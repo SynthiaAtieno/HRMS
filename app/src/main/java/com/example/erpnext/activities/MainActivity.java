@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_nav);
         replaceFragment(new HomeFragment());
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:

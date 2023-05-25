@@ -25,7 +25,7 @@ public class OnboardingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding_screen);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         skipbtn = findViewById(R.id.skip_btn);
         nextbtn = findViewById(R.id.next_btn);

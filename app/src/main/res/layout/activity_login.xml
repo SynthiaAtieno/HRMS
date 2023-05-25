@@ -2,66 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:padding="16dp"
     android:orientation="vertical"
-    android:gravity="center"
-    android:id="@+id/linearlayout"
     tools:context=".activities.Login">
 
-    <ScrollView
+    <TextView
+        android:layout_marginTop="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:textAlignment="center"
+        android:textColor="#639ECD"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:text="Savanna HRMS"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:layout_marginTop="12dp"
+        android:text="Welcome Back."/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:orientation="vertical"
-            android:gravity="center"
 
-            android:padding="32dp"
-            >
-
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/erpnext_logo"/>
-
+            android:padding="32dp">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login To ErpNext"
-                android:textStyle="bold"
-                android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/georgia_bold_italic"
-                android:textColor="@color/white"
-                android:textSize="24sp"/>
+                android:text="Log In"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="username"
-                android:outlineAmbientShadowColor="#fff"
-                android:textColorHint="#fff"
-                app:boxStrokeColor="#fff"
-                app:endIconMode="clear_text"
                 android:layout_marginTop="16dp"
-                app:hintTextColor="#fff"
-                app:prefixTextColor="@color/white"
+                android:hint="Email"
+                android:outlineAmbientShadowColor="#000"
+                android:textColorHint="#83000000"
+                app:boxStrokeColor="#BA000000"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/black"
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -71,49 +77,50 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:outlineAmbientShadowColor="#fff"
-                android:textColorHint="#fff"
-                app:boxStrokeColor="#fff"
                 android:layout_marginTop="8dp"
+                android:hint="Password"
+                android:outlineAmbientShadowColor="#77FFFFFF"
+                android:textColorHint="#83000000"
+                app:boxStrokeColor="#BB000000"
                 app:endIconMode="password_toggle"
-                app:hintTextColor="#fff"
-                app:prefixTextColor="@color/white"
+                app:hintTextColor="#000"
                 app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     android:textSize="16sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 android:id="@+id/forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                android:text="Forgot Password"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp"
-                android:textColor="#fff"
                 android:layout_gravity="end"
-                android:textStyle="italic"/>
+                android:layout_marginTop="16dp"
+                android:text="Forgot Password?"
+                android:textAlignment="textEnd"
+                android:textColor="#639ECD"
+                android:textSize="18sp"
+                />
 
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="Login"
-                android:textColor="#fff"
-                android:backgroundTint="#2A618E"
                 android:background="@drawable/custom_edittext"
-                android:textSize="24sp"
-                android:textAllCaps="false" />
+                android:backgroundTint="#3075AC"
+                android:text="Log In"
+                android:enabled="false"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
