@@ -1,5 +1,6 @@
 package com.example.erpnext.services;
 
+import com.example.erpnext.UserInfo;
 import com.example.erpnext.models.UserError;
 import com.example.erpnext.models.UserModel;
 import com.example.erpnext.models.sidebar.Message;
@@ -23,6 +24,6 @@ public interface ApiInterface {
     @POST("method/logout")
     Call<ResponseBody> logout();
 
-    @GET("method/frappe.desk.desktop.get_workspace_sidebar_items")
-    Call<Message> getSideBar(@Query("sid") String sid);
+    @GET("method/frappe.realtime.get_user_info")
+    Call<UserInfo> getUserInfo(@Query("sid") String sid);
 }
