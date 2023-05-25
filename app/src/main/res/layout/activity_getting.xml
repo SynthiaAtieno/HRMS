@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_700"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".activities.GettingActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/getting_stated_image"
+        android:id="@+id/image_desc"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text="Welcome to,"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:text="Savanna HRMS"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:layout_marginTop="26sp"
+        android:text="@string/all_in_one_platform_to_streamline_your_hr_n_payroll_process"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        >
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/getting_started_btn"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Started"
+            android:layout_centerInParent="true"
+            android:textColor="@color/purple_700"
+            android:background="@drawable/btn_background"
+            android:textAllCaps="false"/>
+    </RelativeLayout>
+
+</LinearLayout>
