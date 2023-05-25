@@ -1,45 +1,38 @@
 package com.example.erpnext.activities;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
+import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.models.UserError;
 import com.example.erpnext.models.UserModel;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.services.SetCookieInterceptor;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.Headers;
-import okhttp3.Interceptor;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,6 +46,12 @@ public class Login extends AppCompatActivity {
     String username, password;
     TextView errorMessageTextView, errorMessage;
     AlertDialog.Builder builder;
+    UserSessionManager sessionManager;
+
+
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_SID = "sid";
+    private static final String KEY_NAME = "full_name";
 
     View dialogView;
     private SetCookieInterceptor interceptor;
@@ -67,31 +66,30 @@ public class Login extends AppCompatActivity {
         usernametxt = (TextInputLayout) findViewById(R.id.username);
         passwordtxt = (TextInputLayout) findViewById(R.id.password);
         login = findViewById(R.id.login_btn);
+        builder = new AlertDialog.Builder(this);
+        sessionManager = new UserSessionManager(Login.this);
+
         linearLayout = findViewById(R.id.linearlayout);
-
         progressDialog = new ProgressDialog(this);
-        alertDialog = new AlertDialog.Builder(this).create();
         interceptor = new SetCookieInterceptor();
-        LayoutInflater inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.custom_alert, null);
-        errorMessageTextView = dialogView.findViewById(R.id.error_title);
-        errorMessage = dialogView.findViewById(R.id.error_message);
-        builder.setView(dialogView);
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-                //loginFailed();
-            }
-        });
+        if (sessionManager.isLoggedIn()){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
+        else {
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    login();
+                }
+            });
+        }
     }
 
     private void displayUserInfo(String message) {
         Snackbar.make(linearLayout, message, Snackbar.LENGTH_SHORT).show();
         progressDialog.dismiss();
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -133,15 +131,18 @@ public class Login extends AppCompatActivity {
                         for (String cookieHeader : setCookieHeaders) {
                             if (cookieHeader.startsWith("sid=")) {
                                 sid = cookieHeader.substring(4, cookieHeader.indexOf(';'));
-                                if (sid != null){
+                                if (!Objects.equals(sid, "Guest")){
                                     Toast.makeText(Login.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     //Toast.makeText(Login.this, "Full name " + response.body().getFullName(), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     //intent.putExtra("username", response.body().getFullName());
-                                    Toast.makeText(Login.this, "sid = "+sid, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(Login.this, "sid = "+sid, Toast.LENGTH_SHORT).show();
+                                    sessionManager.setUserId(sid);
+                                    sessionManager.setKeyFullName(response.body().getFullName());
                                     startActivity(intent);
                                     finish();
                                 }else {
+
                                     Toast.makeText(Login.this, "You are not an authorised user", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
@@ -156,25 +157,44 @@ public class Login extends AppCompatActivity {
                                 String errorResponseJson = response.errorBody().string();
                                 UserError errorResponse = new Gson().fromJson(errorResponseJson, UserError.class);
                                 //Toast.makeText(Login.this, "" + errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                                errorMessageTextView.setText("An error occurred.");
-                                errorMessage.setText(errorResponse.getMessage());
+                                //errorMessageTextView.setText("An error occurred.");
+                                //errorMessage.setText(errorResponse.getMessage());
                                 // Set button click listener
+                                /*alertDialog.setTitle("Error occurred");
+                                alertDialog.setMessage(errorResponse.getMessage());
                                 Button dismissButton = dialogView.findViewById(R.id.dismiss_button);
+                                alertDialog.setButton("Dismiss","Dismiss",Onc);
                                 dismissButton.setVisibility(View.VISIBLE);
                                 AlertDialog dialog = builder.create();
+                                dialog.show();
                                 dismissButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         // Dismiss the dialog
                                         dialog.dismiss();
                                     }
-                                });
+                                });*/
 
                                 // Create and show the dialog
-                                dialog.show();
 //                                alertDialog.setTitle("User Does not exist");
 //                                alertDialog.setMessage(errorResponse.getMessage());
 //                                alertDialog.show();
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                                builder.setTitle("Error Occurred");
+                                builder.setMessage(errorResponse.getMessage());
+
+                                // Set a positive button and its click listener
+                                builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                // Create and show the alert dialog
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -199,4 +219,5 @@ public class Login extends AppCompatActivity {
             });
         }
     }
+
 }
