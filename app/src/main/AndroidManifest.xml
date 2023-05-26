@@ -20,9 +20,73 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activities.ResetPasswordActivity"
-            android:parentActivityName=".activities.Login"
+            android:name=".activities.drawerActivities.SettingsActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.drawerActivities.TaskInformationActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.drawerActivities.RaiseIssueActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.drawerActivities.HolidayActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.drawerActivities.TrainingActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.drawerActivities.BenefitsActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.drawerActivities.AppointmentsActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.drawerActivities.ProfileActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.ResetPasswordActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.Login">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

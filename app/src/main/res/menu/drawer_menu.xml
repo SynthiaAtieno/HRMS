@@ -16,14 +16,14 @@
             android:id="@+id/drawer_benefits"
             android:title="Benefits" />
         <item
-            android:id="@+id/drawer_loan"
-            android:title="Loan" />
+            android:id="@+id/drawer_training"
+            android:title="Training" />
         <item
             android:id="@+id/drawer_holidays"
             android:title="Holidays" />
 
         <item
-            android:id="@+id/tax"
+            android:id="@+id/drawer_tax"
             android:title="Tax Information" />
         <item
             android:id="@+id/raise_issue"
