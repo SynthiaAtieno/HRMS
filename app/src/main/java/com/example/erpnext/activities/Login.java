@@ -72,12 +72,12 @@ public class Login extends AppCompatActivity {
             //finish();
         });
 
-            if (sessionManager.isLoggedIn()) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
-            } else {
-                login.setOnClickListener(v -> login());
-            }
+        if (sessionManager.isLoggedIn()) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        } else {
+            login.setOnClickListener(v -> login());
+        }
     }
 
     @Override
@@ -93,21 +93,14 @@ public class Login extends AppCompatActivity {
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-       String username = usernametxt.getEditText().getText().toString();
-       String password = passwordtxt.getEditText().getText().toString();
+        String username = usernametxt.getEditText().getText().toString();
+        String password = passwordtxt.getEditText().getText().toString();
         String contentType = "application/json";
         String accept = "application/json";
         String authToken = "a838616307c06c351b63";
         Map<String, String> credentials = new HashMap<>();
         credentials.put("usr", username);
         credentials.put("pwd", password);
-//        if (username.isEmpty()) {
-//            usernametxt.setError("username is required");
-//            usernametxt.requestFocus();
-//        } else if (password.isEmpty()) {
-//            passwordtxt.setError("password is required");
-//            passwordtxt.requestFocus();
-//        }
         if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
             alertDialog.setTitle("Network Error");
             alertDialog.setMessage("You have no internet connection");
@@ -128,8 +121,6 @@ public class Login extends AppCompatActivity {
                                     Toast.makeText(Login.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     //Toast.makeText(Login.this, "Full name " + response.body().getFullName(), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    //intent.putExtra("username", response.body().getFullName());
-                                    //Toast.makeText(Login.this, "sid = "+sid, Toast.LENGTH_SHORT).show();
                                     sessionManager.setUserId(sid);
                                     sessionManager.setKeyFullName(response.body().getFullName());
                                     startActivity(intent);
@@ -155,12 +146,7 @@ public class Login extends AppCompatActivity {
                                 builder.setMessage(errorResponse.getMessage());
 
                                 // Set a positive button and its click listener
-                                builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
+                                builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
 
                                 // Create and show the alert dialog
                                 AlertDialog dialog = builder.create();
@@ -182,22 +168,12 @@ public class Login extends AppCompatActivity {
                         builder.setMessage("Kindly check your internet connection then try again");
 
                         // Set a positive button and its click listener
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
                     } else {
                         builder.setMessage(t.getMessage());
 
                         // Set a positive button and its click listener
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
                     }
                     // Create and show the alert dialog
                     AlertDialog dialog = builder.create();
@@ -208,7 +184,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    private TextWatcher loginTextWatcher = new TextWatcher() {
+    private final TextWatcher loginTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -216,11 +192,7 @@ public class Login extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//            String username = usernametxt.getEditText().getText().toString().trim();
-//            String password = passwordtxt.getEditText().getText().toString().trim();
-//            if (!username.isEmpty() && !password.isEmpty()) {
-//                login.isEnabled();
-//            }
+
         }
 
         @Override
@@ -235,15 +207,10 @@ public class Login extends AppCompatActivity {
     };
 
     private boolean isUsernameNotEmpty(String username) {
-
-        // Add your email validation logic here
-        // This is a basic example checking for a non-empty email
         return !username.isEmpty();
     }
-    private boolean isPasswordNotEmpty(String password) {
 
-        // Add your email validation logic here
-        // This is a basic example checking for a non-empty email
+    private boolean isPasswordNotEmpty(String password) {
         return !password.isEmpty();
     }
 

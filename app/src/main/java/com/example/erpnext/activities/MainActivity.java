@@ -24,12 +24,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
+import com.example.erpnext.activities.drawerActivities.AppointmentsActivity;
+import com.example.erpnext.activities.drawerActivities.BenefitsActivity;
+import com.example.erpnext.activities.drawerActivities.HolidayActivity;
+import com.example.erpnext.activities.drawerActivities.ProfileActivity;
+import com.example.erpnext.activities.drawerActivities.RaiseIssueActivity;
+import com.example.erpnext.activities.drawerActivities.SettingsActivity;
+import com.example.erpnext.activities.drawerActivities.TaskInformationActivity;
+import com.example.erpnext.activities.drawerActivities.TrainingActivity;
 import com.example.erpnext.fragments.AttendanceFragment;
 import com.example.erpnext.fragments.HomeFragment;
 import com.example.erpnext.fragments.LeaveFragment;
 import com.example.erpnext.fragments.MarkAttendanceFragment;
 import com.example.erpnext.fragments.ProfileFragment;
 import com.example.erpnext.services.ApiClient;
+import com.example.erpnext.session.UserSessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -44,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-
+    UserSessionManager sessionManager;
 
 
     @Override
@@ -53,20 +62,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         replaceFragment(new HomeFragment());
+        sessionManager = new UserSessionManager(this);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.drawer_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.getHeaderView(0);
+        TextView nametxt = headerView.findViewById(R.id.header_name_txt);
+        TextView roletxt = headerView.findViewById(R.id.header_role_txt);
+
+        nametxt.setText(sessionManager.getFullName());
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
@@ -98,56 +113,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
 
-  /*  @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bottom_nav, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                replaceFragment(new HomeFragment());
-                Toast.makeText(this, "Home is clicked", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.attendance:
-                replaceFragment(new AttendanceFragment());
-                Toast.makeText(this, "attendance is clicked", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.leave:
-                replaceFragment(new LeaveFragment());
-                Toast.makeText(this, "Leave is clicked", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.profile:
-                replaceFragment(new ProfileFragment());
-                Toast.makeText(this, "Profile is clicked", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.mark_attendance:
-                replaceFragment(new MarkAttendanceFragment());
-                Toast.makeText(this, "Mark attendance is clicked", Toast.LENGTH_SHORT).show();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-*/
-
-
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
@@ -157,6 +130,105 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.drawer_profile:
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+
+                break;
+            case R.id.drawer_appointments:
+                startActivity(new Intent(MainActivity.this, AppointmentsActivity.class));
+                break;
+            case R.id.drawer_benefits:
+                startActivity(new Intent(MainActivity.this, BenefitsActivity.class));
+
+                break;
+            case R.id.drawer_holidays:
+                startActivity(new Intent(MainActivity.this, HolidayActivity.class));
+
+                break;
+            case R.id.raise_issue:
+                startActivity(new Intent(MainActivity.this, RaiseIssueActivity.class));
+
+                break;
+
+            case R.id.settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+
+                break;
+            case R.id.drawer_training:
+                startActivity(new Intent(MainActivity.this, TrainingActivity.class));
+
+                break;
+
+            case R.id.drawer_tax:
+                startActivity(new Intent(MainActivity.this, TaskInformationActivity.class));
+
+                break;
+            case R.id.drawer_logout:
+                logout();
+        }
+
         return true;
+    }
+
+    public void logout() {
+
+        ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("Alert");
+                    builder.setMessage("Do you want to Quit?");
+
+                    // Set a positive button and its click listener
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Perform any action you want when the "Yes" button is clicked
+                            Toast.makeText(MainActivity.this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(MainActivity.this, Login.class));
+                            finish();
+                            sessionManager.clearSession();
+
+                        }
+                    });
+                    // Set a negative button and its click listener
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Perform any action you want when the "No" button is clicked
+                            dialog.dismiss();
+                        }
+                    });
+
+                    // Create and show the alert dialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Error Occurred");
+                if (t.getMessage().equals("timeout")) {
+                    builder.setMessage("Kindly check your internet connection then try again");
+
+                    // Set a positive button and its click listener
+                    builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                } else {
+                    builder.setMessage(t.getMessage());
+
+                    // Set a positive button and its click listener
+                    builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                }
+                // Create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                builder.setTitle("Error occurred");
+            }
+        });
     }
 }
