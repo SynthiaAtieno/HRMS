@@ -1,4 +1,4 @@
-package com.example.erpnext;
+package com.example.erpnext.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.erpnext.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;

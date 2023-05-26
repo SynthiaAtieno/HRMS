@@ -2,7 +2,6 @@ package com.example.erpnext.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -13,20 +12,17 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
-import com.example.erpnext.ResetPasswordActivity;
 import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.models.UserError;
 import com.example.erpnext.models.UserModel;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.services.SetCookieInterceptor;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
@@ -35,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 import okhttp3.Headers;
 import retrofit2.Call;

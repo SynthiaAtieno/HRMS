@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@color/purple_700"
+    android:padding="12dp"
+    android:gravity="bottom"
+    android:layout_height="200dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/header_profile_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/ic_baseline_person_24"
+        app:civ_border_color="#fff"
+        android:paddingRight="6dp"
+        app:civ_border_width="2dp" />
+    <LinearLayout
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Synthia Ondeng"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:id="@+id/header_name_txt"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#6AFFFFFF"
+            android:text="System User"
+            android:textSize="16sp"
+            android:id="@+id/header_role_txt"/>
+    </LinearLayout>
+
+</LinearLayout>

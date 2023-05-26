@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".activities.ResetPasswordActivity"
             android:parentActivityName=".activities.Login"
             android:exported="false">
             <meta-data

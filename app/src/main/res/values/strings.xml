@@ -16,4 +16,8 @@
     <string name="hello_blank_fragment">Hello Blank Fragment.</string>
     <string name="all_in_one_platform_to_streamline_your_hr_n_payroll_process"><![CDATA[All in one platform to streamline your HR &\n payroll process]]></string>
     <string name="say_goodbye_to_running_payroll_manually_on_n_complicated_spreadsheet">Say Goodbye to running payroll manually on\n complicated spreadsheet</string>
+
+<!--    Navigation strings-->
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
 </resources>

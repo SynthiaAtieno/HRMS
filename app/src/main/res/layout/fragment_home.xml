@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:elevation="12dp"
         android:id="@+id/profile_card"
-        android:layout_alignParentTop="true"
         app:cardCornerRadius="12dp">
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -77,6 +77,7 @@
         app:cardElevation="12dp">
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -124,6 +125,7 @@
 
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
