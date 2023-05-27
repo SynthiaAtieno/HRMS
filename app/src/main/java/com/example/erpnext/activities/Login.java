@@ -169,11 +169,13 @@ public class Login extends AppCompatActivity {
 
                         // Set a positive button and its click listener
                         builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                        progressDialog.dismiss();
                     } else {
                         builder.setMessage(t.getMessage());
 
                         // Set a positive button and its click listener
                         builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                        progressDialog.dismiss();
                     }
                     // Create and show the alert dialog
                     AlertDialog dialog = builder.create();
