@@ -1,5 +1,6 @@
 package com.example.erpnext.services;
 
+import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.models.UserInfo;
 import com.example.erpnext.models.UserModel;
 
@@ -23,4 +24,7 @@ public interface ApiInterface {
 
     @GET("method/frappe.realtime.get_user_info")
     Call<UserInfo> getUserInfo(@Query("sid") String sid);
+
+    @GET("method/frappe.core.doctype.user_permission.user_permission.get_user_permissions")
+    Call<EmployeePermission> getEmployeePermission(@Header("sid") String sid);
 }
