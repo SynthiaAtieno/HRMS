@@ -37,6 +37,8 @@ import com.example.erpnext.fragments.HomeFragment;
 import com.example.erpnext.fragments.LeaveFragment;
 import com.example.erpnext.fragments.MarkAttendanceFragment;
 import com.example.erpnext.fragments.ProfileFragment;
+import com.example.erpnext.models.EmployeeData;
+import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
 
+        getEmployeeData();
         navigationView.setNavigationItemSelectedListener(this);
 
         View headerView = navigationView.getHeaderView(0);
@@ -230,5 +233,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 builder.setTitle("Error occurred");
             }
         });
+    }
+    public void getEmployeeData(){
+
     }
 }
