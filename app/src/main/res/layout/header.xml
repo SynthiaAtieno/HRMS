@@ -10,8 +10,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/header_profile_image"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:src="@drawable/ic_baseline_person_24"
         app:civ_border_color="#fff"
         android:paddingRight="6dp"
@@ -20,7 +20,7 @@
         android:layout_marginLeft="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="14dp"
         android:orientation="vertical"
         >
         <TextView
