@@ -12,12 +12,14 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
+import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.models.UserError;
 import com.example.erpnext.models.UserModel;
@@ -76,7 +78,10 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         } else {
-            login.setOnClickListener(v -> login());
+            login.setOnClickListener(v -> {
+                login();
+
+            });
         }
     }
 
@@ -123,6 +128,7 @@ public class Login extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     sessionManager.setUserId(sid);
                                     sessionManager.setKeyFullName(response.body().getFullName());
+                                    getNamingSeries();
                                     startActivity(intent);
                                     finish();
                                 } else {
@@ -216,5 +222,35 @@ public class Login extends AppCompatActivity {
         return !password.isEmpty();
     }
 
+    public void getNamingSeries(){
+        ApiClient.getApiClient().getEmployeePermission(sessionManager.getUserId()).enqueue(new Callback<EmployeePermission>() {
+            @Override
+            public void onResponse(Call<EmployeePermission> call, Response<EmployeePermission> response) {
+                if (response.isSuccessful()){
+                    EmployeePermission responseData = response.body();
+                    Toast.makeText(Login.this, ""+responseData, Toast.LENGTH_SHORT).show();
+                    if (responseData != null && responseData.getMessage() != null) {
+                        List<EmployeePermission.Employee> employees = responseData.getMessage().getEmployee();
+                        if (employees != null && !employees.isEmpty()) {
+                            String doc = employees.get(0).getDoc();
+                            sessionManager.setKeyEmployeeNamingSeries(doc);
+                            Toast.makeText(Login.this, "Naming Series"+doc, Toast.LENGTH_SHORT).show();
+                           // Log.d(TAG, "onResponse: "+doc);
+                        }else {
+                            Toast.makeText(Login.this, "Doc is null", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    // Handle error response
+                    Toast.makeText(Login.this, "Response not successful", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<EmployeePermission> call, Throwable t) {
+
+                Toast.makeText(Login.this, "An error occurred", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

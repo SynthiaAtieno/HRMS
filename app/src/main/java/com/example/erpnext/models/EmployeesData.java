@@ -3,177 +3,135 @@ package com.example.erpnext.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.List;
 
 public class EmployeesData {
 
 
-    @SerializedName("data")
-    private EmployeeData data;
+    @SerializedName("docs")
+    private List<EmployeeDoc> docs;
+    @SerializedName("docinfo")
+    private DocInfo docinfo;
+    @SerializedName("_link_titles")
+    private Object _link_titles;
 
-    public EmployeeData getData() {
-        return data;
+    public List<EmployeeDoc> getDocs() {
+        return docs;
     }
 
-    public void setData(EmployeeData data) {
-        this.data = data;
+    public void setDocs(List<EmployeeDoc> docs) {
+        this.docs = docs;
     }
 
-    public static class EmployeeData {
+    public DocInfo getDocinfo() {
+        return docinfo;
+    }
+
+    public void setDocinfo(DocInfo docinfo) {
+        this.docinfo = docinfo;
+    }
+
+    public Object get_link_titles() {
+        return _link_titles;
+    }
+
+    public void set_link_titles(Object _link_titles) {
+        this._link_titles = _link_titles;
+    }
+
+    public static class EmployeeDoc {
         @SerializedName("name")
         private String name;
-
         @SerializedName("owner")
         private String owner;
-
         @SerializedName("creation")
         private String creation;
-
         @SerializedName("modified")
         private String modified;
-
         @SerializedName("modified_by")
-        private String modifiedBy;
-
+        private String modified_by;
         @SerializedName("docstatus")
-        private int docStatus;
-
+        private int docstatus;
         @SerializedName("idx")
         private int idx;
-
         @SerializedName("employee")
         private String employee;
-
         @SerializedName("naming_series")
-        private String namingSeries;
-
+        private String naming_series;
         @SerializedName("first_name")
-        private String firstName;
-
-        @SerializedName("last_name")
-        private String lastName;
-
+        private String first_name;
         @SerializedName("employee_name")
-        private String employeeName;
-
+        private String employee_name;
         @SerializedName("gender")
         private String gender;
-
         @SerializedName("date_of_birth")
-        private String dateOfBirth;
-
+        private String date_of_birth;
         @SerializedName("salutation")
         private String salutation;
-
         @SerializedName("date_of_joining")
-        private String dateOfJoining;
-
+        private String date_of_joining;
         @SerializedName("status")
         private String status;
-
         @SerializedName("user_id")
-        private String userId;
-
+        private String user_id;
         @SerializedName("create_user_permission")
-        private int createUserPermission;
-
+        private int create_user_permission;
         @SerializedName("company")
         private String company;
-
         @SerializedName("department")
         private String department;
-
         @SerializedName("employment_type")
-        private String employmentType;
-
-        @SerializedName("employee_number")
-        private String employeeNumber;
-
+        private String employment_type;
         @SerializedName("designation")
         private String designation;
-
-        @SerializedName("reports_to")
-        private String reportsTo;
-
         @SerializedName("notice_number_of_days")
-        private int noticeNumberOfDays;
-
+        private int notice_number_of_days;
+        @SerializedName("cell_number")
+        private String cell_number;
         @SerializedName("personal_email")
-        private String personalEmail;
-
+        private String personal_email;
         @SerializedName("prefered_contact_email")
-        private String preferedContactEmail;
-
+        private String prefered_contact_email;
         @SerializedName("prefered_email")
-        private String preferedEmail;
-
+        private String prefered_email;
         @SerializedName("unsubscribed")
         private int unsubscribed;
-
         @SerializedName("current_accommodation_type")
-        private String currentAccommodationType;
-
+        private String current_accommodation_type;
         @SerializedName("permanent_accommodation_type")
-        private String permanentAccommodationType;
-
+        private String permanent_accommodation_type;
         @SerializedName("holiday_list")
-        private String holidayList;
-
+        private String holiday_list;
         @SerializedName("default_shift")
-        private String defaultShift;
-
-        @SerializedName("expense_approver")
-        private String expenseApprover;
-
-        @SerializedName("leave_approver")
-        private String leaveApprover;
-
-        @SerializedName("shift_request_approver")
-        private String shiftRequestApprover;
-
+        private String default_shift;
         @SerializedName("ctc")
         private double ctc;
-
         @SerializedName("salary_currency")
-        private String salaryCurrency;
-
+        private String salary_currency;
         @SerializedName("salary_mode")
-        private String salaryMode;
-
+        private String salary_mode;
         @SerializedName("payroll_cost_center")
-        private String payrollCostCenter;
-
+        private String payroll_cost_center;
         @SerializedName("marital_status")
-        private String maritalStatus;
-
+        private String marital_status;
         @SerializedName("blood_group")
-        private String bloodGroup;
-
+        private String blood_group;
         @SerializedName("leave_encashed")
-        private String leaveEncashed;
-
+        private String leave_encashed;
         @SerializedName("lft")
         private int lft;
-
         @SerializedName("rgt")
         private int rgt;
-
         @SerializedName("old_parent")
-        private String oldParent;
-
+        private String old_parent;
         @SerializedName("doctype")
-        private String docType;
-
-        @SerializedName("external_work_history")
-        private List<Object> externalWorkHistory;
-
+        private String doctype;
         @SerializedName("internal_work_history")
-        private List<Object> internalWorkHistory;
-
+        private List<Object> internal_work_history;
+        @SerializedName("external_work_history")
+        private List<Object> external_work_history;
         @SerializedName("education")
         private List<Object> education;
-
-        // Getters and setters for the fields
-
 
         public String getName() {
             return name;
@@ -207,20 +165,20 @@ public class EmployeesData {
             this.modified = modified;
         }
 
-        public String getModifiedBy() {
-            return modifiedBy;
+        public String getModified_by() {
+            return modified_by;
         }
 
-        public void setModifiedBy(String modifiedBy) {
-            this.modifiedBy = modifiedBy;
+        public void setModified_by(String modified_by) {
+            this.modified_by = modified_by;
         }
 
-        public int getDocStatus() {
-            return docStatus;
+        public int getDocstatus() {
+            return docstatus;
         }
 
-        public void setDocStatus(int docStatus) {
-            this.docStatus = docStatus;
+        public void setDocstatus(int docstatus) {
+            this.docstatus = docstatus;
         }
 
         public int getIdx() {
@@ -239,36 +197,28 @@ public class EmployeesData {
             this.employee = employee;
         }
 
-        public String getNamingSeries() {
-            return namingSeries;
+        public String getNaming_series() {
+            return naming_series;
         }
 
-        public void setNamingSeries(String namingSeries) {
-            this.namingSeries = namingSeries;
+        public void setNaming_series(String naming_series) {
+            this.naming_series = naming_series;
         }
 
-        public String getFirstName() {
-            return firstName;
+        public String getFirst_name() {
+            return first_name;
         }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
+        public void setFirst_name(String first_name) {
+            this.first_name = first_name;
         }
 
-        public String getLastName() {
-            return lastName;
+        public String getEmployee_name() {
+            return employee_name;
         }
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public String getEmployeeName() {
-            return employeeName;
-        }
-
-        public void setEmployeeName(String employeeName) {
-            this.employeeName = employeeName;
+        public void setEmployee_name(String employee_name) {
+            this.employee_name = employee_name;
         }
 
         public String getGender() {
@@ -279,12 +229,12 @@ public class EmployeesData {
             this.gender = gender;
         }
 
-        public String getDateOfBirth() {
-            return dateOfBirth;
+        public String getDate_of_birth() {
+            return date_of_birth;
         }
 
-        public void setDateOfBirth(String dateOfBirth) {
-            this.dateOfBirth = dateOfBirth;
+        public void setDate_of_birth(String date_of_birth) {
+            this.date_of_birth = date_of_birth;
         }
 
         public String getSalutation() {
@@ -295,12 +245,12 @@ public class EmployeesData {
             this.salutation = salutation;
         }
 
-        public String getDateOfJoining() {
-            return dateOfJoining;
+        public String getDate_of_joining() {
+            return date_of_joining;
         }
 
-        public void setDateOfJoining(String dateOfJoining) {
-            this.dateOfJoining = dateOfJoining;
+        public void setDate_of_joining(String date_of_joining) {
+            this.date_of_joining = date_of_joining;
         }
 
         public String getStatus() {
@@ -311,20 +261,20 @@ public class EmployeesData {
             this.status = status;
         }
 
-        public String getUserId() {
-            return userId;
+        public String getUser_id() {
+            return user_id;
         }
 
-        public void setUserId(String userId) {
-            this.userId = userId;
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
         }
 
-        public int getCreateUserPermission() {
-            return createUserPermission;
+        public int getCreate_user_permission() {
+            return create_user_permission;
         }
 
-        public void setCreateUserPermission(int createUserPermission) {
-            this.createUserPermission = createUserPermission;
+        public void setCreate_user_permission(int create_user_permission) {
+            this.create_user_permission = create_user_permission;
         }
 
         public String getCompany() {
@@ -343,20 +293,12 @@ public class EmployeesData {
             this.department = department;
         }
 
-        public String getEmploymentType() {
-            return employmentType;
+        public String getEmployment_type() {
+            return employment_type;
         }
 
-        public void setEmploymentType(String employmentType) {
-            this.employmentType = employmentType;
-        }
-
-        public String getEmployeeNumber() {
-            return employeeNumber;
-        }
-
-        public void setEmployeeNumber(String employeeNumber) {
-            this.employeeNumber = employeeNumber;
+        public void setEmployment_type(String employment_type) {
+            this.employment_type = employment_type;
         }
 
         public String getDesignation() {
@@ -367,44 +309,44 @@ public class EmployeesData {
             this.designation = designation;
         }
 
-        public String getReportsTo() {
-            return reportsTo;
+        public int getNotice_number_of_days() {
+            return notice_number_of_days;
         }
 
-        public void setReportsTo(String reportsTo) {
-            this.reportsTo = reportsTo;
+        public void setNotice_number_of_days(int notice_number_of_days) {
+            this.notice_number_of_days = notice_number_of_days;
         }
 
-        public int getNoticeNumberOfDays() {
-            return noticeNumberOfDays;
+        public String getCell_number() {
+            return cell_number;
         }
 
-        public void setNoticeNumberOfDays(int noticeNumberOfDays) {
-            this.noticeNumberOfDays = noticeNumberOfDays;
+        public void setCell_number(String cell_number) {
+            this.cell_number = cell_number;
         }
 
-        public String getPersonalEmail() {
-            return personalEmail;
+        public String getPersonal_email() {
+            return personal_email;
         }
 
-        public void setPersonalEmail(String personalEmail) {
-            this.personalEmail = personalEmail;
+        public void setPersonal_email(String personal_email) {
+            this.personal_email = personal_email;
         }
 
-        public String getPreferedContactEmail() {
-            return preferedContactEmail;
+        public String getPrefered_contact_email() {
+            return prefered_contact_email;
         }
 
-        public void setPreferedContactEmail(String preferedContactEmail) {
-            this.preferedContactEmail = preferedContactEmail;
+        public void setPrefered_contact_email(String prefered_contact_email) {
+            this.prefered_contact_email = prefered_contact_email;
         }
 
-        public String getPreferedEmail() {
-            return preferedEmail;
+        public String getPrefered_email() {
+            return prefered_email;
         }
 
-        public void setPreferedEmail(String preferedEmail) {
-            this.preferedEmail = preferedEmail;
+        public void setPrefered_email(String prefered_email) {
+            this.prefered_email = prefered_email;
         }
 
         public int getUnsubscribed() {
@@ -415,60 +357,36 @@ public class EmployeesData {
             this.unsubscribed = unsubscribed;
         }
 
-        public String getCurrentAccommodationType() {
-            return currentAccommodationType;
+        public String getCurrent_accommodation_type() {
+            return current_accommodation_type;
         }
 
-        public void setCurrentAccommodationType(String currentAccommodationType) {
-            this.currentAccommodationType = currentAccommodationType;
+        public void setCurrent_accommodation_type(String current_accommodation_type) {
+            this.current_accommodation_type = current_accommodation_type;
         }
 
-        public String getPermanentAccommodationType() {
-            return permanentAccommodationType;
+        public String getPermanent_accommodation_type() {
+            return permanent_accommodation_type;
         }
 
-        public void setPermanentAccommodationType(String permanentAccommodationType) {
-            this.permanentAccommodationType = permanentAccommodationType;
+        public void setPermanent_accommodation_type(String permanent_accommodation_type) {
+            this.permanent_accommodation_type = permanent_accommodation_type;
         }
 
-        public String getHolidayList() {
-            return holidayList;
+        public String getHoliday_list() {
+            return holiday_list;
         }
 
-        public void setHolidayList(String holidayList) {
-            this.holidayList = holidayList;
+        public void setHoliday_list(String holiday_list) {
+            this.holiday_list = holiday_list;
         }
 
-        public String getDefaultShift() {
-            return defaultShift;
+        public String getDefault_shift() {
+            return default_shift;
         }
 
-        public void setDefaultShift(String defaultShift) {
-            this.defaultShift = defaultShift;
-        }
-
-        public String getExpenseApprover() {
-            return expenseApprover;
-        }
-
-        public void setExpenseApprover(String expenseApprover) {
-            this.expenseApprover = expenseApprover;
-        }
-
-        public String getLeaveApprover() {
-            return leaveApprover;
-        }
-
-        public void setLeaveApprover(String leaveApprover) {
-            this.leaveApprover = leaveApprover;
-        }
-
-        public String getShiftRequestApprover() {
-            return shiftRequestApprover;
-        }
-
-        public void setShiftRequestApprover(String shiftRequestApprover) {
-            this.shiftRequestApprover = shiftRequestApprover;
+        public void setDefault_shift(String default_shift) {
+            this.default_shift = default_shift;
         }
 
         public double getCtc() {
@@ -479,52 +397,52 @@ public class EmployeesData {
             this.ctc = ctc;
         }
 
-        public String getSalaryCurrency() {
-            return salaryCurrency;
+        public String getSalary_currency() {
+            return salary_currency;
         }
 
-        public void setSalaryCurrency(String salaryCurrency) {
-            this.salaryCurrency = salaryCurrency;
+        public void setSalary_currency(String salary_currency) {
+            this.salary_currency = salary_currency;
         }
 
-        public String getSalaryMode() {
-            return salaryMode;
+        public String getSalary_mode() {
+            return salary_mode;
         }
 
-        public void setSalaryMode(String salaryMode) {
-            this.salaryMode = salaryMode;
+        public void setSalary_mode(String salary_mode) {
+            this.salary_mode = salary_mode;
         }
 
-        public String getPayrollCostCenter() {
-            return payrollCostCenter;
+        public String getPayroll_cost_center() {
+            return payroll_cost_center;
         }
 
-        public void setPayrollCostCenter(String payrollCostCenter) {
-            this.payrollCostCenter = payrollCostCenter;
+        public void setPayroll_cost_center(String payroll_cost_center) {
+            this.payroll_cost_center = payroll_cost_center;
         }
 
-        public String getMaritalStatus() {
-            return maritalStatus;
+        public String getMarital_status() {
+            return marital_status;
         }
 
-        public void setMaritalStatus(String maritalStatus) {
-            this.maritalStatus = maritalStatus;
+        public void setMarital_status(String marital_status) {
+            this.marital_status = marital_status;
         }
 
-        public String getBloodGroup() {
-            return bloodGroup;
+        public String getBlood_group() {
+            return blood_group;
         }
 
-        public void setBloodGroup(String bloodGroup) {
-            this.bloodGroup = bloodGroup;
+        public void setBlood_group(String blood_group) {
+            this.blood_group = blood_group;
         }
 
-        public String getLeaveEncashed() {
-            return leaveEncashed;
+        public String getLeave_encashed() {
+            return leave_encashed;
         }
 
-        public void setLeaveEncashed(String leaveEncashed) {
-            this.leaveEncashed = leaveEncashed;
+        public void setLeave_encashed(String leave_encashed) {
+            this.leave_encashed = leave_encashed;
         }
 
         public int getLft() {
@@ -543,36 +461,36 @@ public class EmployeesData {
             this.rgt = rgt;
         }
 
-        public String getOldParent() {
-            return oldParent;
+        public String getOld_parent() {
+            return old_parent;
         }
 
-        public void setOldParent(String oldParent) {
-            this.oldParent = oldParent;
+        public void setOld_parent(String old_parent) {
+            this.old_parent = old_parent;
         }
 
-        public String getDocType() {
-            return docType;
+        public String getDoctype() {
+            return doctype;
         }
 
-        public void setDocType(String docType) {
-            this.docType = docType;
+        public void setDoctype(String doctype) {
+            this.doctype = doctype;
         }
 
-        public List<Object> getExternalWorkHistory() {
-            return externalWorkHistory;
+        public List<Object> getInternal_work_history() {
+            return internal_work_history;
         }
 
-        public void setExternalWorkHistory(List<Object> externalWorkHistory) {
-            this.externalWorkHistory = externalWorkHistory;
+        public void setInternal_work_history(List<Object> internal_work_history) {
+            this.internal_work_history = internal_work_history;
         }
 
-        public List<Object> getInternalWorkHistory() {
-            return internalWorkHistory;
+        public List<Object> getExternal_work_history() {
+            return external_work_history;
         }
 
-        public void setInternalWorkHistory(List<Object> internalWorkHistory) {
-            this.internalWorkHistory = internalWorkHistory;
+        public void setExternal_work_history(List<Object> external_work_history) {
+            this.external_work_history = external_work_history;
         }
 
         public List<Object> getEducation() {
@@ -583,5 +501,404 @@ public class EmployeesData {
             this.education = education;
         }
     }
+
+    public static class DocInfo {
+        @SerializedName("user_info")
+        private UserInfo user_info;
+        @SerializedName("comments")
+        private List<Object> comments;
+        @SerializedName("shared")
+        private List<Object> shared;
+        @SerializedName("assignment_logs")
+        private List<Object> assignment_logs;
+        @SerializedName("attachment_logs")
+        private List<Object> attachment_logs;
+        @SerializedName("info_logs")
+        private List<Object> info_logs;
+        @SerializedName("like_logs")
+        private List<Object> like_logs;
+        @SerializedName("workflow_logs")
+        private List<Object> workflow_logs;
+        @SerializedName("doctype")
+        private String doctype;
+        @SerializedName("name")
+        private String name;
+        @SerializedName("attachments")
+        private List<Object> attachments;
+        @SerializedName("communications")
+        private List<Object> communications;
+        @SerializedName("automated_messages")
+        private List<Object> automated_messages;
+        @SerializedName("total_comments")
+        private int total_comments;
+        @SerializedName("versions")
+        private List<Object> versions;
+        @SerializedName("assignments")
+        private List<Object> assignments;
+        @SerializedName("permissions")
+        private Permissions permissions;
+        @SerializedName("views")
+        private List<Object> views;
+        @SerializedName("energy_point_logs")
+        private List<Object> energy_point_logs;
+        @SerializedName("additional_timeline_content")
+        private List<Object> additional_timeline_content;
+        @SerializedName("milestones")
+        private List<Object> milestones;
+        @SerializedName("is_document_followed")
+        private Object is_document_followed;
+        @SerializedName("tags")
+        private String tags;
+        @SerializedName("document_email")
+        private Object document_email;
+
+
+        public UserInfo getUser_info() {
+            return user_info;
+        }
+
+        public void setUser_info(UserInfo user_info) {
+            this.user_info = user_info;
+        }
+
+        public List<Object> getComments() {
+            return comments;
+        }
+
+        public void setComments(List<Object> comments) {
+            this.comments = comments;
+        }
+
+        public List<Object> getShared() {
+            return shared;
+        }
+
+        public void setShared(List<Object> shared) {
+            this.shared = shared;
+        }
+
+        public List<Object> getAssignment_logs() {
+            return assignment_logs;
+        }
+
+        public void setAssignment_logs(List<Object> assignment_logs) {
+            this.assignment_logs = assignment_logs;
+        }
+
+        public List<Object> getAttachment_logs() {
+            return attachment_logs;
+        }
+
+        public void setAttachment_logs(List<Object> attachment_logs) {
+            this.attachment_logs = attachment_logs;
+        }
+
+        public List<Object> getInfo_logs() {
+            return info_logs;
+        }
+
+        public void setInfo_logs(List<Object> info_logs) {
+            this.info_logs = info_logs;
+        }
+
+        public List<Object> getLike_logs() {
+            return like_logs;
+        }
+
+        public void setLike_logs(List<Object> like_logs) {
+            this.like_logs = like_logs;
+        }
+
+        public List<Object> getWorkflow_logs() {
+            return workflow_logs;
+        }
+
+        public void setWorkflow_logs(List<Object> workflow_logs) {
+            this.workflow_logs = workflow_logs;
+        }
+
+        public String getDoctype() {
+            return doctype;
+        }
+
+        public void setDoctype(String doctype) {
+            this.doctype = doctype;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public List<Object> getAttachments() {
+            return attachments;
+        }
+
+        public void setAttachments(List<Object> attachments) {
+            this.attachments = attachments;
+        }
+
+        public List<Object> getCommunications() {
+            return communications;
+        }
+
+        public void setCommunications(List<Object> communications) {
+            this.communications = communications;
+        }
+
+        public List<Object> getAutomated_messages() {
+            return automated_messages;
+        }
+
+        public void setAutomated_messages(List<Object> automated_messages) {
+            this.automated_messages = automated_messages;
+        }
+
+        public int getTotal_comments() {
+            return total_comments;
+        }
+
+        public void setTotal_comments(int total_comments) {
+            this.total_comments = total_comments;
+        }
+
+        public List<Object> getVersions() {
+            return versions;
+        }
+
+        public void setVersions(List<Object> versions) {
+            this.versions = versions;
+        }
+
+        public List<Object> getAssignments() {
+            return assignments;
+        }
+
+        public void setAssignments(List<Object> assignments) {
+            this.assignments = assignments;
+        }
+
+        public Permissions getPermissions() {
+            return permissions;
+        }
+
+        public void setPermissions(Permissions permissions) {
+            this.permissions = permissions;
+        }
+
+        public List<Object> getViews() {
+            return views;
+        }
+
+        public void setViews(List<Object> views) {
+            this.views = views;
+        }
+
+        public List<Object> getEnergy_point_logs() {
+            return energy_point_logs;
+        }
+
+        public void setEnergy_point_logs(List<Object> energy_point_logs) {
+            this.energy_point_logs = energy_point_logs;
+        }
+
+        public List<Object> getAdditional_timeline_content() {
+            return additional_timeline_content;
+        }
+
+        public void setAdditional_timeline_content(List<Object> additional_timeline_content) {
+            this.additional_timeline_content = additional_timeline_content;
+        }
+
+        public List<Object> getMilestones() {
+            return milestones;
+        }
+
+        public void setMilestones(List<Object> milestones) {
+            this.milestones = milestones;
+        }
+
+        public Object getIs_document_followed() {
+            return is_document_followed;
+        }
+
+        public void setIs_document_followed(Object is_document_followed) {
+            this.is_document_followed = is_document_followed;
+        }
+
+        public String getTags() {
+            return tags;
+        }
+
+        public void setTags(String tags) {
+            this.tags = tags;
+        }
+
+        public Object getDocument_email() {
+            return document_email;
+        }
+
+        public void setDocument_email(Object document_email) {
+            this.document_email = document_email;
+        }
+    }
+
+    public static class Permissions {
+        @SerializedName("select")
+        private int select;
+        @SerializedName("raed")
+        private int read;
+        @SerializedName("write")
+        private int write;
+        @SerializedName("create")
+        private int create;
+        @SerializedName("delete")
+        private int delete;
+        @SerializedName("submit")
+        private int submit;
+        @SerializedName("cancel")
+        private int cancel;
+        @SerializedName("amend")
+        private int amend;
+        @SerializedName("print")
+        private int print;
+        @SerializedName("email")
+        private int email;
+        @SerializedName("report")
+        private int report;
+        @SerializedName("import")
+        private int imports;
+        @SerializedName("export")
+        private int export;
+        @SerializedName("set_user_permissions")
+        private int set_user_permissions;
+        @SerializedName("share")
+        private int share;
+
+        public int getSelect() {
+            return select;
+        }
+
+        public void setSelect(int select) {
+            this.select = select;
+        }
+
+        public int getRead() {
+            return read;
+        }
+
+        public void setRead(int read) {
+            this.read = read;
+        }
+
+        public int getWrite() {
+            return write;
+        }
+
+        public void setWrite(int write) {
+            this.write = write;
+        }
+
+        public int getCreate() {
+            return create;
+        }
+
+        public void setCreate(int create) {
+            this.create = create;
+        }
+
+        public int getDelete() {
+            return delete;
+        }
+
+        public void setDelete(int delete) {
+            this.delete = delete;
+        }
+
+        public int getSubmit() {
+            return submit;
+        }
+
+        public void setSubmit(int submit) {
+            this.submit = submit;
+        }
+
+        public int getCancel() {
+            return cancel;
+        }
+
+        public void setCancel(int cancel) {
+            this.cancel = cancel;
+        }
+
+        public int getAmend() {
+            return amend;
+        }
+
+        public void setAmend(int amend) {
+            this.amend = amend;
+        }
+
+        public int getPrint() {
+            return print;
+        }
+
+        public void setPrint(int print) {
+            this.print = print;
+        }
+
+        public int getEmail() {
+            return email;
+        }
+
+        public void setEmail(int email) {
+            this.email = email;
+        }
+
+        public int getReport() {
+            return report;
+        }
+
+        public void setReport(int report) {
+            this.report = report;
+        }
+
+        public int getImport() {
+            return imports;
+        }
+
+        public void setImport(int imports) {
+            this.imports = imports;
+        }
+
+        public int getExport() {
+            return export;
+        }
+
+        public void setExport(int export) {
+            this.export = export;
+        }
+
+        public int getSet_user_permissions() {
+            return set_user_permissions;
+        }
+
+        public void setSet_user_permissions(int set_user_permissions) {
+            this.set_user_permissions = set_user_permissions;
+        }
+
+        public int getShare() {
+            return share;
+        }
+
+        public void setShare(int share) {
+            this.share = share;
+        }
+    }
 }
+
+
 
