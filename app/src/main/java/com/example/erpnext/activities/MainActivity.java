@@ -237,53 +237,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getEmployeeData() {
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
+        //String Auth_Token = "a838616307c06c351b63";
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries()).enqueue(new Callback<EmployeesData>() {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
-                if (response.isSuccessful()){
+                System.out.println(sessionManager.getKeyEmployeeNamingSeries());
+                if (response.isSuccessful()) {
                     EmployeesData responseModel = response.body();
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
                         EmployeesData.EmployeeDoc data = responseModel.getDocs().get(0);
 
                         // Access the designation from the data model
                         String designation = data.getDesignation();
-                        Toast.makeText(MainActivity.this, "Designation is"+designation, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Designation is" + designation, Toast.LENGTH_SHORT).show();
                         // Set the designation in a TextView
                         //textView.setText(designation);
-                    }
-                    else {
+                    } else {
                         Toast.makeText(MainActivity.this, "Null data", Toast.LENGTH_SHORT).show();
                     }
 
-                }
-                else {
-                    // Error
-                    if (response.errorBody() != null) {
-                        try {
-                            String errorResponseJson = response.errorBody().string();
-                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            builder.setTitle("Error Occurred");
-                            builder.setMessage(errorResponse.getExcType());
-
-                            // Set a positive button and its click listener
-                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
-
-                            // Create and show the alert dialog
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<EmployeesData> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error occurred "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Onfailure" + t.getMessage());
             }
         });
     }
