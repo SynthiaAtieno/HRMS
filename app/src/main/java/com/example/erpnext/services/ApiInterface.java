@@ -1,6 +1,5 @@
 package com.example.erpnext.services;
 
-import com.example.erpnext.models.EmployeeData;
 import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.models.UserInfo;
@@ -33,6 +32,6 @@ public interface ApiInterface {
     Call<EmployeePermission> getEmployeePermission(@Query("sid") String sid);
 
     @Headers({"Content-Type:application/json", "Accept:application/json"})
-    @GET("method/frappe.desk.form.load.getdoc")
-    Call<EmployeeData> getEmployeeData(@Query("doctype") String empDoctype, @Query("name") String name);
+    @POST("method/frappe.desk.form.load.getdoc")
+    Call<EmployeesData> getEmployeeData(@Query("doctype") String empDoctype, @Query("name") String name);
 }

@@ -14,10 +14,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -37,12 +33,17 @@ import com.example.erpnext.fragments.HomeFragment;
 import com.example.erpnext.fragments.LeaveFragment;
 import com.example.erpnext.fragments.MarkAttendanceFragment;
 import com.example.erpnext.fragments.ProfileFragment;
-import com.example.erpnext.models.EmployeeData;
 import com.example.erpnext.models.EmployeesData;
+import com.example.erpnext.models.PermissionError;
+import com.example.erpnext.models.UserError;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -234,7 +235,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-    public void getEmployeeData(){
 
+    public void getEmployeeData() {
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
+            @Override
+            public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
+                if (response.isSuccessful()){
+                    EmployeesData responseModel = response.body();
+                    if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
+                        EmployeesData.EmployeeDoc data = responseModel.getDocs().get(0);
+
+                        // Access the designation from the data model
+                        String designation = data.getDesignation();
+                        Toast.makeText(MainActivity.this, "Designation is"+designation, Toast.LENGTH_SHORT).show();
+                        // Set the designation in a TextView
+                        //textView.setText(designation);
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Null data", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else {
+                    // Error
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorResponseJson = response.errorBody().string();
+                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setTitle("Error Occurred");
+                            builder.setMessage(errorResponse.getExcType());
+
+                            // Set a positive button and its click listener
+                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                            // Create and show the alert dialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<EmployeesData> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error occurred "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
