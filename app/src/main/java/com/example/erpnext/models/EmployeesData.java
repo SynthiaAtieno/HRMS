@@ -1,5 +1,7 @@
 package com.example.erpnext.models;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -41,6 +43,7 @@ public class EmployeesData {
 
     public static class EmployeeDoc {
         @SerializedName("name")
+        @Nullable
         private String name;
         @SerializedName("owner")
         private String owner;
