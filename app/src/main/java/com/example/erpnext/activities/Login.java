@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.erpnext.R;
 import com.example.erpnext.models.EmployeePermission;
+import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.models.UserError;
 import com.example.erpnext.models.UserModel;
@@ -228,7 +229,7 @@ public class Login extends AppCompatActivity {
             public void onResponse(Call<EmployeePermission> call, Response<EmployeePermission> response) {
                 if (response.isSuccessful()){
                     EmployeePermission responseData = response.body();
-                    Toast.makeText(Login.this, ""+responseData, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Login.this, ""+responseData, Toast.LENGTH_SHORT).show();
                     if (responseData != null && responseData.getMessage() != null) {
                         List<EmployeePermission.Employee> employees = responseData.getMessage().getEmployee();
                         if (employees != null && !employees.isEmpty()) {
@@ -242,13 +243,32 @@ public class Login extends AppCompatActivity {
                     }
                 } else {
                     // Handle error response
-                    Toast.makeText(Login.this, "Response not successful", Toast.LENGTH_SHORT).show();
+
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorResponseJson = response.errorBody().string();
+                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                            builder.setTitle("Error Occurred");
+                            builder.setMessage(errorResponse.getExcType());
+
+                            // Set a positive button and its click listener
+                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                            // Create and show the alert dialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
             @Override
             public void onFailure(Call<EmployeePermission> call, Throwable t) {
 
-                Toast.makeText(Login.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "An error occurred"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
