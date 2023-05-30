@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getEmployeeData();
         navigationView.setNavigationItemSelectedListener(this);
+        System.out.println("sid"+sessionManager.getUserId());
 
         View headerView = navigationView.getHeaderView(0);
         TextView nametxt = headerView.findViewById(R.id.header_name_txt);
@@ -238,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void getEmployeeData() {
         //String Auth_Token = "a838616307c06c351b63";
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries()).enqueue(new Callback<EmployeesData>() {
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
                 System.out.println(sessionManager.getKeyEmployeeNamingSeries());
@@ -257,7 +258,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorResponseJson = response.errorBody().string();
+                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setTitle("Error Occurred");
+                            builder.setMessage(errorResponse.getExcType());
+
+                            // Set a positive button and its click listener
+                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                            // Create and show the alert dialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //Toast.makeText(MainActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
                 }
 
             }
