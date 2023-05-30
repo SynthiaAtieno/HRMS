@@ -2,18 +2,21 @@ package com.example.erpnext.models;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
 import java.util.List;
 
 public class EmployeesData {
 
 
     @SerializedName("docs")
+    @Expose
     private List<EmployeeDoc> docs;
     @SerializedName("docinfo")
+    @Expose
     private DocInfo docinfo;
+    @Expose
     @SerializedName("_link_titles")
     private Object _link_titles;
 
@@ -44,96 +47,142 @@ public class EmployeesData {
     public static class EmployeeDoc {
         @SerializedName("name")
         @Nullable
+        @Expose
         private String name;
         @SerializedName("owner")
+        @Expose
         private String owner;
         @SerializedName("creation")
+        @Expose
         private String creation;
         @SerializedName("modified")
+        @Expose
         private String modified;
         @SerializedName("modified_by")
+        @Expose
         private String modified_by;
         @SerializedName("docstatus")
+        @Expose
         private int docstatus;
         @SerializedName("idx")
+        @Expose
         private int idx;
         @SerializedName("employee")
+        @Expose
         private String employee;
         @SerializedName("naming_series")
+        @Expose
         private String naming_series;
         @SerializedName("first_name")
+        @Expose
         private String first_name;
         @SerializedName("employee_name")
+        @Expose
         private String employee_name;
         @SerializedName("gender")
+        @Expose
         private String gender;
         @SerializedName("date_of_birth")
+        @Expose
         private String date_of_birth;
         @SerializedName("salutation")
+        @Expose
         private String salutation;
         @SerializedName("date_of_joining")
+        @Expose
         private String date_of_joining;
         @SerializedName("status")
+        @Expose
         private String status;
         @SerializedName("user_id")
+        @Expose
         private String user_id;
         @SerializedName("create_user_permission")
+        @Expose
         private int create_user_permission;
         @SerializedName("company")
+        @Expose
         private String company;
         @SerializedName("department")
+        @Expose
         private String department;
         @SerializedName("employment_type")
+        @Expose
         private String employment_type;
         @SerializedName("designation")
+        @Expose
         private String designation;
         @SerializedName("notice_number_of_days")
+        @Expose
         private int notice_number_of_days;
         @SerializedName("cell_number")
+        @Expose
         private String cell_number;
         @SerializedName("personal_email")
+        @Expose
         private String personal_email;
         @SerializedName("prefered_contact_email")
+        @Expose
         private String prefered_contact_email;
         @SerializedName("prefered_email")
+        @Expose
         private String prefered_email;
         @SerializedName("unsubscribed")
+        @Expose
         private int unsubscribed;
         @SerializedName("current_accommodation_type")
+        @Expose
         private String current_accommodation_type;
         @SerializedName("permanent_accommodation_type")
+        @Expose
         private String permanent_accommodation_type;
         @SerializedName("holiday_list")
+        @Expose
         private String holiday_list;
         @SerializedName("default_shift")
+        @Expose
         private String default_shift;
         @SerializedName("ctc")
+        @Expose
         private double ctc;
         @SerializedName("salary_currency")
+        @Expose
         private String salary_currency;
         @SerializedName("salary_mode")
+        @Expose
         private String salary_mode;
         @SerializedName("payroll_cost_center")
+        @Expose
         private String payroll_cost_center;
         @SerializedName("marital_status")
+        @Expose
         private String marital_status;
         @SerializedName("blood_group")
+        @Expose
         private String blood_group;
         @SerializedName("leave_encashed")
+        @Expose
         private String leave_encashed;
         @SerializedName("lft")
+        @Expose
         private int lft;
         @SerializedName("rgt")
+        @Expose
         private int rgt;
         @SerializedName("old_parent")
+        @Expose
         private String old_parent;
         @SerializedName("doctype")
+        @Expose
         private String doctype;
         @SerializedName("internal_work_history")
+        @Expose
         private List<Object> internal_work_history;
         @SerializedName("external_work_history")
+        @Expose
         private List<Object> external_work_history;
         @SerializedName("education")
+        @Expose
         private List<Object> education;
 
         public String getName() {
@@ -507,52 +556,76 @@ public class EmployeesData {
 
     public static class DocInfo {
         @SerializedName("user_info")
+        @Expose
         private UserInfo user_info;
         @SerializedName("comments")
+        @Expose
         private List<Object> comments;
         @SerializedName("shared")
+        @Expose
         private List<Object> shared;
         @SerializedName("assignment_logs")
+        @Expose
         private List<Object> assignment_logs;
         @SerializedName("attachment_logs")
+        @Expose
         private List<Object> attachment_logs;
         @SerializedName("info_logs")
+        @Expose
         private List<Object> info_logs;
         @SerializedName("like_logs")
+        @Expose
         private List<Object> like_logs;
         @SerializedName("workflow_logs")
+        @Expose
         private List<Object> workflow_logs;
         @SerializedName("doctype")
+        @Expose
         private String doctype;
         @SerializedName("name")
+        @Expose
         private String name;
         @SerializedName("attachments")
+        @Expose
         private List<Object> attachments;
         @SerializedName("communications")
+        @Expose
         private List<Object> communications;
         @SerializedName("automated_messages")
+        @Expose
         private List<Object> automated_messages;
         @SerializedName("total_comments")
+        @Expose
         private int total_comments;
         @SerializedName("versions")
+        @Expose
         private List<Object> versions;
         @SerializedName("assignments")
+        @Expose
         private List<Object> assignments;
         @SerializedName("permissions")
+        @Expose
         private Permissions permissions;
         @SerializedName("views")
+        @Expose
         private List<Object> views;
         @SerializedName("energy_point_logs")
+        @Expose
         private List<Object> energy_point_logs;
         @SerializedName("additional_timeline_content")
+        @Expose
         private List<Object> additional_timeline_content;
         @SerializedName("milestones")
+        @Expose
         private List<Object> milestones;
         @SerializedName("is_document_followed")
+        @Expose
         private Object is_document_followed;
         @SerializedName("tags")
+        @Expose
         private String tags;
         @SerializedName("document_email")
+        @Expose
         private Object document_email;
 
 
@@ -751,34 +824,49 @@ public class EmployeesData {
 
     public static class Permissions {
         @SerializedName("select")
+        @Expose
         private int select;
         @SerializedName("raed")
+        @Expose
         private int read;
         @SerializedName("write")
+        @Expose
         private int write;
         @SerializedName("create")
+        @Expose
         private int create;
         @SerializedName("delete")
+        @Expose
         private int delete;
         @SerializedName("submit")
+        @Expose
         private int submit;
         @SerializedName("cancel")
+        @Expose
         private int cancel;
         @SerializedName("amend")
+        @Expose
         private int amend;
         @SerializedName("print")
+        @Expose
         private int print;
         @SerializedName("email")
+        @Expose
         private int email;
         @SerializedName("report")
+        @Expose
         private int report;
         @SerializedName("import")
+        @Expose
         private int imports;
         @SerializedName("export")
+        @Expose
         private int export;
         @SerializedName("set_user_permissions")
+        @Expose
         private int set_user_permissions;
         @SerializedName("share")
+        @Expose
         private int share;
 
         public int getSelect() {
