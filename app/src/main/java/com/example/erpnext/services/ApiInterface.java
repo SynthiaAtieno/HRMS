@@ -5,6 +5,7 @@ import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.models.UserInfo;
 import com.example.erpnext.models.UserModel;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -33,5 +34,5 @@ public interface ApiInterface {
 
     //@Headers({"Content-Type:application/json", "Accept:application/json"})
     @GET("method/frappe.desk.form.load.getdoc")
-    Call<EmployeesData> getEmployeeData(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
+    Call<List<EmployeesData>> getEmployeeData(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
 }
