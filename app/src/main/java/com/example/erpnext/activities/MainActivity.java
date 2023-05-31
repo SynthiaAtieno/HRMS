@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     UserSessionManager sessionManager;
+    TextView roletxt;
 
 
     @Override
@@ -80,11 +81,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getEmployeeData();
         navigationView.setNavigationItemSelectedListener(this);
-        System.out.println("sid"+sessionManager.getUserId());
+        //System.out.println("sid"+sessionManager.getUserId());
 
         View headerView = navigationView.getHeaderView(0);
         TextView nametxt = headerView.findViewById(R.id.header_name_txt);
-        TextView roletxt = headerView.findViewById(R.id.header_role_txt);
+        roletxt = headerView.findViewById(R.id.header_role_txt);
 
         nametxt.setText(sessionManager.getFullName());
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -239,28 +240,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void getEmployeeData() {
 
-        ApiClient.getApiClient().getEmployeeData("Employee,", sessionManager.getUserId(), sessionManager.getKeyEmployeeNamingSeries()).enqueue(new Callback<List<EmployeesData>>() {
-            @Override
-            public void onResponse(Call<List<EmployeesData>> call, Response<List<EmployeesData>> response) {
-                if (response.isSuccessful()){
-                    EmployeesData responseModel = (EmployeesData) response.body();
-                    //System.out.println(responseModel);
-                }
-                else {
-                    Toast.makeText(MainActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<EmployeesData>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error occurred"+t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        /*//String Auth_Token = "a838616307c06c351b63";
+        //String Auth_Token = "a838616307c06c351b63";
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
-                System.out.println(sessionManager.getKeyEmployeeNamingSeries());
+               // System.out.println(sessionManager.getKeyEmployeeNamingSeries());
                 if (response.isSuccessful()) {
                     EmployeesData responseModel = response.body();
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
@@ -268,7 +252,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         // Access the designation from the data model
                         String designation = data.getDesignation();
-                        Toast.makeText(MainActivity.this, "Designation is" + designation, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Designation is" + designation, Toast.LENGTH_SHORT).show();
+                        roletxt.setText(designation);
                         // Set the designation in a TextView
                         //textView.setText(designation);
                     } else {
@@ -303,8 +288,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onFailure(Call<EmployeesData> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println("Onfailure" + t.getMessage());
             }
-        });*/
+        });
     }
 }
