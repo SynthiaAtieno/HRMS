@@ -46,7 +46,6 @@ public class EmployeesData {
 
     public static class EmployeeDoc {
         @SerializedName("name")
-        @Nullable
         @Expose
         private String name;
         @SerializedName("owner")
@@ -61,6 +60,9 @@ public class EmployeesData {
         @SerializedName("modified_by")
         @Expose
         private String modified_by;
+        @SerializedName("current_address")
+        @Expose
+        private String current_address;
         @SerializedName("docstatus")
         @Expose
         private int docstatus;
@@ -109,6 +111,9 @@ public class EmployeesData {
         @SerializedName("employment_type")
         @Expose
         private String employment_type;
+        @SerializedName("employee_number")
+        @Expose
+        private String employee_number;
         @SerializedName("designation")
         @Expose
         private String designation;
@@ -185,6 +190,10 @@ public class EmployeesData {
         @Expose
         private List<Object> education;
 
+        public String getEmployee_number() {
+            return employee_number;
+        }
+
         public String getName() {
             return name;
         }
@@ -239,6 +248,10 @@ public class EmployeesData {
 
         public void setIdx(int idx) {
             this.idx = idx;
+        }
+
+        public String getCurrent_address() {
+            return current_address;
         }
 
         public String getEmployee() {
