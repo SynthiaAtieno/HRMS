@@ -2,15 +2,25 @@ package com.example.erpnext.activities.drawerActivities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
 import com.example.erpnext.activities.MainActivity;
+import com.example.erpnext.fragments.profile.AchievementFragment;
+import com.example.erpnext.fragments.profile.EducationFragment;
+import com.example.erpnext.fragments.profile.ExperienceFragment;
+import com.example.erpnext.fragments.profile.OverviewFragment;
 import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.services.ApiClient;
@@ -18,6 +28,7 @@ import com.example.erpnext.session.UserSessionManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     UserSessionManager sessionManager;
     TextView nametxt, usertxt;
+    AppCompatButton overviewbtn, expebtn, achievebtn, educationbtn;
 
 
     @Override
@@ -36,22 +48,77 @@ public class ProfileActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.profile_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Profile");
 
         nametxt = findViewById(R.id.usernametxtprofile);
         usertxt = findViewById(R.id.userroletxt);
+        overviewbtn = findViewById(R.id.btn_overview);
+        expebtn = findViewById(R.id.btn_experience);
+        achievebtn = findViewById(R.id.btn_achievement);
+        educationbtn = findViewById(R.id.btn_education);
+
+        replaceFragment(new OverviewFragment());
+        overviewbtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
+        overviewbtn.setTextColor(Color.WHITE);
+        overviewbtn.setOnClickListener(view -> {
+            replaceFragment(new OverviewFragment());
+            overviewbtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
+            overviewbtn.setTextColor(Color.WHITE);
+            achievebtn.setBackgroundColor(Color.WHITE);
+            achievebtn.setTextColor(Color.BLACK);
+            expebtn.setBackgroundColor(Color.WHITE);
+            expebtn.setTextColor(Color.BLACK);
+            educationbtn.setBackgroundColor(Color.WHITE);
+            educationbtn.setTextColor(Color.BLACK);
+        });
+        expebtn.setOnClickListener(view -> {
+            replaceFragment(new ExperienceFragment());
+            expebtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
+            expebtn.setTextColor(Color.WHITE);
+            achievebtn.setBackgroundColor(Color.WHITE);
+            achievebtn.setTextColor(Color.BLACK);
+            educationbtn.setBackgroundColor(Color.WHITE);
+            educationbtn.setTextColor(Color.BLACK);
+            overviewbtn.setBackgroundColor(Color.WHITE);
+            overviewbtn.setTextColor(Color.BLACK);
+
+        });
+        achievebtn.setOnClickListener(view -> {
+            replaceFragment(new AchievementFragment());
+            achievebtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
+            achievebtn.setTextColor(Color.WHITE);
+
+            expebtn.setBackgroundColor(Color.WHITE);
+            expebtn.setTextColor(Color.BLACK);
+            educationbtn.setBackgroundColor(Color.WHITE);
+            educationbtn.setTextColor(Color.BLACK);
+            overviewbtn.setBackgroundColor(Color.WHITE);
+            overviewbtn.setTextColor(Color.BLACK);
+        });
+        educationbtn.setOnClickListener(view -> {
+            replaceFragment(new EducationFragment());
+            educationbtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
+            educationbtn.setTextColor(Color.WHITE);
+
+            achievebtn.setBackgroundColor(Color.WHITE);
+            achievebtn.setTextColor(Color.BLACK);
+            expebtn.setBackgroundColor(Color.WHITE);
+            expebtn.setTextColor(Color.BLACK);
+            overviewbtn.setBackgroundColor(Color.WHITE);
+            overviewbtn.setTextColor(Color.BLACK);
+        });
         getEmployeeData();
-        sessionManager = new UserSessionManager(ProfileActivity.this);
-        Toast.makeText(this, ""+sessionManager.getKeyEmployeeNamingSeries(), Toast.LENGTH_SHORT).show();
+        sessionManager = new UserSessionManager(this);
         nametxt.setText(sessionManager.getFullName());
+
     }
 
     public void getEmployeeData() {
+        sessionManager = new UserSessionManager(ProfileActivity.this);
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
-                System.out.println("Session"+sessionManager.getKeyEmployeeNamingSeries());
                 if (response.isSuccessful()) {
                     EmployeesData responseModel = response.body();
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
@@ -94,5 +161,13 @@ public class ProfileActivity extends AppCompatActivity {
                 System.out.println("Onfailure" + t.getMessage());
             }
         });
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
+
     }
 }
