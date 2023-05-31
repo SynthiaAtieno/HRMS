@@ -238,7 +238,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getEmployeeData() {
-        //String Auth_Token = "a838616307c06c351b63";
+
+        ApiClient.getApiClient().getEmployeeData("Employee,", sessionManager.getUserId(), sessionManager.getKeyEmployeeNamingSeries()).enqueue(new Callback<List<EmployeesData>>() {
+            @Override
+            public void onResponse(Call<List<EmployeesData>> call, Response<List<EmployeesData>> response) {
+                if (response.isSuccessful()){
+                    EmployeesData responseModel = (EmployeesData) response.body();
+                    //System.out.println(responseModel);
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EmployeesData>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error occurred"+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        /*//String Auth_Token = "a838616307c06c351b63";
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
@@ -287,6 +305,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("Onfailure" + t.getMessage());
             }
-        });
+        });*/
     }
 }
