@@ -14,6 +14,52 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    <LinearLayout
+        android:padding="18dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_baseline_person_24"
+            app:civ_border_color="#FF000000"
+            android:paddingRight="6dp"
+            app:civ_border_width="2dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:layout_margin="8dp"
+            android:layout_toEndOf="@+id/profile_image"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Synthia Ondeng"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/usernametxtprofile"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="System User"
+                android:layout_marginTop="6dp"
+                android:textSize="16sp"
+                android:id="@+id/userroletxt"/>
+        </LinearLayout>
+    </LinearLayout>
 
+
+
+ 
 
 </RelativeLayout>
