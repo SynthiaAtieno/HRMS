@@ -239,7 +239,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getEmployeeData() {
-
         //String Auth_Token = "a838616307c06c351b63";
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @Override
