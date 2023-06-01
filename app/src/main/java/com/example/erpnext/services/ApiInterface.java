@@ -35,4 +35,9 @@ public interface ApiInterface {
     //@Headers({"Content-Type:application/json", "Accept:application/json"})
     @GET("method/frappe.desk.form.load.getdoc")
     Call<EmployeesData> getEmployeeData(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
+
+    @GET("method/frappe.desk.form.load.getdoc")
+    Call<List<EmployeesData.EmployeeDoc>> getEmployeeDoc(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
+
+
 }
