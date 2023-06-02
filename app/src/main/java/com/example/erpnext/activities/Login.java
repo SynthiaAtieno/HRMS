@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,9 @@ public class Login extends AppCompatActivity {
     UserSessionManager sessionManager;
     TextView forgotpasswordtxt;
 
+    Calendar calendar = Calendar.getInstance();
+    int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,14 @@ public class Login extends AppCompatActivity {
         passwordtxt.getEditText().addTextChangedListener(loginTextWatcher);
 
 
+        String greeting;
+        if (hourOfDay >= 0 && hourOfDay < 12) {
+            greeting = "Good morning!";
+        } else if (hourOfDay >= 12 && hourOfDay < 18) {
+            greeting = "Good afternoon!";
+        } else {
+            greeting = "Good evening!";
+        }
         linearLayout = findViewById(R.id.linearlayout);
         progressDialog = new ProgressDialog(this);
         SetCookieInterceptor interceptor = new SetCookieInterceptor();
