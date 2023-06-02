@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -41,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
     AppCompatButton overviewbtn, expebtn, achievebtn, educationbtn;
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,23 +66,23 @@ public class ProfileActivity extends AppCompatActivity {
         overviewbtn.setOnClickListener(view -> {
             replaceFragment(new OverviewFragment());
             overviewbtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
-            overviewbtn.setTextColor(Color.WHITE);
-            achievebtn.setBackgroundColor(Color.WHITE);
-            achievebtn.setTextColor(Color.BLACK);
-            expebtn.setBackgroundColor(Color.WHITE);
+            achievebtn.setTextColor(Color.WHITE);
+            expebtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             expebtn.setTextColor(Color.BLACK);
-            educationbtn.setBackgroundColor(Color.WHITE);
+            educationbtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             educationbtn.setTextColor(Color.BLACK);
+            achievebtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
+            achievebtn.setTextColor(Color.BLACK);
         });
         expebtn.setOnClickListener(view -> {
             replaceFragment(new ExperienceFragment());
             expebtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
             expebtn.setTextColor(Color.WHITE);
-            achievebtn.setBackgroundColor(Color.WHITE);
-            achievebtn.setTextColor(Color.BLACK);
-            educationbtn.setBackgroundColor(Color.WHITE);
+            educationbtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             educationbtn.setTextColor(Color.BLACK);
-            overviewbtn.setBackgroundColor(Color.WHITE);
+            achievebtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
+            achievebtn.setTextColor(Color.BLACK);
+            overviewbtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             overviewbtn.setTextColor(Color.BLACK);
 
         });
@@ -89,11 +91,11 @@ public class ProfileActivity extends AppCompatActivity {
             achievebtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
             achievebtn.setTextColor(Color.WHITE);
 
-            expebtn.setBackgroundColor(Color.WHITE);
+            expebtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             expebtn.setTextColor(Color.BLACK);
-            educationbtn.setBackgroundColor(Color.WHITE);
+            educationbtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             educationbtn.setTextColor(Color.BLACK);
-            overviewbtn.setBackgroundColor(Color.WHITE);
+            overviewbtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             overviewbtn.setTextColor(Color.BLACK);
         });
         educationbtn.setOnClickListener(view -> {
@@ -101,11 +103,11 @@ public class ProfileActivity extends AppCompatActivity {
             educationbtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
             educationbtn.setTextColor(Color.WHITE);
 
-            achievebtn.setBackgroundColor(Color.WHITE);
+            achievebtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             achievebtn.setTextColor(Color.BLACK);
-            expebtn.setBackgroundColor(Color.WHITE);
+            expebtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             expebtn.setTextColor(Color.BLACK);
-            overviewbtn.setBackgroundColor(Color.WHITE);
+            overviewbtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             overviewbtn.setTextColor(Color.BLACK);
         });
         getEmployeeData();
