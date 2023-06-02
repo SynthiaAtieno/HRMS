@@ -188,7 +188,7 @@ public class EmployeesData {
         private List<Object> external_work_history;
         @SerializedName("education")
         @Expose
-        private List<Object> education;
+        private List<EmployeeEducation> education;
 
         public String getEmployee_number() {
             return employee_number;
@@ -558,11 +558,11 @@ public class EmployeesData {
             this.external_work_history = external_work_history;
         }
 
-        public List<Object> getEducation() {
+        public List<EmployeeEducation> getEducation() {
             return education;
         }
 
-        public void setEducation(List<Object> education) {
+        public void setEducation(List<EmployeeEducation> education) {
             this.education = education;
         }
     }
@@ -832,6 +832,130 @@ public class EmployeesData {
 
         public void setDocument_email(Object document_email) {
             this.document_email = document_email;
+        }
+    }
+
+    public static class EmployeeEducation {
+
+
+        @SerializedName("name")
+        @Expose
+        private String name;
+
+        @SerializedName("owner")
+        @Expose
+        private String owner;
+
+        @SerializedName("creation")
+        @Expose
+        private String creation;
+
+        @SerializedName("modified")
+        @Expose
+        private String modified;
+
+        @SerializedName("modified_by")
+        @Expose
+        private String modifiedBy;
+
+        @SerializedName("docstatus")
+        @Expose
+        private int docStatus;
+
+        @SerializedName("idx")
+        @Expose
+        private int idx;
+
+        @SerializedName("school_univ")
+        @Expose
+        private String schoolUniv;
+
+        @SerializedName("qualification")
+        @Expose
+        private String qualification;
+
+        @SerializedName("level")
+        @Expose
+        private String level;
+
+        @SerializedName("year_of_passing")
+        @Expose
+        private int yearOfPassing;
+
+        @SerializedName("parent")
+        @Expose
+        private String parent;
+
+        @SerializedName("parentfield")
+        @Expose
+        private String parentField;
+
+        @SerializedName("parenttype")
+        @Expose
+        private String parentType;
+
+        @SerializedName("doctype")
+        @Expose
+        private String docType;
+
+        public String getName() {
+            return name;
+        }
+
+        public String getOwner() {
+            return owner;
+        }
+
+        public String getCreation() {
+            return creation;
+        }
+
+        public String getModified() {
+            return modified;
+        }
+
+        public String getModifiedBy() {
+            return modifiedBy;
+        }
+
+        public int getDocStatus() {
+            return docStatus;
+        }
+
+        public int getIdx() {
+            return idx;
+        }
+
+        public String getSchoolUniv() {
+            return schoolUniv;
+        }
+
+        public String getQualification() {
+            return qualification;
+        }
+
+        public String getLevel() {
+            return level;
+        }
+
+        public int getYearOfPassing() {
+            return yearOfPassing;
+        }
+
+        public String getParent() {
+            return parent;
+        }
+
+        public String getParentField() {
+            return parentField;
+        }
+
+        public String getParentType() {
+            return parentType;
+        }
+
+        public String getDocType() {
+            return docType;
         }
     }
 
