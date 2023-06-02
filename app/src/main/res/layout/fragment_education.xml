@@ -7,6 +7,18 @@
     android:gravity="center"
     tools:context=".fragments.profile.EducationFragment">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/qualifications"
+            android:textSize="16sp"
+            android:text="Qualifications"
+            android:textColor="@color/black"
+            />
 
-
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
