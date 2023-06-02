@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
-               // System.out.println(sessionManager.getKeyEmployeeNamingSeries());
+                // System.out.println(sessionManager.getKeyEmployeeNamingSeries());
                 if (response.isSuccessful()) {
                     EmployeesData responseModel = response.body();
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
@@ -255,6 +255,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         roletxt.setText(designation);
                         // Set the designation in a TextView
                         //textView.setText(designation);
+                        sessionManager.setUserFirstName(data.getFirst_name());
+                        //Toast.makeText(MainActivity.this, "First Name"+sessionManager.getUserFirstName(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Null data", Toast.LENGTH_SHORT).show();
                     }
@@ -263,23 +265,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (response.errorBody() != null) {
                         try {
                             String errorResponseJson = response.errorBody().string();
-                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+                            if (response.code() == 403) {
+                                PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle(errorResponse.getExcType());
+                                builder.setMessage("Your session expired, please login to access your account");
+                                builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            builder.setTitle("Error Occurred");
-                            builder.setMessage(errorResponse.getExcType());
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Server error occurred, please reload your page", Toast.LENGTH_SHORT).show();
+                            }
 
-                            // Set a positive button and its click listener
-                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
-
-                            // Create and show the alert dialog
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                    //Toast.makeText(MainActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
                 }
 
             }
