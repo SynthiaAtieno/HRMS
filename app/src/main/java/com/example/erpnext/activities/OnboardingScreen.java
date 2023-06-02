@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.erpnext.R;
-import com.example.erpnext.ViewPagerAdapter;
+import com.example.erpnext.adapters.ViewPagerAdapter;
 
 public class OnboardingScreen extends AppCompatActivity {
     ViewPager mSlideViewPage;
