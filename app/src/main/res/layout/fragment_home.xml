@@ -8,24 +8,242 @@
 
 
     <LinearLayout
+        android:id="@+id/welcome_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/greetings"
-            android:textColor="#B6000000"
-            android:textSize="18sp"
-            />
+        android:orientation="horizontal"
+        android:padding="12dp">
 
         <TextView
+            android:id="@+id/greetings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#B6000000"
+            android:textSize="18sp" />
+
+        <TextView
             android:id="@+id/firstname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="#000"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
     </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/announcement_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcome_layout"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="22dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/announcement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Announcement"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/holidayname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/announcement"
+                android:layout_marginTop="6dp"
+                android:text="Diwali Holiday"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/holidayname"
+                android:layout_marginTop="6dp"
+                android:text="10 May 2022"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/holidayname"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:text="View all"
+                android:textColor="#7E000000"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/check_in_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/announcement_layout"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/checkin"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/btn_profile"
+            android:backgroundTint="#397CB3"
+            android:text="Check In"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/checkout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/checkout"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_profile"
+            android:text="Check Out"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkin"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/check_in_layout"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Quick Access"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/appCompatButtonSlip"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/textView"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/round_btn"
+                app:cornerRadius="16dp" />
+
+            <TextView
+                android:id="@+id/textViewslip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/appCompatButtonSlip"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:text="Pay Slip"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/appCompatButtonLeave"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/textView"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_toEndOf="@id/appCompatButtonSlip"
+                android:background="@drawable/round_btn"
+                app:cornerRadius="16dp" />
+
+            <TextView
+                android:id="@+id/textViewleave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/appCompatButtonLeave"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@id/textViewslip"
+                android:text="Leave"
+                android:textColor="#8A000000"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/appCompatButtonClaims"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/textView"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_toEndOf="@id/appCompatButtonLeave"
+                android:background="@drawable/round_btn"
+                app:cornerRadius="16dp" />
+
+            <TextView
+                android:id="@+id/textViewClaims"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/appCompatButtonClaims"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@id/textViewleave"
+                android:text="Claims"
+                android:textColor="#8C000000"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/appCompatButtonAttendance"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/textView"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_toEndOf="@id/appCompatButtonClaims"
+                android:background="@drawable/round_btn"
+                app:cornerRadius="16dp" />
+
+            <TextView
+                android:id="@+id/textViewAttendance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/appCompatButtonAttendance"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@id/textViewClaims"
+                android:text="Attendance"
+                android:textColor="#9E000000"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </HorizontalScrollView>
 </RelativeLayout>
