@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.erpnext.R;
 import com.example.erpnext.models.EmployeePermission;
+import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.models.UserError;
@@ -93,6 +94,7 @@ public class Login extends AppCompatActivity {
         } else {
             login.setOnClickListener(v -> {
                 login();
+                //getEmployeeData();
 
             });
         }
@@ -235,11 +237,11 @@ public class Login extends AppCompatActivity {
         return !password.isEmpty();
     }
 
-    public void getNamingSeries(){
+    public void getNamingSeries() {
         ApiClient.getApiClient().getEmployeePermission(sessionManager.getUserId()).enqueue(new Callback<EmployeePermission>() {
             @Override
             public void onResponse(Call<EmployeePermission> call, Response<EmployeePermission> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     EmployeePermission responseData = response.body();
                     //Toast.makeText(Login.this, ""+responseData, Toast.LENGTH_SHORT).show();
                     if (responseData != null && responseData.getMessage() != null) {
@@ -247,9 +249,9 @@ public class Login extends AppCompatActivity {
                         if (employees != null && !employees.isEmpty()) {
                             String doc = employees.get(0).getDoc();
                             sessionManager.setKeyEmployeeNamingSeries(doc);
-                            Toast.makeText(Login.this, "Naming Series"+doc, Toast.LENGTH_SHORT).show();
-                           // Log.d(TAG, "onResponse: "+doc);
-                        }else {
+                            Toast.makeText(Login.this, "Naming Series" + doc, Toast.LENGTH_SHORT).show();
+                            // Log.d(TAG, "onResponse: "+doc);
+                        } else {
                             Toast.makeText(Login.this, "Doc is null", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -277,12 +279,63 @@ public class Login extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<EmployeePermission> call, Throwable t) {
 
-                Toast.makeText(Login.this, "An error occurred"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "An error occurred" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    public void getEmployeeData() {
+        //String Auth_Token = "a838616307c06c351b63";
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
+            @Override
+            public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
+                // System.out.println(sessionManager.getKeyEmployeeNamingSeries());
+                if (response.isSuccessful()) {
+                    EmployeesData responseModel = response.body();
+                    if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
+                        EmployeesData.EmployeeDoc data = responseModel.getDocs().get(0);
+
+                        // Access the designation from the data model
+                        String designation = data.getDesignation();
+                        sessionManager.setUserFirstName(data.getFirst_name());
+                        //Toast.makeText(MainActivity.this, "First Name"+sessionManager.getUserFirstName(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Login.this, "Null data", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorResponseJson = response.errorBody().string();
+                            if (response.code() == 403) {
+                                PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                                builder.setTitle(errorResponse.getExcType());
+                                builder.setMessage("Your session expired, please login to access your account");
+                                builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            } else {
+                                Toast.makeText(Login.this, "Server error occurred, please reload your page", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<EmployeesData> call, Throwable t) {
+                Toast.makeText(Login.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
