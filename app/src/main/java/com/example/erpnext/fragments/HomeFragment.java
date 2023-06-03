@@ -50,7 +50,12 @@ public class HomeFragment extends Fragment {
         greting.setText(greeting);
 
         sessionManager = new UserSessionManager(getContext());
-        first_name.setText(sessionManager.getUserFirstName());
+        if (sessionManager.getUserFirstName()== null){
+            Toast.makeText(getContext(), "First Name is null", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            first_name.setText(sessionManager.getUserFirstName().toUpperCase());
+        }
         return view;
     }
 
