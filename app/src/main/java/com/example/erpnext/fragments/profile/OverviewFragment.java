@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,6 @@ public class OverviewFragment extends Fragment {
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
                         EmployeesData.EmployeeDoc data = responseModel.getDocs().get(0);
                         String designation = data.getDesignation();
-//                        usertxt.setText(designation);
                         empId.setText(data.getEmployee());
                         phone.setText(data.getEmployee_number());
                         blood.setText(data.getBlood_group());
