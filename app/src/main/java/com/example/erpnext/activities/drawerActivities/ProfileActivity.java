@@ -66,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         overviewbtn.setOnClickListener(view -> {
             replaceFragment(new OverviewFragment());
             overviewbtn.setBackgroundColor(getResources().getColor(R.color.purple_700));
+            overviewbtn.setTextColor(Color.WHITE);
             achievebtn.setTextColor(Color.WHITE);
             expebtn.setBackground(getResources().getDrawable(R.drawable.btn_profile));
             expebtn.setTextColor(Color.BLACK);
