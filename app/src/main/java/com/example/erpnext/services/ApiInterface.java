@@ -4,9 +4,7 @@ import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.models.UserInfo;
 import com.example.erpnext.models.UserModel;
-import com.example.erpnext.models.employee_info.EmployeeInfo;
 
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -37,7 +35,7 @@ public interface ApiInterface {
     @GET("method/frappe.desk.form.load.getdoc")
     Call<EmployeesData> getEmployeeData(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
 
-    @GET("method/frappe.desk.form.load.getdoc")
-    Call<EmployeeInfo> getEmployeeDoc(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
+    //@GET("method/frappe.desk.form.load.getdoc")
+  //  Call<EmployeeInfo> getEmployeeDoc(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
 
 }
