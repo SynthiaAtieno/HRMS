@@ -7,10 +7,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
@@ -22,6 +24,7 @@ import com.example.erpnext.session.UserSessionManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,6 +35,7 @@ import retrofit2.Response;
 public class EducationFragment extends Fragment {
 
     UserSessionManager sessionManager;
+    TextView qualificationstxt;
 
     private RecyclerView recyclerView;
     private EmployeeEducationAdapter adapter;
@@ -53,6 +57,7 @@ public class EducationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_education, container, false);
+        qualificationstxt = view.findViewById(R.id.qualifications);
         return view;
     }
 
@@ -71,15 +76,25 @@ public class EducationFragment extends Fragment {
 
                         for (EmployeesData.EmployeeDoc employee : employees) {
                             List<EmployeesData.EmployeeEducation> educationList = employee.getEducation();
-
+                            List<String> qualifications = new ArrayList<>();
+                            System.out.println("educationList = " + educationList);
                             for (EmployeesData.EmployeeEducation education : educationList) {
-                                String institutionName = education.getName();
-                                int yearOfPassing = education.getYearOfPassing();
+//                                List<String> institutionName = education.;
+//                                institutionName += education.getQualification()+"\n";
+//                                qualifications.setText(institutionName);
+                                String qualification = education.getQualification();
+                                qualifications.add(qualification);
+                                //int yearOfPassing = education.getYearOfPassing();
 
                                 // Do something with the education data
-                                System.out.println("Institution Name: " + institutionName);
-                                System.out.println("Year of Passing: " + yearOfPassing);
+//                                System.out.println("Institution Name: " + institutionName);
+//                             System.out.println("Year of Passing: " + yearOfPassing);
                             }
+                            // Create a formatted string with the qualifications
+                            String qualificationsText = TextUtils.join("\n\n", qualifications);
+
+                            // Set the text in the TextView
+                            qualificationstxt.setText(qualificationsText);
                         }
 
                     } else {
