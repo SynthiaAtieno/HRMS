@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.erpnext.Greetings;
 import com.example.erpnext.R;
+import com.example.erpnext.activities.PaySlipActivity2;
 import com.example.erpnext.models.UserInfo;
 import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.activities.Login;
@@ -28,7 +29,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     UserSessionManager sessionManager ;
-    TextView greting, first_name;
+    TextView greting, first_name,txviewslip;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment {
         first_name = view.findViewById(R.id.firstname);
         greting = view.findViewById(R.id.greetings);
         greting.setText(greeting);
+        txviewslip = view.findViewById(R.id.textViewslip);
 
         sessionManager = new UserSessionManager(getContext());
         if (sessionManager.getUserFirstName()== null){
@@ -56,6 +58,9 @@ public class HomeFragment extends Fragment {
         else {
             first_name.setText(sessionManager.getUserFirstName().toUpperCase());
         }
+
+        txviewslip.setOnClickListener(v ->
+                startActivity(new Intent(getContext(), PaySlipActivity2.class)));
         return view;
     }
 
