@@ -79,16 +79,8 @@ public class EducationFragment extends Fragment {
                             List<String> qualifications = new ArrayList<>();
                             System.out.println("educationList = " + educationList);
                             for (EmployeesData.EmployeeEducation education : educationList) {
-//                                List<String> institutionName = education.;
-//                                institutionName += education.getQualification()+"\n";
-//                                qualifications.setText(institutionName);
                                 String qualification = education.getQualification();
                                 qualifications.add(qualification);
-                                //int yearOfPassing = education.getYearOfPassing();
-
-                                // Do something with the education data
-//                                System.out.println("Institution Name: " + institutionName);
-//                             System.out.println("Year of Passing: " + yearOfPassing);
                             }
                             // Create a formatted string with the qualifications
                             String qualificationsText = TextUtils.join("\n\n", qualifications);
