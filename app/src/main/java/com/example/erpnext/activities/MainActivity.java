@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView roletxt;
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -269,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setTitle(errorResponse.getExcType());
-                                builder.setMessage("Your session expired, please login to access your account");
+                                builder.setMessage("Your session expired, please logout then login to access your account");
                                 builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
 
                                 AlertDialog dialog = builder.create();
