@@ -21,6 +21,6 @@
         android:title="Mark Attendance"/>
     <item
         android:id="@+id/profile"
-        android:title="Profile"
-        android:icon="@drawable/ic_baseline_person_24"/>
+        android:title="Payslip"
+        android:icon="@drawable/attendance"/>
 </menu>
