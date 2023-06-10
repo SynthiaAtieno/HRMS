@@ -2,7 +2,7 @@
     <string name="app_name">ERPNext</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!--    Heading-->
-    <string name="savanna_hrms">Erpnext HRMS</string>
+    <string name="savanna_hrms">Savanna HRMS</string>
 
     <string-array name="months">
         <item>January</item>
