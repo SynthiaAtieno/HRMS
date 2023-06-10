@@ -17,7 +17,7 @@
         android:textColor="#639ECD"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:text="Erpnext HRMS"/>
+        android:text="Savanna HRMS"/>
 
     <TextView
         android:layout_width="match_parent"
