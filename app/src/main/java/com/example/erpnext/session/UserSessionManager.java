@@ -46,7 +46,7 @@ public class UserSessionManager {
     public String getKeyEmployeeNamingSeries(){
         return sharedPreferences.getString(KEY_EMPLOYEE_NAMING_SERIES, null);
     }
-
+//set the first name and saves in a shared preference
     public void setUserFirstName(String firstName){
         editor.putString(USER_FIRST_NAME, firstName);
         editor.apply();
