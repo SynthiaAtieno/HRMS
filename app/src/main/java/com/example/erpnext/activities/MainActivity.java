@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getEmployeeData();
         navigationView.setNavigationItemSelectedListener(this);
-        //System.out.println("sid"+sessionManager.getUserId());
 
         View headerView = navigationView.getHeaderView(0);
         TextView nametxt = headerView.findViewById(R.id.header_name_txt);
