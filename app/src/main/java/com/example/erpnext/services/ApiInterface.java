@@ -24,8 +24,8 @@ public interface ApiInterface {
     @POST("logout")
     Call<ResponseBody> logout();
 
-    @GET("frappe.realtime.get_user_info")
-    Call<UserInfo> getUserInfo(@Query("sid") String sid);
+//    @GET("frappe.realtime.get_user_info")
+//    Call<UserInfo> getUserInfo(@Query("sid") String sid);
 
     @Headers({"Content-Type:application/json", "Accept:application/json"})
     @GET("frappe.core.doctype.user_permission.user_permission.get_user_permissions")
