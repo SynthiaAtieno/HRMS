@@ -63,7 +63,7 @@
 
         <Spinner
             android:id="@+id/spinner_item_text1"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/from"
             android:layout_alignParentStart="true"
@@ -72,10 +72,22 @@
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
+        <Spinner
+            android:id="@+id/spinner_item_text_month"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/from"
+            android:layout_toEndOf="@id/spinner_item_text1"
+            android:layout_marginEnd="6dp"
+            android:entries="@array/months"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner_item_year"
-            android:layout_width="100dp"
+            android:layout_width="85dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/from"
             android:layout_alignParentEnd="true"
