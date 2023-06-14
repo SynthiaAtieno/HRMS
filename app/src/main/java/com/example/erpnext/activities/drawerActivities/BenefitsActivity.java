@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import com.example.erpnext.R;
 
+import java.util.Objects;
+
 public class BenefitsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -17,7 +19,7 @@ public class BenefitsActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.benefits_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Benefits");
     }
 }
