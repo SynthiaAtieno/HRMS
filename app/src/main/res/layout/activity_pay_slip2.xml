@@ -148,6 +148,7 @@
 
         <FrameLayout
             android:id="@+id/framemonthpayslip"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -240,6 +241,7 @@
             android:background="#46000000" />
         <FrameLayout
             android:id="@+id/framesecondmonthpayslip"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -300,6 +302,22 @@
             </LinearLayout>
 
         </FrameLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/generate_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Generate All"
+        android:padding="12dp"
+        android:background="@drawable/reset_btn"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>
+
 
     </LinearLayout>
 </ScrollView>
