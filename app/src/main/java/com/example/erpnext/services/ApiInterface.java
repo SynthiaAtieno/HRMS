@@ -31,7 +31,6 @@ public interface ApiInterface {
     @GET("frappe.core.doctype.user_permission.user_permission.get_user_permissions")
     Call<EmployeePermission> getEmployeePermission(@Query("sid") String sid);
 
-    //@Headers({"Content-Type:application/json", "Accept:application/json"})
     @GET("frappe.desk.form.load.getdoc")
     Call<EmployeesData> getEmployeeData(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
 
