@@ -19,5 +19,6 @@ public class RaiseIssueActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.raise_isseu_toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Raise Issue");
     }
 }
