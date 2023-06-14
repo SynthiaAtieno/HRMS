@@ -73,7 +73,17 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-
+        <Spinner
+            android:id="@+id/spinner_item_year"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/from"
+            android:layout_alignParentEnd="true"
+            android:entries="@array/months"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </LinearLayout>
