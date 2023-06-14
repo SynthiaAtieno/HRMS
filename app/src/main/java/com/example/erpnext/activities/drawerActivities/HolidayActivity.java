@@ -18,5 +18,6 @@ public class HolidayActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.holiday_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Holiday");
     }
 }
