@@ -1,11 +1,13 @@
 package com.example.erpnext.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import java.util.Objects;
 public class PaySlipActivity2 extends AppCompatActivity {
     Toolbar toolbar;
     Spinner spinnerFrom, spinnerTo, spinnerYear;
+    AppCompatButton generateAll;
+    FrameLayout frame1, frame2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,17 @@ public class PaySlipActivity2 extends AppCompatActivity {
         spinnerFrom = findViewById(R.id.spinner_item_textfrom);
         spinnerTo = findViewById(R.id.spinner_item_textto);
         spinnerYear = findViewById(R.id.spinner_item_year);
+        generateAll = findViewById(R.id.generate_all);
+        frame1 = findViewById(R.id.framemonthpayslip);
+        frame2 = findViewById(R.id.framesecondmonthpayslip);
 
+        generateAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                frame1.setVisibility(View.VISIBLE);
+                frame2.setVisibility(View.VISIBLE);
+            }
+        });
         spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
