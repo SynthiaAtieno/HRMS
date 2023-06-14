@@ -18,6 +18,6 @@ public class AppointmentsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.appointment_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setTitle("Appointments");
     }
 }
