@@ -365,7 +365,7 @@ public class SalarySlipData {
 
     }
 
-    public class Doc {
+    public static class Doc {
 
         @SerializedName("name")
         @Expose
