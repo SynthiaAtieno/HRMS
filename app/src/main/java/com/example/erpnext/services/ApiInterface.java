@@ -18,24 +18,24 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @POST("method/login")
+    @POST("login")
     Call<UserModel> login(@Body Map<String, String> credentials, @Header("Authorization") String authToken,@Header("Content-Type") String contentType, @Header("Accept") String accept);
 
-    @POST("method/logout")
+    @POST("logout")
     Call<ResponseBody> logout();
 
-    @GET("method/frappe.realtime.get_user_info")
+    @GET("frappe.realtime.get_user_info")
     Call<UserInfo> getUserInfo(@Query("sid") String sid);
 
     @Headers({"Content-Type:application/json", "Accept:application/json"})
-    @GET("method/frappe.core.doctype.user_permission.user_permission.get_user_permissions")
+    @GET("frappe.core.doctype.user_permission.user_permission.get_user_permissions")
     Call<EmployeePermission> getEmployeePermission(@Query("sid") String sid);
 
     //@Headers({"Content-Type:application/json", "Accept:application/json"})
-    @GET("method/frappe.desk.form.load.getdoc")
+    @GET("frappe.desk.form.load.getdoc")
     Call<EmployeesData> getEmployeeData(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
 
     //@GET("method/frappe.desk.form.load.getdoc")
   //  Call<EmployeeInfo> getEmployeeDoc(@Query("doctype") String empDoctype, @Query("name") String name, @Query("sid") String sid);
-
+    //@GET("frappe.desk.form.load.getdoc?")
 }
