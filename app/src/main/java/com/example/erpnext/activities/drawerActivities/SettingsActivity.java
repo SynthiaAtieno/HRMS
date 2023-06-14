@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import com.example.erpnext.R;
 
+import java.util.Objects;
+
 public class SettingsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -16,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         toolbar = findViewById(R.id.psettings_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Settings");
     }
 }
