@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class PaySlipActivity2 extends AppCompatActivity {
     Toolbar toolbar;
-    Spinner spinner;
+    Spinner spinnerFrom, spinnerTo, spinnerYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,9 @@ public class PaySlipActivity2 extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Payslip");
 
-        spinner = findViewById(R.id.spinner_item_text_month);
+        spinnerFrom = findViewById(R.id.spinner_item_text_month);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
