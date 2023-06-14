@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/payslip_toolbar"
             android:layout_width="match_parent"
