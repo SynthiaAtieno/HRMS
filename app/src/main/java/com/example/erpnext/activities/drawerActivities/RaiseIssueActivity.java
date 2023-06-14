@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import com.example.erpnext.R;
 
+import java.util.Objects;
+
 public class RaiseIssueActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -16,6 +18,6 @@ public class RaiseIssueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_raise_issue);
         toolbar = findViewById(R.id.raise_isseu_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 }
