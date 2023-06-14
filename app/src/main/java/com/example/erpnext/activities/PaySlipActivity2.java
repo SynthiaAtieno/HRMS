@@ -30,6 +30,8 @@ public class PaySlipActivity2 extends AppCompatActivity {
         getSupportActionBar().setTitle("Payslip");
 
         spinnerFrom = findViewById(R.id.spinner_item_textfrom);
+        spinnerTo = findViewById(R.id.spinner_item_textto);
+        spinnerYear = findViewById(R.id.spinner_item_year);
 
         spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -42,6 +44,28 @@ public class PaySlipActivity2 extends AppCompatActivity {
 
             }
         });
+        spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 }
