@@ -19,7 +19,6 @@ public class GettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getting);
-        //Objects.requireNonNull(getSupportActionBar()).hide();
 
         sessionManager = new UserSessionManager(this);
 
