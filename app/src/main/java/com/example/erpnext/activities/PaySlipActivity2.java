@@ -29,7 +29,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Payslip");
 
-        spinnerFrom = findViewById(R.id.spinner_item_text_month);
+        spinnerFrom = findViewById(R.id.spinner_item_textfrom);
 
         spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
