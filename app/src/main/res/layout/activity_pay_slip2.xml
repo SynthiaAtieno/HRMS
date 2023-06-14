@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginBottom="12dp"
             android:text="Month"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -47,6 +48,7 @@
             android:layout_below="@id/month"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="60dp"
+            android:layout_marginStart="10dp"
             android:text="From"
             android:textColor="@color/black"
             android:textSize="18sp" />
