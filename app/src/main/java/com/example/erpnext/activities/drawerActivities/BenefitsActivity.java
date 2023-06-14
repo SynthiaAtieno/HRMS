@@ -18,6 +18,6 @@ public class BenefitsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.benefits_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setTitle("Benefits");
     }
 }
