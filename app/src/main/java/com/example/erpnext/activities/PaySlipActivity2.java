@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.CustomAdapter;
@@ -23,6 +24,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
     Spinner spinnerFrom, spinnerTo, spinnerYear;
     AppCompatButton generateAll;
     FrameLayout frame1, frame2;
+    TextView txtfirstmonth, txtsecondmonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class PaySlipActivity2 extends AppCompatActivity {
         generateAll = findViewById(R.id.generate_all);
         frame1 = findViewById(R.id.framemonthpayslip);
         frame2 = findViewById(R.id.framesecondmonthpayslip);
+        txtfirstmonth = findViewById(R.id.monthtxt);
+        txtsecondmonth = findViewById(R.id.secondmonthtxt);
 
         generateAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +55,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 //Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
+                txtfirstmonth.setText(adapterView.getItemAtPosition(position).toString());
             }
 
             @Override
@@ -61,7 +66,8 @@ public class PaySlipActivity2 extends AppCompatActivity {
         spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
+                txtsecondmonth.setText(adapterView.getItemAtPosition(position).toString());
 
             }
 
@@ -74,7 +80,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
 
             }
 
