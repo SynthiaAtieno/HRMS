@@ -41,330 +41,6 @@ public class SalarySlipData {
     }
 
 
-    public static class Deduction {
-
-        @SerializedName("name")
-        @Expose
-        private String name;
-        @SerializedName("owner")
-        @Expose
-        private String owner;
-        @SerializedName("creation")
-        @Expose
-        private String creation;
-        @SerializedName("modified")
-        @Expose
-        private String modified;
-        @SerializedName("modified_by")
-        @Expose
-        private String modifiedBy;
-        @SerializedName("docstatus")
-        @Expose
-        private Integer docstatus;
-        @SerializedName("idx")
-        @Expose
-        private Integer idx;
-        @SerializedName("salary_component")
-        @Expose
-        private String salaryComponent;
-        @SerializedName("abbr")
-        @Expose
-        private String abbr;
-        @SerializedName("amount")
-        @Expose
-        private Double amount;
-        @SerializedName("year_to_date")
-        @Expose
-        private Double yearToDate;
-        @SerializedName("is_recurring_additional_salary")
-        @Expose
-        private Integer isRecurringAdditionalSalary;
-        @SerializedName("statistical_component")
-        @Expose
-        private Integer statisticalComponent;
-        @SerializedName("depends_on_payment_days")
-        @Expose
-        private Integer dependsOnPaymentDays;
-        @SerializedName("exempted_from_income_tax")
-        @Expose
-        private Integer exemptedFromIncomeTax;
-        @SerializedName("is_tax_applicable")
-        @Expose
-        private Integer isTaxApplicable;
-        @SerializedName("is_flexible_benefit")
-        @Expose
-        private Integer isFlexibleBenefit;
-        @SerializedName("variable_based_on_taxable_salary")
-        @Expose
-        private Integer variableBasedOnTaxableSalary;
-        @SerializedName("do_not_include_in_total")
-        @Expose
-        private Integer doNotIncludeInTotal;
-        @SerializedName("deduct_full_tax_on_selected_payroll_date")
-        @Expose
-        private Integer deductFullTaxOnSelectedPayrollDate;
-        @SerializedName("amount_based_on_formula")
-        @Expose
-        private Integer amountBasedOnFormula;
-        @SerializedName("default_amount")
-        @Expose
-        private Double defaultAmount;
-        @SerializedName("additional_amount")
-        @Expose
-        private Double additionalAmount;
-        @SerializedName("tax_on_flexible_benefit")
-        @Expose
-        private Double taxOnFlexibleBenefit;
-        @SerializedName("tax_on_additional_salary")
-        @Expose
-        private Double taxOnAdditionalSalary;
-        @SerializedName("parent")
-        @Expose
-        private String parent;
-        @SerializedName("parentfield")
-        @Expose
-        private String parentfield;
-        @SerializedName("parenttype")
-        @Expose
-        private String parenttype;
-        @SerializedName("doctype")
-        @Expose
-        private String doctype;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getOwner() {
-            return owner;
-        }
-
-        public void setOwner(String owner) {
-            this.owner = owner;
-        }
-
-        public String getCreation() {
-            return creation;
-        }
-
-        public void setCreation(String creation) {
-            this.creation = creation;
-        }
-
-        public String getModified() {
-            return modified;
-        }
-
-        public void setModified(String modified) {
-            this.modified = modified;
-        }
-
-        public String getModifiedBy() {
-            return modifiedBy;
-        }
-
-        public void setModifiedBy(String modifiedBy) {
-            this.modifiedBy = modifiedBy;
-        }
-
-        public Integer getDocstatus() {
-            return docstatus;
-        }
-
-        public void setDocstatus(Integer docstatus) {
-            this.docstatus = docstatus;
-        }
-
-        public Integer getIdx() {
-            return idx;
-        }
-
-        public void setIdx(Integer idx) {
-            this.idx = idx;
-        }
-
-        public String getSalaryComponent() {
-            return salaryComponent;
-        }
-
-        public void setSalaryComponent(String salaryComponent) {
-            this.salaryComponent = salaryComponent;
-        }
-
-        public String getAbbr() {
-            return abbr;
-        }
-
-        public void setAbbr(String abbr) {
-            this.abbr = abbr;
-        }
-
-        public Double getAmount() {
-            return amount;
-        }
-
-        public void setAmount(Double amount) {
-            this.amount = amount;
-        }
-
-        public Double getYearToDate() {
-            return yearToDate;
-        }
-
-        public void setYearToDate(Double yearToDate) {
-            this.yearToDate = yearToDate;
-        }
-
-        public Integer getIsRecurringAdditionalSalary() {
-            return isRecurringAdditionalSalary;
-        }
-
-        public void setIsRecurringAdditionalSalary(Integer isRecurringAdditionalSalary) {
-            this.isRecurringAdditionalSalary = isRecurringAdditionalSalary;
-        }
-
-        public Integer getStatisticalComponent() {
-            return statisticalComponent;
-        }
-
-        public void setStatisticalComponent(Integer statisticalComponent) {
-            this.statisticalComponent = statisticalComponent;
-        }
-
-        public Integer getDependsOnPaymentDays() {
-            return dependsOnPaymentDays;
-        }
-
-        public void setDependsOnPaymentDays(Integer dependsOnPaymentDays) {
-            this.dependsOnPaymentDays = dependsOnPaymentDays;
-        }
-
-        public Integer getExemptedFromIncomeTax() {
-            return exemptedFromIncomeTax;
-        }
-
-        public void setExemptedFromIncomeTax(Integer exemptedFromIncomeTax) {
-            this.exemptedFromIncomeTax = exemptedFromIncomeTax;
-        }
-
-        public Integer getIsTaxApplicable() {
-            return isTaxApplicable;
-        }
-
-        public void setIsTaxApplicable(Integer isTaxApplicable) {
-            this.isTaxApplicable = isTaxApplicable;
-        }
-
-        public Integer getIsFlexibleBenefit() {
-            return isFlexibleBenefit;
-        }
-
-        public void setIsFlexibleBenefit(Integer isFlexibleBenefit) {
-            this.isFlexibleBenefit = isFlexibleBenefit;
-        }
-
-        public Integer getVariableBasedOnTaxableSalary() {
-            return variableBasedOnTaxableSalary;
-        }
-
-        public void setVariableBasedOnTaxableSalary(Integer variableBasedOnTaxableSalary) {
-            this.variableBasedOnTaxableSalary = variableBasedOnTaxableSalary;
-        }
-
-        public Integer getDoNotIncludeInTotal() {
-            return doNotIncludeInTotal;
-        }
-
-        public void setDoNotIncludeInTotal(Integer doNotIncludeInTotal) {
-            this.doNotIncludeInTotal = doNotIncludeInTotal;
-        }
-
-        public Integer getDeductFullTaxOnSelectedPayrollDate() {
-            return deductFullTaxOnSelectedPayrollDate;
-        }
-
-        public void setDeductFullTaxOnSelectedPayrollDate(Integer deductFullTaxOnSelectedPayrollDate) {
-            this.deductFullTaxOnSelectedPayrollDate = deductFullTaxOnSelectedPayrollDate;
-        }
-
-        public Integer getAmountBasedOnFormula() {
-            return amountBasedOnFormula;
-        }
-
-        public void setAmountBasedOnFormula(Integer amountBasedOnFormula) {
-            this.amountBasedOnFormula = amountBasedOnFormula;
-        }
-
-        public Double getDefaultAmount() {
-            return defaultAmount;
-        }
-
-        public void setDefaultAmount(Double defaultAmount) {
-            this.defaultAmount = defaultAmount;
-        }
-
-        public Double getAdditionalAmount() {
-            return additionalAmount;
-        }
-
-        public void setAdditionalAmount(Double additionalAmount) {
-            this.additionalAmount = additionalAmount;
-        }
-
-        public Double getTaxOnFlexibleBenefit() {
-            return taxOnFlexibleBenefit;
-        }
-
-        public void setTaxOnFlexibleBenefit(Double taxOnFlexibleBenefit) {
-            this.taxOnFlexibleBenefit = taxOnFlexibleBenefit;
-        }
-
-        public Double getTaxOnAdditionalSalary() {
-            return taxOnAdditionalSalary;
-        }
-
-        public void setTaxOnAdditionalSalary(Double taxOnAdditionalSalary) {
-            this.taxOnAdditionalSalary = taxOnAdditionalSalary;
-        }
-
-        public String getParent() {
-            return parent;
-        }
-
-        public void setParent(String parent) {
-            this.parent = parent;
-        }
-
-        public String getParentfield() {
-            return parentfield;
-        }
-
-        public void setParentfield(String parentfield) {
-            this.parentfield = parentfield;
-        }
-
-        public String getParenttype() {
-            return parenttype;
-        }
-
-        public void setParenttype(String parenttype) {
-            this.parenttype = parenttype;
-        }
-
-        public String getDoctype() {
-            return doctype;
-        }
-
-        public void setDoctype(String doctype) {
-            this.doctype = doctype;
-        }
-
-    }
-
     public static class Doc {
 
         @SerializedName("name")
@@ -1151,7 +827,332 @@ public class SalarySlipData {
 
     }
 
-    public class Docinfo {
+    public static class Deduction {
+
+        @SerializedName("name")
+        @Expose
+        private String name;
+        @SerializedName("owner")
+        @Expose
+        private String owner;
+        @SerializedName("creation")
+        @Expose
+        private String creation;
+        @SerializedName("modified")
+        @Expose
+        private String modified;
+        @SerializedName("modified_by")
+        @Expose
+        private String modifiedBy;
+        @SerializedName("docstatus")
+        @Expose
+        private Integer docstatus;
+        @SerializedName("idx")
+        @Expose
+        private Integer idx;
+        @SerializedName("salary_component")
+        @Expose
+        private String salaryComponent;
+        @SerializedName("abbr")
+        @Expose
+        private String abbr;
+        @SerializedName("amount")
+        @Expose
+        private Double amount;
+        @SerializedName("year_to_date")
+        @Expose
+        private Double yearToDate;
+        @SerializedName("is_recurring_additional_salary")
+        @Expose
+        private Integer isRecurringAdditionalSalary;
+        @SerializedName("statistical_component")
+        @Expose
+        private Integer statisticalComponent;
+        @SerializedName("depends_on_payment_days")
+        @Expose
+        private Integer dependsOnPaymentDays;
+        @SerializedName("exempted_from_income_tax")
+        @Expose
+        private Integer exemptedFromIncomeTax;
+        @SerializedName("is_tax_applicable")
+        @Expose
+        private Integer isTaxApplicable;
+        @SerializedName("is_flexible_benefit")
+        @Expose
+        private Integer isFlexibleBenefit;
+        @SerializedName("variable_based_on_taxable_salary")
+        @Expose
+        private Integer variableBasedOnTaxableSalary;
+        @SerializedName("do_not_include_in_total")
+        @Expose
+        private Integer doNotIncludeInTotal;
+        @SerializedName("deduct_full_tax_on_selected_payroll_date")
+        @Expose
+        private Integer deductFullTaxOnSelectedPayrollDate;
+        @SerializedName("amount_based_on_formula")
+        @Expose
+        private Integer amountBasedOnFormula;
+        @SerializedName("default_amount")
+        @Expose
+        private Double defaultAmount;
+        @SerializedName("additional_amount")
+        @Expose
+        private Double additionalAmount;
+        @SerializedName("tax_on_flexible_benefit")
+        @Expose
+        private Double taxOnFlexibleBenefit;
+        @SerializedName("tax_on_additional_salary")
+        @Expose
+        private Double taxOnAdditionalSalary;
+        @SerializedName("parent")
+        @Expose
+        private String parent;
+        @SerializedName("parentfield")
+        @Expose
+        private String parentfield;
+        @SerializedName("parenttype")
+        @Expose
+        private String parenttype;
+        @SerializedName("doctype")
+        @Expose
+        private String doctype;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getOwner() {
+            return owner;
+        }
+
+        public void setOwner(String owner) {
+            this.owner = owner;
+        }
+
+        public String getCreation() {
+            return creation;
+        }
+
+        public void setCreation(String creation) {
+            this.creation = creation;
+        }
+
+        public String getModified() {
+            return modified;
+        }
+
+        public void setModified(String modified) {
+            this.modified = modified;
+        }
+
+        public String getModifiedBy() {
+            return modifiedBy;
+        }
+
+        public void setModifiedBy(String modifiedBy) {
+            this.modifiedBy = modifiedBy;
+        }
+
+        public Integer getDocstatus() {
+            return docstatus;
+        }
+
+        public void setDocstatus(Integer docstatus) {
+            this.docstatus = docstatus;
+        }
+
+        public Integer getIdx() {
+            return idx;
+        }
+
+        public void setIdx(Integer idx) {
+            this.idx = idx;
+        }
+
+        public String getSalaryComponent() {
+            return salaryComponent;
+        }
+
+        public void setSalaryComponent(String salaryComponent) {
+            this.salaryComponent = salaryComponent;
+        }
+
+        public String getAbbr() {
+            return abbr;
+        }
+
+        public void setAbbr(String abbr) {
+            this.abbr = abbr;
+        }
+
+        public Double getAmount() {
+            return amount;
+        }
+
+        public void setAmount(Double amount) {
+            this.amount = amount;
+        }
+
+        public Double getYearToDate() {
+            return yearToDate;
+        }
+
+        public void setYearToDate(Double yearToDate) {
+            this.yearToDate = yearToDate;
+        }
+
+        public Integer getIsRecurringAdditionalSalary() {
+            return isRecurringAdditionalSalary;
+        }
+
+        public void setIsRecurringAdditionalSalary(Integer isRecurringAdditionalSalary) {
+            this.isRecurringAdditionalSalary = isRecurringAdditionalSalary;
+        }
+
+        public Integer getStatisticalComponent() {
+            return statisticalComponent;
+        }
+
+        public void setStatisticalComponent(Integer statisticalComponent) {
+            this.statisticalComponent = statisticalComponent;
+        }
+
+        public Integer getDependsOnPaymentDays() {
+            return dependsOnPaymentDays;
+        }
+
+        public void setDependsOnPaymentDays(Integer dependsOnPaymentDays) {
+            this.dependsOnPaymentDays = dependsOnPaymentDays;
+        }
+
+        public Integer getExemptedFromIncomeTax() {
+            return exemptedFromIncomeTax;
+        }
+
+        public void setExemptedFromIncomeTax(Integer exemptedFromIncomeTax) {
+            this.exemptedFromIncomeTax = exemptedFromIncomeTax;
+        }
+
+        public Integer getIsTaxApplicable() {
+            return isTaxApplicable;
+        }
+
+        public void setIsTaxApplicable(Integer isTaxApplicable) {
+            this.isTaxApplicable = isTaxApplicable;
+        }
+
+        public Integer getIsFlexibleBenefit() {
+            return isFlexibleBenefit;
+        }
+
+        public void setIsFlexibleBenefit(Integer isFlexibleBenefit) {
+            this.isFlexibleBenefit = isFlexibleBenefit;
+        }
+
+        public Integer getVariableBasedOnTaxableSalary() {
+            return variableBasedOnTaxableSalary;
+        }
+
+        public void setVariableBasedOnTaxableSalary(Integer variableBasedOnTaxableSalary) {
+            this.variableBasedOnTaxableSalary = variableBasedOnTaxableSalary;
+        }
+
+        public Integer getDoNotIncludeInTotal() {
+            return doNotIncludeInTotal;
+        }
+
+        public void setDoNotIncludeInTotal(Integer doNotIncludeInTotal) {
+            this.doNotIncludeInTotal = doNotIncludeInTotal;
+        }
+
+        public Integer getDeductFullTaxOnSelectedPayrollDate() {
+            return deductFullTaxOnSelectedPayrollDate;
+        }
+
+        public void setDeductFullTaxOnSelectedPayrollDate(Integer deductFullTaxOnSelectedPayrollDate) {
+            this.deductFullTaxOnSelectedPayrollDate = deductFullTaxOnSelectedPayrollDate;
+        }
+
+        public Integer getAmountBasedOnFormula() {
+            return amountBasedOnFormula;
+        }
+
+        public void setAmountBasedOnFormula(Integer amountBasedOnFormula) {
+            this.amountBasedOnFormula = amountBasedOnFormula;
+        }
+
+        public Double getDefaultAmount() {
+            return defaultAmount;
+        }
+
+        public void setDefaultAmount(Double defaultAmount) {
+            this.defaultAmount = defaultAmount;
+        }
+
+        public Double getAdditionalAmount() {
+            return additionalAmount;
+        }
+
+        public void setAdditionalAmount(Double additionalAmount) {
+            this.additionalAmount = additionalAmount;
+        }
+
+        public Double getTaxOnFlexibleBenefit() {
+            return taxOnFlexibleBenefit;
+        }
+
+        public void setTaxOnFlexibleBenefit(Double taxOnFlexibleBenefit) {
+            this.taxOnFlexibleBenefit = taxOnFlexibleBenefit;
+        }
+
+        public Double getTaxOnAdditionalSalary() {
+            return taxOnAdditionalSalary;
+        }
+
+        public void setTaxOnAdditionalSalary(Double taxOnAdditionalSalary) {
+            this.taxOnAdditionalSalary = taxOnAdditionalSalary;
+        }
+
+        public String getParent() {
+            return parent;
+        }
+
+        public void setParent(String parent) {
+            this.parent = parent;
+        }
+
+        public String getParentfield() {
+            return parentfield;
+        }
+
+        public void setParentfield(String parentfield) {
+            this.parentfield = parentfield;
+        }
+
+        public String getParenttype() {
+            return parenttype;
+        }
+
+        public void setParenttype(String parenttype) {
+            this.parenttype = parenttype;
+        }
+
+        public String getDoctype() {
+            return doctype;
+        }
+
+        public void setDoctype(String doctype) {
+            this.doctype = doctype;
+        }
+
+    }
+
+
+    public static class Docinfo {
 
         @SerializedName("user_info")
         @Expose
@@ -1945,6 +1946,7 @@ public class SalarySlipData {
         }
 
     }
+
     public static class UserInfo {
 
 
