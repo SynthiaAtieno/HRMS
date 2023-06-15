@@ -2,6 +2,7 @@ package com.example.erpnext.services;
 
 import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.models.EmployeesData;
+import com.example.erpnext.models.SalarySlipData;
 import com.example.erpnext.models.UserInfo;
 import com.example.erpnext.models.UserModel;
 
@@ -36,5 +37,5 @@ public interface ApiInterface {
 
 
     @GET("frappe.desk.form.load.getdoc?")
-    Call<ResponseBody> getSlipData();
+    Call<SalarySlipData> getSlipData(@Query("doctype") String doctype, @Query("name") String name);
 }
