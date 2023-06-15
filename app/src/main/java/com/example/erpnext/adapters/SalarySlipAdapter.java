@@ -28,13 +28,15 @@ public class SalarySlipAdapter extends RecyclerView.Adapter<SalarySlipAdapter.My
     @NonNull
     @Override
     public SalarySlipAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_pay_slip2, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.salaryslipitemearning, parent,false);
         return new SalarySlipAdapter.MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SalarySlipAdapter.MyViewHolder holder, int position) {
         SalarySlipData.Earning earningat = earningList.get(position);
+        holder.amount.setText(earningat.getAmount().toString());
+        holder.component.setText(earningat.getSalaryComponent());
     }
 
     @Override
@@ -43,10 +45,11 @@ public class SalarySlipAdapter extends RecyclerView.Adapter<SalarySlipAdapter.My
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView baseearning, houseallowance, transportallowance, medicalallowance, leaveencashment, workingdayforfisrtmonth, workingdaysforsecondmonth;
+        TextView amount, component;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            baseearning = itemView.findViewById(R.id.employee_basesalary);
+            component = itemView.findViewById(R.id.component);
+            amount = itemView.findViewById(R.id.amount);
         }
     }
 }
