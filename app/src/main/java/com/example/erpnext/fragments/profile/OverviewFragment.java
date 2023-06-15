@@ -1,6 +1,7 @@
 package com.example.erpnext.fragments.profile;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -33,6 +34,7 @@ public class OverviewFragment extends Fragment {
     TextView empId, phone, email, dob, blood, address, dateofjoining;
     UserSessionManager sessionManager;
     ProgressBar progressBar;
+    ProgressDialog progressDialog;
 
     public OverviewFragment() {
         // Required empty public constructor
@@ -65,6 +67,10 @@ public class OverviewFragment extends Fragment {
     }
 
     public void getEmployeeData() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Please wait...");
+        progressDialog.setMessage("Fetching data");
+        progressDialog.setCanceledOnTouchOutside(false);
         //progressBar.setVisibility(View.VISIBLE);
         sessionManager = new UserSessionManager(getContext());
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
@@ -72,6 +78,7 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.show();
                     EmployeesData responseModel = response.body();
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
                         EmployeesData.EmployeeDoc data = responseModel.getDocs().get(0);
@@ -86,10 +93,11 @@ public class OverviewFragment extends Fragment {
                         address.setText(data.getCurrent_address());
                        // progressBar.setVisibility(View.GONE);
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(getContext(), "Null data", Toast.LENGTH_SHORT).show();
                         //progressBar.setVisibility(View.GONE);
                     }
-
+                    progressDialog.dismiss();
                 } else {
                     if (response.errorBody() != null) {
                         try {
