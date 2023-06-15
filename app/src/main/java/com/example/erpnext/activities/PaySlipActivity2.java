@@ -68,8 +68,6 @@ public class PaySlipActivity2 extends AppCompatActivity {
         spinnerTo = findViewById(R.id.spinner_item_textto);
         spinnerYear = findViewById(R.id.spinner_item_year);
         generateAll = findViewById(R.id.generate_all);
-        //frame1 = findViewById(R.id.framemonthpayslip);
-        //  frame2 = findViewById(R.id.framesecondmonthpayslip);
         txtfirstmonth = findViewById(R.id.monthtxt);
         txtsecondmonth = findViewById(R.id.secondmonthtxt);
         grosspaydeductions = findViewById(R.id.grossdeductions);
@@ -93,6 +91,19 @@ public class PaySlipActivity2 extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 txtfirstmonth.setText(adapterView.getItemAtPosition(position).toString());
                 String month = adapterView.getItemAtPosition(position).toString();
+                spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int toPosition, long l) {
+                        String toMonth = adapterView.getItemAtPosition(toPosition).toString();
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
                 if (month.equals("January")) {
                     ApiClient.getApiClient().getSlipData("Salary Slip", name + "000001", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
                         @Override
