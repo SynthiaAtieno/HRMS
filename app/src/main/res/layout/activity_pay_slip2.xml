@@ -78,7 +78,7 @@
                 android:layout_alignParentStart="true"
                 android:background="@drawable/btn_profile"
                 android:entries="@array/months"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -93,7 +93,7 @@
                 android:layout_toEndOf="@id/spinner_item_textfrom"
                 android:background="@drawable/btn_profile"
                 android:entries="@array/months"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -106,7 +106,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/btn_profile"
                 android:entries="@array/year"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -147,65 +147,183 @@
 
         <FrameLayout
             android:id="@+id/framemonthpayslip"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="visible">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:padding="8dp"
+                android:gravity="center">
 
                 <TextView
+                    android:id="@+id/earnings_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="Earnings"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
 
                 <TextView
+                    android:id="@+id/employeebasesalarytitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:layout_below="@id/earnings_title"
+                    android:layout_alignParentStart="true"
+                    android:text="Base Slary"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/employee_basesalary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:layout_below="@id/earnings_title"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:text="1000.00"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/houseallowancetitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:layout_below="@id/employeebasesalarytitle"
+                    android:layout_marginTop="8dp"
+                    android:text="House Allowance"
+                    android:layout_alignParentStart="true"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/houseallowance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:layout_below="@id/employee_basesalary"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="20000.00"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
 
                 <TextView
+                    android:id="@+id/medicalallowancetitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:layout_below="@id/houseallowancetitle"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="8dp"
+                    android:text="Medical Allowance"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/medicalallowance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:layout_below="@id/houseallowance"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="9000.00"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
 
                 <TextView
+                    android:id="@+id/transportallowancetitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:layout_below="@+id/medicalallowancetitle"
+                    android:layout_alignParentStart="true"
+                    android:text="Transport Allowance"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/transportallowance"
+                    android:layout_below="@+id/medicalallowance"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello" />
+                    android:textColor="#000"
+                    android:text="50000.00"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/leaveencashmenttitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Leave Encashment"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@id/transportallowancetitle"
+                        android:layout_marginTop="8dp"
+                        android:textColor="#AA000000"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/leaveencashment"
+                        android:layout_below="@id/transportallowance"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="#000"
+                        android:layout_marginEnd="8dp"
+                        android:text="3000.00"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/leaveencashmenttitle"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/firstview"
+                    android:background="#46000000" />
+                    <TextView
+                        android:id="@+id/grossearningstitle"
+                        android:layout_below="@+id/firstview"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_height="wrap_content"
+                        android:text="Gross Earnings"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#AA000000"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/grossearnings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#544EE4"
+                        android:layout_marginTop="8dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/firstview"
+                        android:text="40000.00"
+                        android:layout_marginEnd="8dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/grossearningstitle"
+                    android:layout_height="2dp"
+                    android:background="#46000000" />
+
+            </RelativeLayout>
 
         </FrameLayout>
 
@@ -238,84 +356,204 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#46000000" />
+
         <FrameLayout
             android:id="@+id/framesecondmonthpayslip"
-            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/deductions_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="Deductions"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/incometaxtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/deductions_title"
+                    android:layout_alignParentStart="true"
+                    android:text="Income Tax"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/incometax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/deductions_title"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:text="1000.00"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/insurancetitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/incometaxtitle"
+                    android:layout_marginTop="8dp"
+                    android:text="Insurance"
+                    android:layout_alignParentStart="true"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/insurance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/incometax"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="20000.00"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/nssftitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/insurancetitle"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="8dp"
+                    android:text="NSSF"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/nssf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/insurance"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="9000.00"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/providendfundtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nssftitle"
+                    android:layout_alignParentStart="true"
+                    android:text="Providend Fund"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/providendfund"
+                    android:layout_below="@+id/nssf"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:text="50000.00"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/socialsecuritytitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Leave Encashment"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/providendfundtitle"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/socialsecurity"
+                    android:layout_below="@id/providendfund"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#000"
+                    android:layout_marginEnd="8dp"
+                    android:text="3000.00"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/socialsecuritytitle"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/secondview"
+                    android:background="#46000000" />
+                <TextView
+                    android:id="@+id/grossdeductionstitle"
+                    android:layout_below="@+id/secondview"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="wrap_content"
+                    android:text="Gross Deductions"
+                    android:layout_alignParentStart="true"
+                    android:textColor="#AA000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/grossdeductions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#544EE4"
+                    android:layout_marginTop="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/secondview"
+                    android:text="40000.00"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/grossdeductionstitle"
+                    android:layout_height="2dp"
+                    android:background="#46000000" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/generate_all"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hello" />
-            </LinearLayout>
-
-        </FrameLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/generate_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="Generate All"
-        android:padding="12dp"
-        android:background="@drawable/reset_btn"
-        android:layout_marginTop="16dp"
-        android:layout_alignParentEnd="true"/>
-</RelativeLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/reset_btn"
+                android:padding="12dp"
+                android:text="Generate All"
+                android:textColor="@color/white" />
+        </RelativeLayout>
 
 
     </LinearLayout>
