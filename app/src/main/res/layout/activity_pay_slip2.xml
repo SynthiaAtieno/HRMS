@@ -322,7 +322,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     >
-
                     <TextView
                         android:id="@+id/deductions_title"
                         android:layout_width="wrap_content"
@@ -333,192 +332,13 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/incometaxtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_below="@id/deductions_title"
-                        android:layout_alignParentStart="true"
-                        android:text="Income Tax"
-                        android:textColor="#AA000000"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/incometax"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/deductions_title"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="8dp"
-                        android:text="1000.00"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/insurancetitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/incometaxtitle"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="8dp"
-                        android:text="Insurance"
-                        android:textColor="#AA000000"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/insurance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/incometax"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="20000.00"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/nssftitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/insurancetitle"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="8dp"
-                        android:text="NSSF"
-                        android:textColor="#AA000000"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/nssf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/insurance"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="9000.00"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/providendfundtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/nssftitle"
-                        android:layout_alignParentStart="true"
-                        android:text="Providend Fund"
-                        android:layout_marginTop="8dp"
-                        android:textColor="#AA000000"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/providendfund"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/nssf"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="50000.00"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/socialsecuritytitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/providendfundtitle"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="8dp"
-                        android:text="Social Security Fund"
-                        android:textColor="#AA000000"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/socialsecurity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/providendfund"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="3000.00"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:id="@+id/secondview"
+                        android:id="@+id/recyclerviewdeductions"
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_below="@id/socialsecuritytitle"
-                        android:layout_marginTop="8dp"
-                        android:background="#46000000" />
-
-                    <TextView
-                        android:id="@+id/grossdeductionstitle"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/secondview"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="8dp"
-                        android:text="Gross Deductions"
-                        android:textColor="#AA000000"
-                        android:textSize="16sp" />
+                        tools:listitem="@layout/salaryslipitemdeductions"/>
 
-                    <TextView
-                        android:id="@+id/grossdeductions"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/secondview"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="40000.00"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:id="@+id/secondmontview"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_below="@id/grossdeductionstitle"
-                        android:background="#46000000" />
-
-                    <TextView
-                        android:id="@+id/totalPay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textColor="#544EE4"
-                        android:text="Total Pay :"
-                        android:layout_alignParentStart="true"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_below="@id/secondmontview"/>
-
-                    <TextView
-                        android:id="@+id/TotalPayAmount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/totalPay"
-                        android:layout_marginStart="6dp"
-                        android:textSize="18sp"
-                        android:textColor="#544EE4"
-                        android:text="200000.00 KSH"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_below="@id/secondmontview"/>
                 </RelativeLayout>
 
             </FrameLayout>
