@@ -173,7 +173,6 @@
                 android:id="@+id/linearlayoutforfirstmonth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:orientation="vertical">
 
                 <FrameLayout
