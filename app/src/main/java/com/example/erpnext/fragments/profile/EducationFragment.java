@@ -62,7 +62,6 @@ public class EducationFragment extends Fragment {
     }
 
     public void getEmployeeData() {
-        //progressBar.setVisibility(View.VISIBLE);
         sessionManager = new UserSessionManager(getContext());
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @SuppressLint("SetTextI18n")
@@ -77,7 +76,7 @@ public class EducationFragment extends Fragment {
                         for (EmployeesData.EmployeeDoc employee : employees) {
                             List<EmployeesData.EmployeeEducation> educationList = employee.getEducation();
                             List<String> qualifications = new ArrayList<>();
-                            System.out.println("educationList = " + educationList);
+                            //System.out.println("educationList = " + educationList);
                             for (EmployeesData.EmployeeEducation education : educationList) {
                                 String qualification = education.getQualification();
                                 qualifications.add(qualification);
@@ -91,7 +90,7 @@ public class EducationFragment extends Fragment {
 
                     } else {
                         Toast.makeText(getContext(), "Null data", Toast.LENGTH_SHORT).show();
-                        //progressBar.setVisibility(View.GONE);
+
                     }
 
                 } else {
