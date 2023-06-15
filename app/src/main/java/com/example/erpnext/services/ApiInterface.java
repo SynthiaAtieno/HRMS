@@ -3,7 +3,6 @@ package com.example.erpnext.services;
 import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.models.SalarySlipData;
-import com.example.erpnext.models.UserInfo;
 import com.example.erpnext.models.UserModel;
 
 import java.util.Map;
