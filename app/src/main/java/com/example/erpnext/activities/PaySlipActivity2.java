@@ -48,11 +48,6 @@ public class PaySlipActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_pay_slip2);
         toolbar = findViewById(R.id.payslip_toolbar);
         setSupportActionBar(toolbar);
-        baseearning = findViewById(R.id.employee_basesalary);
-        houseallowance = findViewById(R.id.houseallowance);
-        transportallowance = findViewById(R.id.transportallowance);
-        medicalallowance = findViewById(R.id.medicalallowance);
-        leaveencashment = findViewById(R.id.leaveencashment);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Payslip");
         sessionManager = new UserSessionManager(this);
