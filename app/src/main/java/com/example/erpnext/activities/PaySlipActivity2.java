@@ -4,6 +4,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.erpnext.CustomAdapter;
 import com.example.erpnext.R;
+import com.example.erpnext.adapters.SalarySlipAdapter;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.models.SalarySlipData;
 import com.example.erpnext.services.ApiClient;
@@ -39,8 +42,11 @@ public class PaySlipActivity2 extends AppCompatActivity {
     AppCompatButton generateAll;
     FrameLayout frame1, frame2;
     TextView txtfirstmonth, txtsecondmonth;
-    TextView baseearning, houseallowance, transportallowance, medicalallowance, leaveencashment, workingdayforfisrtmonth, workingdaysforsecondmonth;
+    TextView workingdayforfisrtmonth, workingdaysforsecondmonth, grosspayearning, grosspaydeductions, netpay;
     UserSessionManager sessionManager;
+    SalarySlipAdapter adapter;
+    RecyclerView recyclerView;
+    SalarySlipData salarySlipData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,11 @@ public class PaySlipActivity2 extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Payslip");
+        grosspayearning = findViewById(R.id.grossearnings);
+        grosspaydeductions = findViewById(R.id.grossdeductions);
+        netpay = findViewById(R.id.TotalPayAmount);
+        recyclerView = findViewById(R.id.salarysliprecycler);
+
         sessionManager = new UserSessionManager(this);
         String name = "Sal Slip/" + sessionManager.getKeyEmployeeNamingSeries() + "/";
         workingdayforfisrtmonth = findViewById(R.id.working_days);
@@ -102,13 +113,22 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                     double workingdays = data.getTotalWorkingDays();
                                     int working = (int) workingdays;
                                     workingdayforfisrtmonth.setText(Integer.toString(working));
-                                    //for (int i = 0; i <= 10; i++) {
-                                        List<SalarySlipData.Earning> earnings = data.getEarnings();
-                                    System.out.println("earnings = " + earnings);
-                                      /*  if (earnings.().equals("BS")) {
-                                            baseearning.setText(kenyanCurrencyFormat.format(earnings.getAmount()));
-                                        } else if (earnings.getAbbr().equals("HTA")) {
-                                            houseallowance.setText(kenyanCurrencyFormat.format(earnings.getAmount()));*/
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+
+//                                    //for (int i = 0; i <= 10; i++) {
+//                                    System.out.println("earnings = " + earnings);
+//                                      /*  if (earnings.().equals("BS")) {
+//                                            baseearning.setText(kenyanCurrencyFormat.format(earnings.getAmount()));
+//                                        } else if (earnings.getAbbr().equals("HTA")) {
+//                                            houseallowance.setText(kenyanCurrencyFormat.format(earnings.getAmount()));*/
 
 
                                 } else {
