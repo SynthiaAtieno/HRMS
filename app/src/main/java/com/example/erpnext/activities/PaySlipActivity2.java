@@ -66,7 +66,6 @@ public class PaySlipActivity2 extends AppCompatActivity {
         spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                //Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
                 txtsecondmonth.setText(adapterView.getItemAtPosition(position).toString());
 
             }
@@ -80,7 +79,6 @@ public class PaySlipActivity2 extends AppCompatActivity {
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                //Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
 
             }
 
