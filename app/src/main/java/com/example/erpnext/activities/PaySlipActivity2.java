@@ -14,10 +14,17 @@ import android.widget.Toast;
 
 import com.example.erpnext.CustomAdapter;
 import com.example.erpnext.R;
+import com.example.erpnext.models.SalarySlipData;
+import com.example.erpnext.services.ApiClient;
+import com.example.erpnext.session.UserSessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PaySlipActivity2 extends AppCompatActivity {
     Toolbar toolbar;
@@ -26,6 +33,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
     FrameLayout frame1, frame2;
     TextView txtfirstmonth, txtsecondmonth;
     TextView baseearning, houseallowance, transportallowance, workingdayforfisrtmonth, workingdaysforsecondmonth;
+    UserSessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Payslip");
+        sessionManager = new UserSessionManager(this);
 
         spinnerFrom = findViewById(R.id.spinner_item_textfrom);
         spinnerTo = findViewById(R.id.spinner_item_textto);
@@ -55,8 +64,67 @@ public class PaySlipActivity2 extends AppCompatActivity {
         spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                //Toast.makeText(PaySlipActivity2.this, adapterView.getItemAtPosition(position)+" is selected", Toast.LENGTH_SHORT).show();
                 txtfirstmonth.setText(adapterView.getItemAtPosition(position).toString());
+                String name = "Sal Slip/"+sessionManager.getKeyEmployeeNamingSeries()+"/";
+                String month = adapterView.getItemAtPosition(position).toString();
+              if (month.equals("January")){
+
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+              }else if (month.equals("February")){
+
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+
+              }else if (month.equals("March")){
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+
+              }else if (month.equals("April")){
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+
+              }
+            else if (month.equals("May")){
+                  ApiClient.getApiClient().getSlipData("Salary Slip", name+"00001").enqueue(new Callback<SalarySlipData>() {
+                      @Override
+                      public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+
+                      }
+
+                      @Override
+                      public void onFailure(Call<SalarySlipData> call, Throwable t) {
+
+                      }
+                  });
+            }else if (month.equals("June")){
+                  ApiClient.getApiClient().getSlipData("Salary Slip", name+"000002").enqueue(new Callback<SalarySlipData>() {
+                      @Override
+                      public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+
+                      }
+
+                      @Override
+                      public void onFailure(Call<SalarySlipData> call, Throwable t) {
+
+                      }
+                  });
+
+            }else if (month.equals("July")){
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+            }
+            else if (month.equals("August")){
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+
+            }else if (month.equals("September")){
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+
+            }else if (month.equals("October")){
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+
+            }
+            else if (month.equals("December")){
+                  Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+
+              }else {
+                  Toast.makeText(PaySlipActivity2.this, "Please select a month", Toast.LENGTH_SHORT).show();
+              }
             }
 
             @Override
