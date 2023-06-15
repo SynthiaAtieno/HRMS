@@ -173,15 +173,25 @@
                 android:id="@+id/framemonthpayslip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     >
-
+                    <TextView
+                        android:id="@+id/earnings_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginBottom="8dp"
+                        android:text="Earnings"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@id/earnings_title"
                     android:id="@+id/salarysliprecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -236,6 +246,7 @@
                         android:text="Total Pay :"
                         android:layout_alignParentStart="true"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         android:layout_marginTop="8dp"
                         android:layout_below="@id/firstmonthview"/>
 
@@ -248,6 +259,7 @@
                         android:textSize="18sp"
                         android:textColor="#544EE4"
                         android:text="200000.00 KSH"
+                        android:visibility="gone"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         android:layout_below="@id/firstmonthview"/>
@@ -268,10 +280,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:text="January"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -296,11 +310,6 @@
                 </LinearLayout>
 
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#33000000" />
 
             <FrameLayout
                 android:id="@+id/framesecondmonthpayslip"
