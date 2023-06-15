@@ -25,6 +25,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
     AppCompatButton generateAll;
     FrameLayout frame1, frame2;
     TextView txtfirstmonth, txtsecondmonth;
+    TextView baseearning, houseallowance, transportallowance, workingdayforfisrtmonth, workingdaysforsecondmonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
