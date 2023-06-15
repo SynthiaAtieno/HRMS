@@ -68,7 +68,8 @@ public class PaySlipActivity2 extends AppCompatActivity {
         spinnerTo = findViewById(R.id.spinner_item_textto);
         spinnerYear = findViewById(R.id.spinner_item_year);
         generateAll = findViewById(R.id.generate_all);
-        txtfirstmonth = findViewById(R.id.tomonthtxt);
+        txtfirstmonth = findViewById(R.id.monthtxt);
+        txtsecondmonth = findViewById(R.id.tomonthtxt);
         workingdaystomonth = findViewById(R.id.working_dayssecondmonth);
         grosspaydeductions = findViewById(R.id.grossdeductions);
         grosspayearning = findViewById(R.id.grossearnings);
@@ -91,19 +92,6 @@ public class PaySlipActivity2 extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 txtfirstmonth.setText(adapterView.getItemAtPosition(position).toString());
                 String month = adapterView.getItemAtPosition(position).toString();
-              /*  spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int toPosition, long l) {
-                        String toMonth = adapterView.getItemAtPosition(toPosition).toString();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });*/
-
                 if (month.equals("January")) {
                     ApiClient.getApiClient().getSlipData("Salary Slip", name + "000001", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
                         @Override
@@ -591,7 +579,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                     recyclerView.setAdapter(adapter);
                                     earnings.addAll(data.getEarnings());
                                     adapter.notifyDataSetChanged();
-
+                                    generateAll.setVisibility(View.VISIBLE);
                                     recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
                                     List<SalarySlipData.Deduction> deductions = new ArrayList<>();
                                     deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
@@ -600,6 +588,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                     deductionAdapter.notifyDataSetChanged();
 
                                 } else {
+                                    generateAll.setVisibility(View.GONE);
                                     workingdayforfisrtmonth.setText("0");
                                     linearLayoutforfirstmonth.setVisibility(View.GONE);
                                     Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
@@ -856,21 +845,88 @@ public class PaySlipActivity2 extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 txtsecondmonth.setText(adapterView.getItemAtPosition(position).toString());
                 String month = adapterView.getItemAtPosition(position).toString();
-                if (month.equals("January")) {
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
-                    //   workingdaysforsecondmonth.setText("0");
-                } else if (month.equals("February")) {
+              /*  spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int toPosition, long l) {
+                        String toMonth = adapterView.getItemAtPosition(toPosition).toString();
 
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
-                    //  workingdaysforsecondmonth.setText("0");
-                } else if (month.equals("March")) {
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
-                    //workingdaysforsecondmonth.setText("0");
-                } else if (month.equals("April")) {
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
-                    // workingdaysforsecondmonth.setText("0");
-                } else if (month.equals("May")) {
-                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "00001", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });*/
+
+                if (month.equals("January")) {
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "000001", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    generateAll.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+                            Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    //Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                    //workingdayforfisrtmonth.setText("0");
+                } else if (month.equals("February")) {
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "000002", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
                         @Override
                         public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
                             if (response.isSuccessful()) {
@@ -879,10 +935,231 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                     SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
                                     double workingdays = data.getTotalWorkingDays();
                                     int working = (int) workingdays;
-                                    //workingdaysforsecondmonth.setText(Integer.toString(working));
-                                    SalarySlipData.Earning earnings = data.getEarnings().get(0);
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
 
                                 } else {
+                                    generateAll.setVisibility(View.GONE);
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+                            Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    //Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                    //workingdayforfisrtmonth.setText("0");
+                } else if (month.equals("March")) {
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "000003", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
+
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    generateAll.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+                            Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    //Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                    //workingdayforfisrtmonth.setText("0");
+                } else if (month.equals("April")) {
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "000004", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
+
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    generateAll.setVisibility(View.GONE);
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+                            Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    // Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                    // workingdayforfisrtmonth.setText("0");
+                } else if (month.equals("May")) {
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "00001", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
+
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    generateAll.setVisibility(View.GONE);
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
                                     Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
@@ -925,8 +1202,94 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                     SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
                                     double workingdays = data.getTotalWorkingDays();
                                     int working = (int) workingdays;
-                                    //workingdaysforsecondmonth.setText(Integer.toString(working));
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
                                 } else {
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    generateAll.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+
+                        }
+                    });
+
+                } else if (month.equals("July")) {
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "00003", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
+
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    generateAll.setVisibility(View.GONE);
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
                                     Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
@@ -957,23 +1320,282 @@ public class PaySlipActivity2 extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<SalarySlipData> call, Throwable t) {
                             Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    //workingdayforfisrtmonth.setText("0");
+                    //Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                } else if (month.equals("August")) {
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "00004", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
 
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    generateAll.setVisibility(View.GONE);
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+                            Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    //workingdayforfisrtmonth.setText("0");
+                    //Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+
+                } else if (month.equals("September")) {
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "00005", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
+
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    generateAll.setVisibility(View.GONE);
+                                    workingdaystomonth.setText("0");
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+                            Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
                         }
                     });
 
-                } else if (month.equals("July")) {
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
-                } else if (month.equals("August")) {
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
-
-                } else if (month.equals("September")) {
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
 
                 } else if (month.equals("October")) {
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "00006", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
+
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    generateAll.setVisibility(View.GONE);
+                                    workingdaystomonth.setText(0);
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+                            Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    //Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
 
                 } else if (month.equals("December")) {
-                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                    ApiClient.getApiClient().getSlipData("Salary Slip", name + "00007", sessionManager.getUserId()).enqueue(new Callback<SalarySlipData>() {
+                        @Override
+                        public void onResponse(Call<SalarySlipData> call, Response<SalarySlipData> response) {
+                            if (response.isSuccessful()) {
+                                SalarySlipData salarySlipData = response.body();
+                                if (salarySlipData != null && salarySlipData.getDocs() != null && !salarySlipData.getDocs().isEmpty()) {
+
+                                    SalarySlipData.Doc data = salarySlipData.getDocs().get(0);
+                                    double workingdays = data.getTotalWorkingDays();
+                                    int working = (int) workingdays;
+                                    workingdaystomonth.setText(Integer.toString(working));
+                                    grosspayearning.setText(kenyanCurrencyFormat.format(data.getGrossPay()));
+                                    grosspaydeductions.setText(kenyanCurrencyFormat.format(data.getTotalDeduction()));
+                                    netpay.setText(kenyanCurrencyFormat.format(data.getRoundedTotal()));
+                                    List<SalarySlipData.Earning> earnings = new ArrayList<>();//data.getEarnings();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    adapter = new SalarySlipAdapter(earnings, PaySlipActivity2.this);
+                                    recyclerView.setAdapter(adapter);
+                                    earnings.addAll(data.getEarnings());
+                                    adapter.notifyDataSetChanged();
+                                    generateAll.setVisibility(View.VISIBLE);
+                                    recyclerdeduction.setLayoutManager(new LinearLayoutManager(PaySlipActivity2.this));
+                                    List<SalarySlipData.Deduction> deductions = new ArrayList<>();
+                                    deductionAdapter = new SalarySlipDeductionAdapter(deductions, PaySlipActivity2.this);
+                                    recyclerdeduction.setAdapter(deductionAdapter);
+                                    deductions.addAll(data.getDeductions());
+                                    deductionAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    generateAll.setVisibility(View.GONE);
+                                    workingdaystomonth.setText(0);
+                                    linearLayoutforfirstmonth.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    try {
+                                        String errorResponseJson = response.errorBody().string();
+                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                        builder.setTitle("Error Occurred");
+                                        builder.setMessage(errorResponse.getExcType());
+
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        // progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SalarySlipData> call, Throwable t) {
+                            Toast.makeText(PaySlipActivity2.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    // Toast.makeText(PaySlipActivity2.this, "No salary slip for the specified month yet", Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(PaySlipActivity2.this, "Please select a month", Toast.LENGTH_SHORT).show();
