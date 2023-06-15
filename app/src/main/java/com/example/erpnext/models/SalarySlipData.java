@@ -1954,7 +1954,5 @@ public class SalarySlipData {
 
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements  {
-    }
 }
 
