@@ -36,5 +36,5 @@ public interface ApiInterface {
 
 
     @GET("frappe.desk.form.load.getdoc?")
-    Call<SalarySlipData> getSlipData(@Query("doctype") String doctype, @Query("name") String name);
+    Call<SalarySlipData> getSlipData(@Query("doctype") String doctype, @Query("name") String name, @Query("sid") String sid);
 }
