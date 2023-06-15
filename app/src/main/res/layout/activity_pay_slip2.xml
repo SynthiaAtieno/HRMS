@@ -385,7 +385,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="January"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -424,7 +423,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/reset_btn"
                     android:padding="12dp"
