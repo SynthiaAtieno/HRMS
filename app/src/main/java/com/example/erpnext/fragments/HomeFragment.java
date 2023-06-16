@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
     UserSessionManager sessionManager ;
     TextView greting, first_name,txviewslip;
 
+    LinearLayout payslip, claims, leave, attendance;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment {
         first_name = view.findViewById(R.id.firstname);
         greting = view.findViewById(R.id.greetings);
         greting.setText(greeting);
+        payslip  = view.findViewById(R.id.payslipview);
         txviewslip = view.findViewById(R.id.textViewslip);
 
         sessionManager = new UserSessionManager(getContext());
@@ -59,7 +62,7 @@ public class HomeFragment extends Fragment {
             first_name.setText(sessionManager.getUserFirstName().toUpperCase());
         }
 
-        txviewslip.setOnClickListener(v ->
+        payslip.setOnClickListener(v ->
                 startActivity(new Intent(getContext(), PaySlipActivity2.class)));
         return view;
     }
