@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.Greetings;
+import com.example.erpnext.LeaveReportActivity;
 import com.example.erpnext.R;
 import com.example.erpnext.activities.PaySlipActivity2;
 import com.example.erpnext.models.UserInfo;
@@ -52,7 +53,15 @@ public class HomeFragment extends Fragment {
         greting = view.findViewById(R.id.greetings);
         greting.setText(greeting);
         payslip  = view.findViewById(R.id.payslipview);
+        leave = view.findViewById(R.id.leaveview);
         txviewslip = view.findViewById(R.id.textViewslip);
+
+        leave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(requireContext(), LeaveReportActivity.class));
+            }
+        });
 
         sessionManager = new UserSessionManager(getContext());
         if (sessionManager.getUserFirstName()== null){
