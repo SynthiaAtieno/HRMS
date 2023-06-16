@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="6dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape"
+        android:padding="8dp"
+
+        >
+
+
+    <LinearLayout
+        android:layout_marginEnd="18dp"
+        android:id="@+id/firstlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textColor="#4F000000"
+            android:layout_marginBottom="6dp"
+            android:text="Duration"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textColor="#8A000000"
+            android:text="Type"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textColor="#75000000"
+            android:text="No. of days"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textColor="#6E000000"
+            android:text="Applied On"/>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_marginStart="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/firstlayout"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="6dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="#000"
+                    android:text="10 Nov 2022"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="#000"
+                    android:text=" To "/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="#000"
+                    android:text="13 Nov 2022"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_marginBottom="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:text="Graduation Leave"/>
+            <TextView
+                android:layout_marginBottom="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:text="03"/>
+            <TextView
+                android:layout_marginBottom="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:text="04 Nov 2022"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/leaveaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="91dp"
+            android:text="Action" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toLeftOf="@id/leaveaction"
+            android:src="@drawable/accept"
+            android:layout_alignParentBottom="true"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toLeftOf="@id/leaveaction"
+            android:src="@drawable/ic_baseline_cancel_24"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
