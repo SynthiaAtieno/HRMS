@@ -17,6 +17,7 @@
 
 
     <ScrollView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -54,67 +55,31 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/from"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/month"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="60dp"
-                    android:text="From"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/to"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/month"
-                    android:layout_toEndOf="@id/from"
-                    android:text="To"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
                 <Spinner
                     android:id="@+id/spinner_item_textfrom"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/from"
+                    android:layout_below="@+id/year"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="6dp"
-                    android:background="@drawable/btn_profile"
+                    android:background="@drawable/custom_spinner_background"
                     android:entries="@array/months"
                     android:padding="6dp"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/spinner_item_textto"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/from"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginEnd="6dp"
-                    android:layout_toEndOf="@id/spinner_item_textfrom"
-                    android:background="@drawable/btn_profile"
-                    android:entries="@array/months"
-                    android:padding="6dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+
 
                 <Spinner
                     android:id="@+id/spinner_item_year"
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/from"
+                    android:layout_below="@+id/year"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="6dp"
-                    android:background="@drawable/btn_profile"
                     android:entries="@array/year"
+                    android:background="@drawable/custom_spinner_background"
                     android:padding="6dp"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
@@ -123,6 +88,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/wrkingdaysheading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -164,6 +130,7 @@
             </RelativeLayout>
 
             <View
+                android:id="@+id/firstviewforpayslip"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="6dp"
@@ -182,6 +149,7 @@
                     android:visibility="visible">
 
                     <RelativeLayout
+                        android:id="@+id/earningslayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center">
@@ -244,32 +212,8 @@
                             android:layout_marginTop="8dp"
                             android:background="#46000000" />
 
-                        <TextView
-                            android:id="@+id/totalPayfirstmonth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/firstmonthview"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginTop="8dp"
-                            android:text="Total Pay :"
-                            android:textColor="#544EE4"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
 
-                        <TextView
-                            android:id="@+id/TotalPayAmountFirstMonth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/firstmonthview"
-                            android:layout_marginStart="6dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_toEndOf="@id/totalPayfirstmonth"
-                            android:text="200000.00 KSH"
-                            android:textColor="#544EE4"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
+
 
                     </RelativeLayout>
 
@@ -282,6 +226,7 @@
                     android:visibility="visible">
 
                     <RelativeLayout
+                        android:id="@+id/deductionslayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center">
@@ -352,9 +297,9 @@
                             android:layout_alignParentStart="true"
                             android:layout_marginTop="8dp"
                             android:text="Total Pay"
-                            android:textStyle="bold"
                             android:textColor="#AA000000"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/netPay"
@@ -378,7 +323,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tomonthtxt"
@@ -423,15 +369,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:visibility="visible"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/reset_btn"
                     android:padding="12dp"
                     android:text="Generate All"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
             </RelativeLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:text="You have entered a gross pay of june"
+        android:textAlignment="center"/>
+
+
+
+
 </LinearLayout>
