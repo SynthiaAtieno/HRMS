@@ -47,7 +47,6 @@ public class EducationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_education, container, false);
         recyclerView = view.findViewById(R.id.educationrecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
     }
 
@@ -69,6 +68,7 @@ public class EducationFragment extends Fragment {
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
 
                         EmployeesData.EmployeeDoc employees = responseModel.getDocs().get(0);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         List<EmployeesData.EmployeeEducation> educationList = new ArrayList<>();
                         adapter = new EmployeEducationAdapter(educationList, getContext());
 
