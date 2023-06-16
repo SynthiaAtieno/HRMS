@@ -11,5 +11,4 @@
         android:textSize="18sp"
         android:text="Qualification"
         android:textColor="@color/black"/>
-
 </LinearLayout>
