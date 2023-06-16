@@ -5,10 +5,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
-import com.example.erpnext.adapters.EmployeeEducationAdapter;
+import com.example.erpnext.adapters.EmployeEducationAdapter;
 import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.services.ApiClient;
@@ -35,11 +35,8 @@ import retrofit2.Response;
 public class EducationFragment extends Fragment {
 
     UserSessionManager sessionManager;
-    TextView qualificationstxt;
-
     private RecyclerView recyclerView;
-    private EmployeeEducationAdapter adapter;
-    private List<EmployeesData.EmployeeDoc> employees;
+    EmployeEducationAdapter adapter;
 
     public EducationFragment() {
         // Required empty public constructor
@@ -55,9 +52,8 @@ public class EducationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_education, container, false);
-        qualificationstxt = view.findViewById(R.id.qualifications);
+        recyclerView = view.findViewById(R.id.recyclerviewdeductions);
         return view;
     }
 
@@ -71,9 +67,15 @@ public class EducationFragment extends Fragment {
                     EmployeesData responseModel = response.body();
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
 
-                        List<EmployeesData.EmployeeDoc> employees = responseModel.getDocs();
-
-                        for (EmployeesData.EmployeeDoc employee : employees) {
+                        EmployeesData.EmployeeDoc employees = responseModel.getDocs().get(0);
+                        //EmployeesData.EmployeeEducation education = responseModel.getDocs();
+                        List<EmployeesData.EmployeeEducation> educationList = new ArrayList<>();
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        adapter = new EmployeEducationAdapter(educationList, getContext());
+                        educationList.addAll(employees.getEducation());
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                 /*       for (EmployeesData.EmployeeDoc employee : employees) {
                             List<EmployeesData.EmployeeEducation> educationList = employee.getEducation();
                             List<String> qualifications = new ArrayList<>();
                             //System.out.println("educationList = " + educationList);
@@ -85,9 +87,8 @@ public class EducationFragment extends Fragment {
                             String qualificationsText = TextUtils.join("\n\n", qualifications);
 
                             // Set the text in the TextView
-                            qualificationstxt.setText(qualificationsText);
                         }
-
+*/
                     } else {
                         Toast.makeText(getContext(), "Null data", Toast.LENGTH_SHORT).show();
 
