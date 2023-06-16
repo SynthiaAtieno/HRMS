@@ -8,12 +8,10 @@
     android:layout_gravity="center"
     tools:context=".fragments.profile.EducationFragment">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/qualifications"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/employee_education_layout"
+        android:id="@+id/educationrecycler"/>
 
 </LinearLayout>
