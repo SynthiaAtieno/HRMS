@@ -35,7 +35,9 @@ import retrofit2.Response;
 public class EducationFragment extends Fragment {
 
     UserSessionManager sessionManager;
-    RecyclerView recyclerView;
+    RecyclerView recyclerViewEducation;
+    LinearLayoutManager linearLayoutManager;
+    List<EmployeesData.EmployeeEducation> educationList = new ArrayList<>();
     EmployeEducationAdapter adapter;
 
     public EducationFragment() {
@@ -46,7 +48,11 @@ public class EducationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_education, container, false);
-        recyclerView = view.findViewById(R.id.educationrecycler);
+        recyclerViewEducation = view.findViewById(R.id.educationrecycler);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerViewEducation.setLayoutManager(linearLayoutManager);
+        adapter = new EmployeEducationAdapter(educationList, getContext());
+        recyclerViewEducation.setAdapter(adapter);
         return view;
     }
 
@@ -58,23 +64,18 @@ public class EducationFragment extends Fragment {
 
 
     public void getEmployeeData() {
-        sessionManager = new UserSessionManager(getContext());
+        sessionManager = new UserSessionManager(requireContext());
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
                 if (response.isSuccessful()) {
-                    EmployeesData responseModel = response.body();
-                    if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
-
-                        EmployeesData.EmployeeDoc employees = responseModel.getDocs().get(0);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        List<EmployeesData.EmployeeEducation> educationList = new ArrayList<>();
-                        adapter = new EmployeEducationAdapter(educationList, getContext());
-
-                        educationList.addAll(employees.getEducation());
-                        recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                    EmployeesData employeesData = response.body();
+                    if (employeesData != null && employeesData.getDocs() != null && !employeesData.getDocs().isEmpty()) {
+                        EmployeesData.EmployeeDoc employees = employeesData.getDocs().get(0);
+                        if (!employees.getEducation().isEmpty()){
+                            educationList.addAll(employees.getEducation());
+                            adapter.notifyDataSetChanged();
                  /*       for (EmployeesData.EmployeeDoc employee : employees) {
                             List<EmployeesData.EmployeeEducation> educationList = employee.getEducation();
                             List<String> qualifications = new ArrayList<>();
@@ -89,6 +90,21 @@ public class EducationFragment extends Fragment {
                             // Set the text in the TextView
                         }
 */
+                        }else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                            builder.setTitle("No Data");
+                            builder.setMessage("Your education details has not been updated");
+
+                            // Set a positive button and its click listener
+                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                            // Create and show the alert dialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            //progressBar.setVisibility(View.GONE);
+                            //Toast.makeText(requireContext(), "Your education details has not been added yet", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
                         Toast.makeText(getContext(), "Null data", Toast.LENGTH_SHORT).show();
 
@@ -100,7 +116,7 @@ public class EducationFragment extends Fragment {
                             String errorResponseJson = response.errorBody().string();
                             PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                             builder.setTitle("Error Occurred");
                             builder.setMessage(errorResponse.getExcType());
 
