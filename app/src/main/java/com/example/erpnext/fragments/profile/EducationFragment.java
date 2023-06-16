@@ -35,13 +35,21 @@ import retrofit2.Response;
 public class EducationFragment extends Fragment {
 
     UserSessionManager sessionManager;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
     EmployeEducationAdapter adapter;
 
     public EducationFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_education, container, false);
+        recyclerView = view.findViewById(R.id.educationrecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        return view;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,13 +57,6 @@ public class EducationFragment extends Fragment {
         getEmployeeData();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_education, container, false);
-        recyclerView = view.findViewById(R.id.recyclerviewdeductions);
-        return view;
-    }
 
     public void getEmployeeData() {
         sessionManager = new UserSessionManager(getContext());
@@ -68,10 +69,9 @@ public class EducationFragment extends Fragment {
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
 
                         EmployeesData.EmployeeDoc employees = responseModel.getDocs().get(0);
-                        //EmployeesData.EmployeeEducation education = responseModel.getDocs();
                         List<EmployeesData.EmployeeEducation> educationList = new ArrayList<>();
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         adapter = new EmployeEducationAdapter(educationList, getContext());
+
                         educationList.addAll(employees.getEducation());
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
