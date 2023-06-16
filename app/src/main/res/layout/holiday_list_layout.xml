@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="6dp"
+    >
 
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/holidayname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Diwali Holiday"
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_below="@id/holidayname"
+            android:id="@+id/holiday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Holiday"
+            android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/holidaytime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="30min"
+         />
+</RelativeLayout>
