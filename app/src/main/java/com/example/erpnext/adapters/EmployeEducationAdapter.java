@@ -15,30 +15,30 @@ import com.example.erpnext.models.EmployeesData;
 import java.util.List;
 
 public class EmployeEducationAdapter extends RecyclerView.Adapter<EmployeEducationAdapter.MyViewHolder> {
-    List<EmployeesData.EmployeeEducation> employeeEducation;
+    List<EmployeesData.EmployeeEducation> employeeEducationList;
     Context context;
 
-    public EmployeEducationAdapter(List<EmployeesData.EmployeeEducation> employeeEducation, Context context) {
-        this.employeeEducation = employeeEducation;
+    public EmployeEducationAdapter(List<EmployeesData.EmployeeEducation> employeeEducationList, Context context) {
+        this.employeeEducationList = employeeEducationList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public EmployeEducationAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.employee_education_layout, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EmployeEducationAdapter.MyViewHolder holder, int position) {
-        EmployeesData.EmployeeEducation education = employeeEducation.get(position);
-        holder.qualification.setText(education.getQualification());
+        EmployeesData.EmployeeEducation employeeEducation = employeeEducationList.get(position);
+        holder.qualification.setText(employeeEducation.getQualification());
     }
 
     @Override
     public int getItemCount() {
-        return employeeEducation.size();
+        return employeeEducationList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
