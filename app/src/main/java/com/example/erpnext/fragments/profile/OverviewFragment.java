@@ -39,16 +39,6 @@ public class OverviewFragment extends Fragment {
     public OverviewFragment() {
         // Required empty public constructor
     }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //progressBar.setVisibility(View.VISIBLE);
-        getEmployeeData();
-        //progressBar.setVisibility(View.GONE);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,6 +55,17 @@ public class OverviewFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressbar);
         return view;
     }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //progressBar.setVisibility(View.VISIBLE);
+        getEmployeeData();
+        //progressBar.setVisibility(View.GONE);
+    }
+
+
 
     public void getEmployeeData() {
         progressDialog = new ProgressDialog(getContext());
