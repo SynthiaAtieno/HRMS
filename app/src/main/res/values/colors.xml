@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#928FED</color>
     <color name="inactive">#45928FED</color>
+    <color name="orange">#FFA500</color>
 </resources>
