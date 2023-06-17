@@ -42,7 +42,7 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
             String formateddate = dateFormat.format(date);
             holder.holidaydate.setText(formateddate);
         }*/
-           // holder.holidaydate.setText(holiday.getHolidayDate());
+            holder.holidaydate.setText(holiday.getHolidayDate());
 
 
         holder.holidayname.setText(holiday.getDescription());
