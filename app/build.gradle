@@ -13,7 +13,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
+        //maven { url 'https://jitpack.io' }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
