@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
@@ -27,6 +29,7 @@ public class HolidayActivity extends AppCompatActivity {
     HolidayListAdapter holidayListAdapter;
     List<HolidayList.Holiday> holidayLists;
     UserSessionManager sessionManager;
+    ProgressBar progressBar;
 
     Toolbar toolbar;
     @Override
@@ -44,9 +47,11 @@ public class HolidayActivity extends AppCompatActivity {
         holidayrecycler.setLayoutManager(new LinearLayoutManager(this));
         holidayListAdapter = new HolidayListAdapter(holidayLists, this);
 
+        progressBar = findViewById(R.id.progressbarholiday);
         getHolidays();
     }
     public void getHolidays(){
+        progressBar.setVisibility(View.VISIBLE);
         String doctype = "Holiday List";
         String holidayname = "2023-Holiday-List";
         ApiClient.getApiClient().getHolidayList(doctype, holidayname, sessionManager.getUserId()).enqueue(new Callback<HolidayList>() {
@@ -59,20 +64,26 @@ public class HolidayActivity extends AppCompatActivity {
 
                         holidayrecycler.setAdapter(holidayListAdapter);
                         holidayLists.addAll(holiday.getHolidays());
+                        progressBar.setVisibility(View.GONE);
                         holidayListAdapter.notifyDataSetChanged();
                     }
                     else {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(HolidayActivity.this, "No Data in Holiday List", Toast.LENGTH_SHORT).show();
                     }
 
                 }
                 else {
+                    progressBar.setVisibility(View.GONE);
+
                     Toast.makeText(HolidayActivity.this, "Response not successfully", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<HolidayList> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+
                 Toast.makeText(HolidayActivity.this, "error"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
