@@ -118,9 +118,17 @@ public class Login extends AppCompatActivity {
         credentials.put("usr", username);
         credentials.put("pwd", password);
         if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            alertDialog.setTitle("Network Error");
-            alertDialog.setMessage("You have no internet connection");
-            alertDialog.show();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+            builder.setTitle("Network Error");
+            builder.setMessage("You have no internet connection"+"\n"+"Please connect and try again");
+
+            // Set a positive button and its click listener
+            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+
+            // Create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
         } else {
             progressDialog.show();
             ApiClient.getApiClient().login(credentials, contentType, accept, authToken).enqueue(new Callback<UserModel>() {
@@ -180,7 +188,7 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<UserModel> call, Throwable t) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                    builder.setTitle("Error Occurred");
+                    builder.setTitle("Login Error");
                     if (t.getMessage().equals("timeout")) {
                         builder.setMessage("Kindly check your internet connection then try again");
 
