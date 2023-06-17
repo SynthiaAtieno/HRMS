@@ -1,42 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="18dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
-    android:padding="6dp">
+    app:cardElevation="18dp">
+
     <RelativeLayout
+        android:padding="14dp"
+        android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
         >
-
-        <TextView
-            android:id="@+id/holidayname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Diwali Holiday"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="#000" />
-
-        <TextView
-            android:layout_below="@id/holidayname"
-            android:id="@+id/holiday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Holiday"
-            android:textColor="#000" />
-
+<de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:src="@drawable/holiday_icon"
+    android:layout_alignParentStart="true"
+    android:layout_marginEnd="12dp"
+    android:id="@+id/circular_image_view"
+    />
     <TextView
-        android:id="@+id/holidaydate"
+        android:id="@+id/holidayname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-         />
+        android:text="Diwali Holiday"
+        android:layout_toEndOf="@id/circular_image_view"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:id="@+id/holiday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/holidayname"
+        android:text="Holiday"
+        android:textColor="#000" />
+
+    <TextView
+        android:layout_below="@id/holidayname"
+        android:id="@+id/holidaydate"
+        android:layout_toEndOf="@id/circular_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+    <View
+        android:id="@+id/firstviewforpayslip"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/relative"
+        android:layout_marginTop="6dp"
+        android:background="#20000000" />
+</RelativeLayout>
+
