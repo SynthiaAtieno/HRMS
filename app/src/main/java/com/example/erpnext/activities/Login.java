@@ -67,15 +67,6 @@ public class Login extends AppCompatActivity {
         usernametxt.getEditText().addTextChangedListener(loginTextWatcher);
         passwordtxt.getEditText().addTextChangedListener(loginTextWatcher);
 
-
-        String greeting;
-        if (hourOfDay >= 0 && hourOfDay < 12) {
-            greeting = "Good morning!";
-        } else if (hourOfDay >= 12 && hourOfDay < 18) {
-            greeting = "Good afternoon!";
-        } else {
-            greeting = "Good evening!";
-        }
         linearLayout = findViewById(R.id.linearlayout);
         progressDialog = new ProgressDialog(this);
         SetCookieInterceptor interceptor = new SetCookieInterceptor();
