@@ -2,8 +2,10 @@ package com.example.erpnext.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -19,6 +21,7 @@ import com.example.erpnext.Greetings;
 import com.example.erpnext.LeaveReportActivity;
 import com.example.erpnext.R;
 import com.example.erpnext.activities.PaySlipActivity2;
+import com.example.erpnext.activities.drawerActivities.HolidayActivity;
 import com.example.erpnext.models.UserInfo;
 import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.activities.Login;
@@ -31,7 +34,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     UserSessionManager sessionManager ;
-    TextView greting, first_name,txviewslip;
+    TextView greting, first_name,txviewslip, viewallholidays;
 
     LinearLayout payslip, claims, leave, attendance;
     public HomeFragment() {
@@ -54,6 +57,7 @@ public class HomeFragment extends Fragment {
         greting.setText(greeting);
         payslip  = view.findViewById(R.id.payslipview);
         leave = view.findViewById(R.id.leaveview);
+        viewallholidays = view.findViewById(R.id.viewallholidays);
         txviewslip = view.findViewById(R.id.textViewslip);
 
         leave.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +67,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        viewallholidays.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(requireContext(), HolidayActivity.class));
+            }
+        });
+
         sessionManager = new UserSessionManager(getContext());
         if (sessionManager.getUserFirstName()== null){
-            Toast.makeText(getContext(), "First Name is null", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getContext(), "First Name is null", Toast.LENGTH_SHORT).show();
         }
         else {
             first_name.setText(sessionManager.getUserFirstName().toUpperCase());
@@ -75,6 +87,7 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getContext(), PaySlipActivity2.class)));
         return view;
     }
+
 
 
 }
