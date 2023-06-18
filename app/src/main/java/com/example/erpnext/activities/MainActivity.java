@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView roletxt, permissiontxt;
     FrameLayout frameLayout;
     AppCompatButton loginbtnerror;
-    View customView;
+    View customView, logoutview;
 
 
     @SuppressLint("NonConstantResourceId")
@@ -202,10 +202,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("Alert");
-                    builder.setMessage("Do you want to Quit?");
+                    logoutview = getLayoutInflater().inflate(R.layout.customalertlayout, null);
+                    //AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
+                   // TextView textView = customView.findViewById(R.id.textView);
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setView(logoutview);
+                    builder.setCancelable(false);
                     // Set a positive button and its click listener
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
@@ -261,7 +264,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
-                // System.out.println(sessionManager.getKeyEmployeeNamingSeries());
                 if (response.isSuccessful()) {
                     EmployeesData responseModel = response.body();
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
@@ -284,19 +286,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
 
                                 customView = getLayoutInflater().inflate(R.layout.customalertbuilder, null);
-                                AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
+                                //AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
                                 TextView textView = customView.findViewById(R.id.textView);
                                 textView.setText(errorResponse.getExcType());
-                                button.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        startActivity(new Intent(getApplicationContext(), Login.class));
-                                    }
-                                });
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setView(customView)
                                         .setCancelable(false);
-
+                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                });
 
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
