@@ -2,8 +2,10 @@ package com.example.erpnext.fragments.profile;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.erpnext.R;
 import com.example.erpnext.activities.drawerActivities.ProfileActivity;
+import com.example.erpnext.adapters.DateUtils;
 import com.example.erpnext.models.EmployeesData;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.services.ApiClient;
@@ -75,6 +78,7 @@ public class OverviewFragment extends Fragment {
         //progressBar.setVisibility(View.VISIBLE);
         sessionManager = new UserSessionManager(getContext());
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
@@ -87,10 +91,12 @@ public class OverviewFragment extends Fragment {
                         empId.setText(data.getEmployee());
                         phone.setText(data.getEmployee_number());
                         blood.setText(data.getBlood_group());
-                        dateofjoining.setText(data.getDate_of_joining());
+                        String dateOfJoining = DateUtils.convertStringToDate(data.getDate_of_joining(),"yyyy-MM-dd","dd MMM yyy");
+                        dateofjoining.setText(dateOfJoining);
                         address.setText("No address");
                         email.setText(data.getPrefered_email());
-                        dob.setText(data.getDate_of_birth());
+                        String dateOfBirth = DateUtils.convertStringToDate(data.getDate_of_birth(),"yyyy-MM-dd","dd MMM yyy");
+                        dob.setText(dateOfBirth);
                         address.setText(data.getCurrent_address());
                        // progressBar.setVisibility(View.GONE);
                     } else {
