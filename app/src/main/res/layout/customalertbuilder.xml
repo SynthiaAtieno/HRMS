@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/errorlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:padding="12dp"
+    >
+
+    <TextView
+        android:id="@id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="28sp" />
+
+    <ImageView
+        android:id="@+id/alertimage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/textView"
+        android:layout_centerInParent="true"
+        android:src="@drawable/error" />
+
+    <TextView
+        android:id="@+id/alerttext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alertimage"
+        android:text="You have no permission to access these files Please login to access your account"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginbuttonerror"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alerttext"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/reset_btn"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
