@@ -14,110 +14,130 @@
         android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-    <LinearLayout
-        android:id="@+id/profile_layout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/profile_toolbar"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:padding="18dp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_alignParentStart="true"
-            android:paddingRight="6dp"
-            android:src="@drawable/ic_baseline_person_24"
-            app:civ_border_color="#77000000"
-            app:civ_border_width="2dp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            android:layout_toEndOf="@+id/profile_image"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/usernametxtprofile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Synthia Ondeng"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/userroletxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="System User"
-                android:textColor="#77000000"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <HorizontalScrollView
-        android:id="@+id/horizontal_scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_below="@id/profile_layout"
-        android:layout_marginTop="24dp"
-        android:padding="12dp"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="4dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_overview"
-                android:layout_width="90dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="18dp"
-                android:background="@drawable/btn_profile"
-                android:text="Overview"
-                android:textAllCaps="false" />
+            <LinearLayout
+                android:id="@+id/profile_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_education"
-                android:layout_width="90dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="18dp"
-                android:background="@drawable/btn_profile"
-                android:text="Education"
-                android:textAllCaps="false" />
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_experience"
-                android:layout_width="90dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="18dp"
-                android:background="@drawable/btn_profile"
-                android:text="Experience"
-                android:textAllCaps="false" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentStart="true"
+                    android:paddingRight="6dp"
+                    android:src="@drawable/ic_baseline_person_24"
+                    app:civ_border_color="#77000000"
+                    app:civ_border_width="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_achievement"
-                android:layout_width="90dp"
-                android:layout_height="30dp"
-                android:background="@drawable/btn_profile"
-                android:text="Achievements"
-                android:textAllCaps="false" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_toEndOf="@+id/profile_image"
+                    android:orientation="vertical">
 
-        </LinearLayout>
-    </HorizontalScrollView>
+                    <TextView
+                        android:id="@+id/usernametxtprofile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Synthia Ondeng"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/horizontal_scrollview" />
+                    <TextView
+                        android:id="@+id/userroletxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="System User"
+                        android:textColor="#77000000"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/horizontal_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@id/profile_layout"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="24dp"
+                android:padding="12dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_overview"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="18dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_profile"
+                        android:text="Overview"
+                        android:textAllCaps="false" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_education"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="18dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_profile"
+                        android:text="Education"
+                        android:textAllCaps="false" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_experience"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="18dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_profile"
+                        android:text="Experience"
+                        android:textAllCaps="false" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_achievement"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_profile"
+                        android:text="Achievements"
+                        android:textAllCaps="false" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/horizontal_scrollview" />
+        </RelativeLayout>
+    </ScrollView>
+
 </RelativeLayout>
