@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/monthiconimageview"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/holiday_icon"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:layout_toEndOf="@id/monthiconimageview"
+        android:id="@+id/monthnametxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="June"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fromdatetxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monthnametxt"
+        android:text="01/01/2020 - "
+        android:layout_toEndOf="@id/monthiconimageview"
+        android:textColor="#72000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monthnametxt"
+        android:layout_toEndOf="@id/fromdatetxt"
+        android:text="01/01/2020"
+        android:textColor="#6F000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/amountforaparticularmonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="20, 000 Ksh"
+        android:textColor="#000"
+        android:textStyle="bold"/>
+    <View
+        android:id="@+id/firstviewforpayslip"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/monthiconimageview"
+        android:layout_marginTop="6dp"
+        android:background="#20000000" />
+
+</RelativeLayout>
