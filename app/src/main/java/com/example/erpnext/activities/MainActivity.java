@@ -1,9 +1,11 @@
 package com.example.erpnext.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -14,13 +16,19 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.erpnext.CustomAlertDialogBuilder;
 import com.example.erpnext.R;
 import com.example.erpnext.activities.drawerActivities.AppointmentsActivity;
 import com.example.erpnext.activities.drawerActivities.BenefitsActivity;
@@ -59,7 +67,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     UserSessionManager sessionManager;
-    TextView roletxt;
+    RelativeLayout errorlayout;
+    TextView roletxt, permissiontxt;
+    FrameLayout frameLayout;
+    AppCompatButton loginbtnerror;
+    View customView;
 
 
     @SuppressLint("NonConstantResourceId")
@@ -82,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+
+        frameLayout = findViewById(R.id.frame_layout);
 
 
         getEmployeeData();
@@ -138,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -180,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
-
 
     public void logout() {
 
@@ -244,7 +258,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getEmployeeData() {
-        //String Auth_Token = "a838616307c06c351b63";
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
             @Override
             public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
@@ -253,13 +266,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     EmployeesData responseModel = response.body();
                     if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
                         EmployeesData.EmployeeDoc data = responseModel.getDocs().get(0);
-
                         // Access the designation from the data model
                         String designation = data.getDesignation();
-                        //Toast.makeText(MainActivity.this, "Designation is" + designation, Toast.LENGTH_SHORT).show();
                         roletxt.setText(designation);
                         // Set the designation in a TextView
-                        //textView.setText(designation);
                         sessionManager.setUserFirstName(data.getFirst_name());
                         //Toast.makeText(MainActivity.this, "First Name"+sessionManager.getUserFirstName(), Toast.LENGTH_SHORT).show();
                     } else {
@@ -272,13 +282,67 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String errorResponseJson = response.errorBody().string();
                             if (response.code() == 403) {
                                 PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                customView = getLayoutInflater().inflate(R.layout.customalertbuilder, null);
+                                AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
+                                TextView textView = customView.findViewById(R.id.textView);
+                                textView.setText(errorResponse.getExcType());
+                                button.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        startActivity(new Intent(getApplicationContext(), Login.class));
+                                    }
+                                });
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setView(customView)
+                                        .setCancelable(false);
+
+
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+
+                               /* Drawable image = getResources().getDrawable(R.drawable.error);
+                                CustomAlertDialogBuilder builder = new CustomAlertDialogBuilder(MainActivity.this);
+                                builder.setImage(image)
+                                        .setTitle("Title")
+                                        .setMessage("Message")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // Positive button click listener
+                                                // Add your logic here
+                                            }
+                                        })
+                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // Negative button click listener
+                                                // Add your logic here
+                                            }
+                                        });
+
+                                android.app.AlertDialog alertDialog = builder.create();
+                                alertDialog.show();*/
+
+                               /* frameLayout.setVisibility(View.GONE);
+                                //drawerLayout.setVisibility(View.GONE);
+                                bottomNavigationView.setVisibility(View.GONE);
+                                errorlayout.setVisibility(View.VISIBLE);
+                                loginbtnerror.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        startActivity(new Intent(MainActivity.this, Login.class));
+                                    }
+                                });
+                                toolbar.setVisibility(View.GONE);
+                                permissiontxt.setText(errorResponse.getExcType());*/
+                                /*AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setTitle(errorResponse.getExcType());
                                 builder.setMessage("Your session expired, please logout then login to access your account");
                                 builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
 
                                 AlertDialog dialog = builder.create();
-                                dialog.show();
+                                dialog.show();*/
                             } else {
                                 Toast.makeText(MainActivity.this, "Server error occurred, please reload your page", Toast.LENGTH_SHORT).show();
                             }
