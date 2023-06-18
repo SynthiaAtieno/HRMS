@@ -5,7 +5,6 @@
     <string name="savanna_hrms">Savanna HRMS</string>
 
     <string-array name="months">
-        <item>Select a month</item>
         <item>January</item>
         <item>February</item>
         <item>March</item>
@@ -20,7 +19,6 @@
         <item>December</item>
     </string-array>
     <string-array name="year">
-        <item>Year</item>
         <item>2023</item>
         <item>2022</item>
         <item>2021</item>
