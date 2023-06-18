@@ -7,282 +7,284 @@
     android:scrollbars="none"
     tools:context=".fragments.HomeFragment">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#05000000"
-        android:padding="8dp"
-        android:layout_height="wrap_content">
+        android:padding="8dp">
 
-        <LinearLayout
-            android:id="@+id/welcome_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp">
-
-            <TextView
-                android:id="@+id/greetings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#B6000000"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/firstname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/announcement_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/welcome_layout"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="4dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="18dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="18dp">
-
-                <TextView
-                    android:id="@+id/announcement"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Announcement"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/holidayname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/announcement"
-                    android:layout_marginTop="6dp"
-                    android:text="Diwali Holiday"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/holidayname"
-                    android:layout_marginTop="6dp"
-                    android:text="10 May 2022"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/holidayname"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:text="View all"
-                    android:textColor="#7E000000"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/check_in_layout"
-            android:layout_alignParentStart="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/announcement_layout"
-            android:layout_marginTop="8dp"
-            android:layout_alignParentEnd="true"
-            android:orientation="horizontal"
-            android:padding="12dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/checkin"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/btn_profile"
-                android:backgroundTint="#397CB3"
-                android:text="Check In"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toStartOf="@+id/checkout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/checkout"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="4dp"
-                android:background="@drawable/btn_profile"
-                android:text="Check Out"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkin"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/quickaccesscardview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/check_in_layout"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="6dp"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="18dp">
-
-
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/welcome_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/greetings"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#B6000000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/firstname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/announcement_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/welcome_layout"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="4dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="18dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:id="@+id/announcement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="Announcement"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/holidayname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/announcement"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="6dp"
+                        android:text="Diwali Holiday"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/holidayname"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="6dp"
+                        android:text="10 May 2022"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/viewallholidays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/holidayname"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:text="View all"
+                        android:textColor="#7E000000"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/check_in_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/announcement_layout"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/checkin"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:text="Quick Access"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/btn_profile"
+                    android:backgroundTint="#397CB3"
+                    android:text="Check In"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toStartOf="@+id/checkout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:id="@+id/linearlayoutimage"
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/checkout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_below="@id/textView"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/btn_profile"
+                    android:text="Check Out"
+                    android:textAllCaps="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/checkin"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/quickaccesscardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/check_in_layout"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="6dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="18dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Quick Access"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
-                        android:id="@+id/payslipview"
-                        android:layout_width="0dp"
+                        android:id="@+id/linearlayoutimage"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_below="@id/textView"
+                        android:layout_marginTop="4dp"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/appCompatButtonSlip"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/payslip_1"
-                            app:cornerRadius="16dp" />
-
-                        <TextView
-                            android:id="@+id/textViewslip"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/payslipview"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Pay Slip"
-                            android:textColor="#000"
-                            android:textSize="12sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                    </LinearLayout>
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/appCompatButtonSlip"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/payslip_1"
+                                app:cornerRadius="16dp" />
 
-                    <LinearLayout
-                        android:id="@+id/leaveview"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/textViewslip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pay Slip"
+                                android:textColor="#000"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/appCompatButtonSlip7"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/leave"
-                            app:cornerRadius="16dp" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textViewleave"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/leaveview"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="Leave"
-                            android:textColor="#000"
-                            android:textSize="12sp" />
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                    </LinearLayout>
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/appCompatButtonSlip7"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/leave"
+                                app:cornerRadius="16dp" />
 
-                    <LinearLayout
-                        android:id="@+id/claimsview"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/textViewleave"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="Leave"
+                                android:textColor="#000"
+                                android:textSize="12sp" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/appCompatButtonSlip2"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/claims"
-                            app:cornerRadius="16dp" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textViewClaims"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/claimsview"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Claims"
-                            android:textColor="#000"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/attendanceview"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/appCompatButtonSlip2"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/claims"
+                                app:cornerRadius="16dp" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/attendance_icon" />
+                            <TextView
+                                android:id="@+id/textViewClaims"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Claims"
+                                android:textColor="#000"
+                                android:textSize="12sp" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textViewAttendance"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/attendanceview"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Attendance"
-                            android:textColor="#000"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/attendance_icon" />
+
+                            <TextView
+                                android:id="@+id/textViewAttendance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Attendance"
+                                android:textColor="#000"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
 
             <LinearLayout
                 android:id="@+id/todolayout"
-                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
-                android:layout_below="@id/quickaccesscardview"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/quickaccesscardview"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/shape"
                 android:orientation="vertical"
 
@@ -313,8 +315,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#000"
                         android:text="Finish Monthly report"
+                        android:textColor="#000"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -342,25 +344,25 @@
 
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/todolayout"
-            android:layout_marginTop="8dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:padding="8dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/todolayout"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-                    android:background="@drawable/shape"
                     android:layout_marginStart="8dp"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:background="@drawable/shape"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -377,6 +379,7 @@
                         android:textColor="#000"
                         android:textSize="18sp"
                         android:textStyle="normal" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -390,11 +393,11 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape"
-                    android:layout_weight="1"
-                    android:padding="8dp"
                     android:layout_marginStart="8dp"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:background="@drawable/shape"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -411,6 +414,7 @@
                         android:textColor="#000"
                         android:textSize="18sp"
                         android:textStyle="normal" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -424,11 +428,11 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape"
-                    android:layout_marginStart="8dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -456,6 +460,6 @@
                         android:textStyle="normal" />
                 </LinearLayout>
 
-        </LinearLayout>
-    </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
 </ScrollView>
