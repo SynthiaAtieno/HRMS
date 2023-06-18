@@ -134,7 +134,6 @@ public class Login extends AppCompatActivity {
                                 sid = cookieHeader.substring(4, cookieHeader.indexOf(';'));
                                 if (!Objects.equals(sid, "Guest")) {
                                     Toast.makeText(Login.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                    //Toast.makeText(Login.this, "Full name " + response.body().getFullName(), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     sessionManager.setUserId(sid);
                                     sessionManager.setKeyFullName(response.body().getFullName());
