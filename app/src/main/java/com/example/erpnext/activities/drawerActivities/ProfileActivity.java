@@ -9,10 +9,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 //import android.provider.CalendarContract;
 //import android.widget.ImageView;
+import android.preference.PreferenceManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (isDarkThemePreferred()) {
+            setTheme(R.style.AppTheme_Dark);
+        } else {
+            setTheme(R.style.AppTheme_Light);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
@@ -172,5 +180,19 @@ public class ProfileActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
 
+    }
+    private boolean isDarkThemePreferred() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String themePreference = sharedPreferences.getString("theme_preference", "system");
+
+        if (themePreference.equals("dark")) {
+            return true;
+        } else if (themePreference.equals("light")) {
+            return false;
+        } else {
+            // If the theme preference is set to "system", use the system default
+            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
+        }
     }
 }
