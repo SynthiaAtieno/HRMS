@@ -6,9 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -41,6 +44,11 @@ public class HolidayActivity extends AppCompatActivity {
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (isDarkThemePreferred()) {
+            setTheme(R.style.AppTheme_Dark);
+        } else {
+            setTheme(R.style.AppTheme_Light);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_holiday);
 
@@ -109,5 +117,19 @@ public class HolidayActivity extends AppCompatActivity {
                 Toast.makeText(HolidayActivity.this, "error"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private boolean isDarkThemePreferred() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String themePreference = sharedPreferences.getString("theme_preference", "system");
+
+        if (themePreference.equals("dark")) {
+            return true;
+        } else if (themePreference.equals("light")) {
+            return false;
+        } else {
+            // If the theme preference is set to "system", use the system default
+            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
+        }
     }
 }
