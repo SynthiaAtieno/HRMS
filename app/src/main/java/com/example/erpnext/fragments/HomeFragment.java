@@ -1,7 +1,10 @@
 package com.example.erpnext.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -9,6 +12,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +54,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), isDarkThemePreferred() ? R.style.AppTheme_Dark : R.style.AppTheme_Light);
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         String greeting = Greetings.getGreeting();
@@ -88,6 +95,24 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private int getLayoutResId() {
+        return R.id.homefragment;
+    }
+
+    private boolean isDarkThemePreferred() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        String themePreference = sharedPreferences.getString("theme_preference", "system");
+
+        if (themePreference.equals("dark")) {
+            return true;
+        } else if (themePreference.equals("light")) {
+            return false;
+        } else {
+            // If the theme preference is set to "system", use the system default
+            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
+        }
+    }
 
 
 }
