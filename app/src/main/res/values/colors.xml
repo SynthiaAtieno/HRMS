@@ -10,4 +10,8 @@
     <color name="purple">#928FED</color>
     <color name="inactive">#45928FED</color>
     <color name="orange">#FFA500</color>
+    <color name="textColorLight">@android:color/black</color>
+    <color name="textColorDark">@android:color/white</color>
+
 </resources>
+
