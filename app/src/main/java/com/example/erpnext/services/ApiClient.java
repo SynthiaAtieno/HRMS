@@ -4,7 +4,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static String baseurl = "http://192.168.88.253:8000/api/method/";
+    //private static String baseurl = "http://192.168.88.253:8000/api/";
+    private static String baseurl = "http://erp.techsavanna.technology:8082/api/";
     private static Retrofit retrofit = null;
 
     public static ApiInterface getApiClient() {
