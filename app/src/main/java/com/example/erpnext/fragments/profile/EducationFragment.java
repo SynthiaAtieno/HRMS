@@ -8,16 +8,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
 import com.example.erpnext.adapters.EmployeEducationAdapter;
-import com.example.erpnext.models.EmployeesData;
+import com.example.erpnext.models.EmployeeDataResponse;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
@@ -34,10 +33,11 @@ import retrofit2.Response;
 
 public class EducationFragment extends Fragment {
 
+    ProgressBar progressBar;
     UserSessionManager sessionManager;
     RecyclerView recyclerViewEducation;
     LinearLayoutManager linearLayoutManager;
-    List<EmployeesData.EmployeeEducation> educationList = new ArrayList<>();
+    List<EmployeeDataResponse.Education> educationList = new ArrayList<>();
     EmployeEducationAdapter adapter;
 
     public EducationFragment() {
@@ -52,6 +52,8 @@ public class EducationFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewEducation.setLayoutManager(linearLayoutManager);
         adapter = new EmployeEducationAdapter(educationList, getContext());
+        progressBar = view.findViewById(R.id.educationProgressbar);
+        progressBar.setVisibility(View.VISIBLE);
         recyclerViewEducation.setAdapter(adapter);
         return view;
     }
@@ -59,59 +61,50 @@ public class EducationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getEmployeeData();
     }
 
 
     public void getEmployeeData() {
         sessionManager = new UserSessionManager(requireContext());
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
+            public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
                 if (response.isSuccessful()) {
-                    EmployeesData employeesData = response.body();
-                    if (employeesData != null && employeesData.getDocs() != null && !employeesData.getDocs().isEmpty()) {
-                        EmployeesData.EmployeeDoc employees = employeesData.getDocs().get(0);
-                        if (!employees.getEducation().isEmpty()){
-                            educationList.addAll(employees.getEducation());
+                    EmployeeDataResponse employeesData = response.body();
+                    if (employeesData != null && employeesData.getData() != null) {
+                        List<EmployeeDataResponse.Education> employees = employeesData.getData().getEducation();
+                        if (!employees.isEmpty()){
+                            educationList.addAll(employees);
                             adapter.notifyDataSetChanged();
-                 /*       for (EmployeesData.EmployeeDoc employee : employees) {
-                            List<EmployeesData.EmployeeEducation> educationList = employee.getEducation();
-                            List<String> qualifications = new ArrayList<>();
-                            //System.out.println("educationList = " + educationList);
-                            for (EmployeesData.EmployeeEducation education : educationList) {
-                                String qualification = education.getQualification();
-                                qualifications.add(qualification);
-                            }
-                            // Create a formatted string with the qualifications
-                            String qualificationsText = TextUtils.join("\n\n", qualifications);
+                            progressBar.setVisibility(View.GONE);
 
-                            // Set the text in the TextView
-                        }
-*/
                         }else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                             builder.setTitle("No Data");
                             builder.setMessage("Your education details has not been updated");
 
                             // Set a positive button and its click listener
-                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                            builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
 
                             // Create and show the alert dialog
                             AlertDialog dialog = builder.create();
                             dialog.show();
-                            //progressBar.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
                             //Toast.makeText(requireContext(), "Your education details has not been added yet", Toast.LENGTH_SHORT).show();
                         }
 
                     } else {
                         Toast.makeText(getContext(), "Null data", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
 
                     }
 
                 } else {
                     if (response.errorBody() != null) {
+                        progressBar.setVisibility(View.GONE);
                         try {
                             String errorResponseJson = response.errorBody().string();
                             PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
@@ -132,16 +125,16 @@ public class EducationFragment extends Fragment {
                             // progressBar.setVisibility(View.GONE);
                         }
                     }
-                    //Toast.makeText(MainActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Response not successful", Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
-            public void onFailure(Call<EmployeesData> call, Throwable t) {
+            public void onFailure(Call<EmployeeDataResponse> call, Throwable t) {
                 Toast.makeText(getContext(), "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("Onfailure" + t.getMessage());
-                // progressBar.setVisibility(View.GONE);
+                 progressBar.setVisibility(View.GONE);
             }
         });
     }
