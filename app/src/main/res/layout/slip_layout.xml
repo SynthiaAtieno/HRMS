@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardviewforslipdetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/slipimage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/payslip_1" />
+
+            <TextView
+                android:id="@+id/sliptextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/slipimage"
+                android:text="Slip 0001"
+                android:layout_centerInParent="true"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <!--<TextView
+                android:id="@+id/fromtodate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sliptextview"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="6dp"
+                android:layout_toEndOf="@id/slipimage"
+                android:text="Slip 0001"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/totaltxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sliptextview"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="4dp"
+                android:layout_toLeftOf="@id/arrowimage"
+                android:text="Slip 0001"
+                android:textColor="@color/black"
+                android:textStyle="bold" />-->
+
+            <ImageView
+                android:id="@+id/arrowimage"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
