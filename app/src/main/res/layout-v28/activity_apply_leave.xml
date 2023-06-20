@@ -32,18 +32,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Leave Type"
-                android:textColor="#000"
+                android:textStyle="bold"
+                android:textColor="@color/royal_blue"
                 android:textSize="16sp" />
 
             <Spinner
-                android:id="@+id/custom_spinner"
+                android:id="@+id/leave_type_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="18dp"
                 android:background="@drawable/custom_spinner_background"
-                android:entries="@array/months"
                 android:padding="8dp"
-                android:popupBackground="@color/white"
                 android:spinnerMode="dropdown" />
 
             <TextView
@@ -51,30 +50,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Date"
-                android:textColor="#000"
+                android:textStyle="bold"
+                android:textColor="@color/royal_blue"
                 android:textSize="16sp" />
 
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:id="@+id/fromdate"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shape"
                 android:hint="From"
-                android:inputType="text"
+                android:gravity="center|start"
                 android:padding="4dp"
                 android:textColor="#000"
                 android:textSize="16sp" />
 
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:id="@+id/todate"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shape"
                 android:hint="To"
-                android:inputType="text"
                 android:padding="4dp"
+                android:gravity="start|center"
                 android:textColor="#000"
                 android:textSize="16sp" />
 
@@ -84,11 +86,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Reasons"
-                android:textColor="#000"
+                android:textStyle="bold"
+                android:textColor="@color/royal_blue"
                 android:textSize="16sp" />
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reasonforleaveapplication"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape"
@@ -113,5 +117,10 @@
         </LinearLayout>
     </ScrollView>
 
-
+<ProgressBar
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:id="@+id/progrssbarforleaveapplication"
+    android:visibility="gone"/>
 </RelativeLayout>
