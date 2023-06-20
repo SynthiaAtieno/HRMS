@@ -23,11 +23,11 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
-    <View
+  <!--  <View
         android:id="@+id/firstviewforpayslip"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@id/deductionamount"
         android:layout_marginTop="6dp"
-        android:background="#20000000" />
+        android:background="#20000000" />-->
 </RelativeLayout>
