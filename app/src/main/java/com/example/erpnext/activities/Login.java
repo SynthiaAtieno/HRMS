@@ -145,7 +145,7 @@ public class Login extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     sessionManager.setUserId(sid);
                                     sessionManager.setKeyFullName(response.body().getFullName());
-                                    getNamingSeries();
+                                    //getNamingSeries();
                                     startActivity(intent);
                                     finish();
                                 } else {
@@ -239,7 +239,7 @@ public class Login extends AppCompatActivity {
         return !password.isEmpty();
     }
 
-    public void getNamingSeries() {
+  /*  public void getNamingSeries() {
         ApiClient.getApiClient().getEmployeePermission(sessionManager.getUserId()).enqueue(new Callback<EmployeePermission>() {
             @Override
             public void onResponse(Call<EmployeePermission> call, Response<EmployeePermission> response) {
@@ -288,7 +288,7 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "An error occurred" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
     private boolean isDarkThemePreferred() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String themePreference = sharedPreferences.getString("theme_preference", "system");
