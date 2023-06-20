@@ -32,7 +32,8 @@
                     android:id="@+id/firstname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_700"
                     android:textSize="18sp" />
             </LinearLayout>
 
