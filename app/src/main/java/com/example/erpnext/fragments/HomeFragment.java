@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.erpnext.Greetings;
 import com.example.erpnext.LeaveReportActivity;
+import com.example.erpnext.PaySlipDetailsActivity;
 import com.example.erpnext.R;
 import com.example.erpnext.activities.PaySlipActivity2;
 import com.example.erpnext.activities.drawerActivities.HolidayActivity;
@@ -67,6 +68,7 @@ public class HomeFragment extends Fragment {
         viewallholidays = view.findViewById(R.id.viewallholidays);
         txviewslip = view.findViewById(R.id.textViewslip);
 
+
         leave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +93,7 @@ public class HomeFragment extends Fragment {
         }
 
         payslip.setOnClickListener(v ->
-                startActivity(new Intent(getContext(), PaySlipActivity2.class)));
+                startActivity(new Intent(getContext(), PaySlipDetailsActivity.class)));
         return view;
     }
 
