@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Leave balance"
-                android:textColor="#000"
+                android:textColor="@color/royal_blue"
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Leave Days"
+                            android:text="Leave Days"
                             android:textColor="#000"
                             android:textSize="12dp" />
 
@@ -136,7 +136,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Leave Days"
+                            android:text="Leave Days"
                             android:textColor="#000"
                             android:textSize="12dp" />
 
@@ -177,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recent Leaves"
-                android:textColor="#000"
+                android:textColor="@color/royal_blue"
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
