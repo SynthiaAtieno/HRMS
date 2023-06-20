@@ -10,19 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erpnext.R;
-import com.example.erpnext.models.EmployeesData;
+import com.example.erpnext.models.EmployeeDataResponse;
 
 import java.util.List;
 
 public class EmployeEducationAdapter extends RecyclerView.Adapter<EmployeEducationAdapter.MyViewHolder> {
-    List<EmployeesData.EmployeeEducation> employeeEducationList;
+    List<EmployeeDataResponse.Education> employeeEducationList;
     Context context;
 
-    public EmployeEducationAdapter(List<EmployeesData.EmployeeEducation> employeeEducationList, Context context) {
+    public EmployeEducationAdapter(List<EmployeeDataResponse.Education> employeeEducationList, Context context) {
         this.employeeEducationList = employeeEducationList;
         this.context = context;
     }
 
+    /*public EmployeEducationAdapter(List<EmployeesData.EmployeeEducation> employeeEducationList, Context context) {
+            this.employeeEducationList = employeeEducationList;
+            this.context = context;
+        }
+    */
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,7 +37,7 @@ public class EmployeEducationAdapter extends RecyclerView.Adapter<EmployeEducati
 
     @Override
     public void onBindViewHolder(@NonNull EmployeEducationAdapter.MyViewHolder holder, int position) {
-        EmployeesData.EmployeeEducation employeeEducation = employeeEducationList.get(position);
+        EmployeeDataResponse.Education employeeEducation = employeeEducationList.get(position);
         holder.qualification.setText(employeeEducation.getQualification());
     }
 
