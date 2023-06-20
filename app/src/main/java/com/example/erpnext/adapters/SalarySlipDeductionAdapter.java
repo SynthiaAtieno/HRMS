@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erpnext.R;
+import com.example.erpnext.models.PaySlip;
 import com.example.erpnext.models.SalarySlipData;
 
 import java.text.NumberFormat;
@@ -18,10 +19,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class SalarySlipDeductionAdapter extends RecyclerView.Adapter<SalarySlipDeductionAdapter.MyViewHolder> {
-    List<SalarySlipData.Deduction> deductionList;
+    List<PaySlip.Deduction> deductionList;
     Context context;
 
-    public SalarySlipDeductionAdapter(List<SalarySlipData.Deduction> deductionList, Context context) {
+    public SalarySlipDeductionAdapter(List<PaySlip.Deduction> deductionList, Context context) {
         this.deductionList = deductionList;
         this.context = context;
     }
@@ -37,7 +38,7 @@ public class SalarySlipDeductionAdapter extends RecyclerView.Adapter<SalarySlipD
     public void onBindViewHolder(@NonNull SalarySlipDeductionAdapter.MyViewHolder holder, int position) {
         NumberFormat kenyanCurrencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "KE"));
         kenyanCurrencyFormat.setCurrency(Currency.getInstance("KES"));
-        SalarySlipData.Deduction deduction = deductionList.get(position);
+        PaySlip.Deduction deduction = deductionList.get(position);
         holder.deductioncomponent.setText(deduction.getSalaryComponent());
         holder.deductionamount.setText(kenyanCurrencyFormat.format(deduction.getAmount()));
     }
