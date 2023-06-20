@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Synthia Ondeng"
-                        android:textColor="@color/black"
+                        android:textColor="@color/purple_700"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="System User"
-                        android:textColor="#77000000"
+                        android:textColor="#A1055C9D"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
