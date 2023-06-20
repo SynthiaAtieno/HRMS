@@ -20,12 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
-import com.example.erpnext.activities.MainActivity;
 import com.example.erpnext.fragments.profile.AchievementFragment;
 import com.example.erpnext.fragments.profile.EducationFragment;
 import com.example.erpnext.fragments.profile.ExperienceFragment;
 import com.example.erpnext.fragments.profile.OverviewFragment;
-import com.example.erpnext.models.EmployeesData;
+import com.example.erpnext.models.EmployeeDataResponse;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
@@ -127,13 +126,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void getEmployeeData() {
         sessionManager = new UserSessionManager(ProfileActivity.this);
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @Override
-            public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
+            public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
                 if (response.isSuccessful()) {
-                    EmployeesData responseModel = response.body();
-                    if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
-                        EmployeesData.EmployeeDoc data = responseModel.getDocs().get(0);
+                    EmployeeDataResponse responseModel = response.body();
+                    if (responseModel != null && responseModel.getData() != null) {
+                        EmployeeDataResponse.Data data = responseModel.getData();
                         String designation = data.getDesignation();
                         usertxt.setText(designation);
 
@@ -167,7 +166,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<EmployeesData> call, Throwable t) {
+            public void onFailure(Call<EmployeeDataResponse> call, Throwable t) {
                 Toast.makeText(ProfileActivity.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("Onfailure" + t.getMessage());
             }
