@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="Are you Sure"
-        android:textColor="#000"
+        android:textColor="@color/purple_700"
         android:textSize="28sp" />
 
     <ImageView
