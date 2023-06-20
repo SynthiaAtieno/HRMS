@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erpnext.R;
+import com.example.erpnext.models.PaySlip;
 import com.example.erpnext.models.SalarySlipData;
 
 import java.text.NumberFormat;
@@ -20,10 +21,10 @@ import java.util.Locale;
 
 public class SalarySlipAdapter extends RecyclerView.Adapter<SalarySlipAdapter.MyViewHolder> {
 
-    List<SalarySlipData.Earning> earningList;
+    List<PaySlip.Earning> earningList;
     Context context;
 
-    public SalarySlipAdapter(List<SalarySlipData.Earning> earningList, Context context) {
+    public SalarySlipAdapter(List<PaySlip.Earning> earningList, Context context) {
         this.earningList = earningList;
         this.context = context;
     }
@@ -39,7 +40,7 @@ public class SalarySlipAdapter extends RecyclerView.Adapter<SalarySlipAdapter.My
     public void onBindViewHolder(@NonNull SalarySlipAdapter.MyViewHolder holder, int position) {
         NumberFormat kenyanCurrencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "KE"));
         kenyanCurrencyFormat.setCurrency(Currency.getInstance("KES"));
-        SalarySlipData.Earning earningat = earningList.get(position);
+        PaySlip.Earning earningat = earningList.get(position);
         holder.amount.setText(kenyanCurrencyFormat.format(earningat.getAmount()));
         holder.component.setText(earningat.getSalaryComponent());
     }
