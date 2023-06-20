@@ -14,17 +14,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -32,7 +28,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erpnext.CustomAlertDialogBuilder;
 import com.example.erpnext.R;
 import com.example.erpnext.activities.drawerActivities.AppointmentsActivity;
 import com.example.erpnext.activities.drawerActivities.BenefitsActivity;
@@ -47,9 +42,8 @@ import com.example.erpnext.fragments.HomeFragment;
 import com.example.erpnext.fragments.LeaveFragment;
 import com.example.erpnext.fragments.MarkAttendanceFragment;
 import com.example.erpnext.fragments.ProfileFragment;
-import com.example.erpnext.models.EmployeesData;
+import com.example.erpnext.models.EmployeeDataResponse;
 import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.models.UserError;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -57,7 +51,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -269,18 +262,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getEmployeeData() {
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeesData>() {
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @Override
-            public void onResponse(Call<EmployeesData> call, Response<EmployeesData> response) {
+            public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
                 if (response.isSuccessful()) {
-                    EmployeesData responseModel = response.body();
-                    if (responseModel != null && responseModel.getDocs() != null && !responseModel.getDocs().isEmpty()) {
-                        EmployeesData.EmployeeDoc data = responseModel.getDocs().get(0);
+                    EmployeeDataResponse responseModel = response.body();
+                    if (responseModel != null && responseModel.getData() != null) {
+                        EmployeeDataResponse.Data data = responseModel.getData();
                         // Access the designation from the data model
                         String designation = data.getDesignation();
                         roletxt.setText(designation);
                         // Set the designation in a TextView
-                        sessionManager.setUserFirstName(data.getFirst_name());
+                        sessionManager.setUserFirstName(data.getFirstName());
                         //Toast.makeText(MainActivity.this, "First Name"+sessionManager.getUserFirstName(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Null data", Toast.LENGTH_SHORT).show();
@@ -366,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             @Override
-            public void onFailure(Call<EmployeesData> call, Throwable t) {
+            public void onFailure(Call<EmployeeDataResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
