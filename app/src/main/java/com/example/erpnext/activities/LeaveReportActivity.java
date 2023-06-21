@@ -1,4 +1,4 @@
-package com.example.erpnext;
+package com.example.erpnext.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.erpnext.R;
 
 import java.util.Objects;
 
