@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".ApplyLeaveActivity">
+    tools:context=".activities.ApplyLeaveActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/apply_leave_toolbar"
@@ -63,7 +63,7 @@
                 android:background="@drawable/shape"
                 android:hint="From"
                 android:gravity="center|start"
-                android:padding="4dp"
+                android:padding="8dp"
                 android:textColor="#000"
                 android:textSize="16sp" />
 
@@ -75,7 +75,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shape"
                 android:hint="To"
-                android:padding="4dp"
+                android:padding="8dp"
                 android:gravity="start|center"
                 android:textColor="#000"
                 android:textSize="16sp" />
@@ -100,7 +100,7 @@
                 android:hint="Type your reason here"
                 android:inputType="textMultiLine"
                 android:minLines="8"
-                android:padding="4dp"
+                android:padding="8dp"
                 android:textColor="#000"
                 android:textSize="16sp" />
 
@@ -113,7 +113,6 @@
                 android:text="Submit"
                 android:textColor="#fff"
                 android:textAllCaps="false" />
-
         </LinearLayout>
     </ScrollView>
 
