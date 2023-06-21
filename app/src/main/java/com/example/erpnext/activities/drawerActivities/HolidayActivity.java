@@ -66,7 +66,7 @@ public class HolidayActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         String doctype = "Holiday List";
         String holidayname = "2023-Holiday-List";
-        ApiClient.getApiClient().getHolidayList(doctype, holidayname, sessionManager.getUserId()).enqueue(new Callback<HolidayList>() {
+        ApiClient.getApiClient().getHolidayList(doctype, holidayname,"sid="+ sessionManager.getUserId()).enqueue(new Callback<HolidayList>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<HolidayList> call, Response<HolidayList> response) {
