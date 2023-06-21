@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
@@ -17,38 +18,44 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.Greetings;
-import com.example.erpnext.LeaveReportActivity;
-import com.example.erpnext.PaySlipDetailsActivity;
-import com.example.erpnext.R;
-import com.example.erpnext.activities.PaySlipActivity2;
-import com.example.erpnext.activities.drawerActivities.HolidayActivity;
-import com.example.erpnext.models.UserInfo;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.erpnext.activities.LeaveReportActivity;
 import com.example.erpnext.activities.Login;
+import com.example.erpnext.activities.MainActivity;
+import com.example.erpnext.activities.PaySlipDetailsActivity;
+import com.example.erpnext.R;
+import com.example.erpnext.activities.drawerActivities.HolidayActivity;
+import com.example.erpnext.models.EmployeeDataResponse;
+import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.services.ApiClient;
+import com.example.erpnext.session.UserSessionManager;
+import com.google.gson.Gson;
 
-import okhttp3.ResponseBody;
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
-    UserSessionManager sessionManager ;
-    TextView greting, first_name,txviewslip, viewallholidays;
+    UserSessionManager sessionManager;
+    TextView greting, first_name, txviewslip, viewallholidays;
+    View customView;
 
     LinearLayout payslip, claims, leave, attendance;
+
     public HomeFragment() {
         // Required empty public constructor
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getEmployeeData();
 
     }
 
@@ -63,7 +70,7 @@ public class HomeFragment extends Fragment {
         first_name = view.findViewById(R.id.firstname);
         greting = view.findViewById(R.id.greetings);
         greting.setText(greeting);
-        payslip  = view.findViewById(R.id.payslipview);
+        payslip = view.findViewById(R.id.payslipview);
         leave = view.findViewById(R.id.leaveview);
         viewallholidays = view.findViewById(R.id.viewallholidays);
         txviewslip = view.findViewById(R.id.textViewslip);
@@ -84,11 +91,11 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        sessionManager = new UserSessionManager(getContext());
-        if (sessionManager.getUserFirstName()== null){
-           // Toast.makeText(getContext(), "First Name is null", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        sessionManager = new UserSessionManager(requireContext());
+        if (sessionManager.getUserFirstName() == null) {
+            System.out.println(" First name is null ");
+            // Toast.makeText(getContext(), "First Name is null", Toast.LENGTH_SHORT).show();
+        } else {
             first_name.setText(sessionManager.getUserFirstName().toUpperCase());
         }
 
@@ -116,5 +123,64 @@ public class HomeFragment extends Fragment {
         }
     }
 
+
+    public void getEmployeeData() {
+        sessionManager = new UserSessionManager(requireContext());
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(),"sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
+            @Override
+            public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
+                if (response.isSuccessful()) {
+                    EmployeeDataResponse responseModel = response.body();
+                    if (responseModel != null && responseModel.getData() != null) {
+                        EmployeeDataResponse.Data data = responseModel.getData();
+                        sessionManager.setUserFirstName(data.getFirstName().toUpperCase());
+
+                    } else {
+                        Toast.makeText(requireContext(), "Null data", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorResponseJson = response.errorBody().string();
+
+                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                            builder.setTitle(errorResponse.getExcType());
+                            String exceptionMessage = errorResponse.getException();
+                            int firstmaessage = exceptionMessage.indexOf(":");
+                            //int lastmessage = exceptionMessage.lastIndexOf(":");
+                            String errorMessage = exceptionMessage.substring(firstmaessage+1).trim();
+                            builder.setMessage(errorMessage);
+                            builder.setCancelable(false);
+                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+
+                            // Set a positive button and its click listener
+
+
+                            // Create and show the alert dialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+
+                            //Toast.makeText(getContext(), "Server error occurred, please reload your page", Toast.LENGTH_SHORT).show();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeDataResponse> call, Throwable t) {
+                System.out.println("t.getMessage() = " + t.getMessage());
+               // Toast.makeText(requireContext(), "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }
