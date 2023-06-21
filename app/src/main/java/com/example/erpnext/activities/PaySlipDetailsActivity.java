@@ -1,4 +1,4 @@
-package com.example.erpnext;
+package com.example.erpnext.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.erpnext.R;
 import com.example.erpnext.adapters.SlipDetailsAdapter;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.models.SlipDetails;
@@ -35,6 +37,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
     TextView firstbane, fromtodate, totaltxt;
     RecyclerView slipdetailsrecycler;
 
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
         slipDetails = new ArrayList<>();
         adapter = new SlipDetailsAdapter(slipDetails, this);
 
+        linearLayout = findViewById(R.id.nothingfoundlayout);
         /*fromtodate = findViewById(R.id.fromdate);
         totaltxt = findViewById(R.id.totaltxt);*/
 
@@ -64,7 +68,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
 
     public void getSlipData() {
         progressBar.setVisibility(View.VISIBLE);
-        ApiClient.getApiClient().getSlipDetails("Salary Slip", sessionManager.getUserId()).enqueue(new Callback<SlipDetails>() {
+        ApiClient.getApiClient().getSlipDetails("Salary Slip", "sid="+sessionManager.getUserId()).enqueue(new Callback<SlipDetails>() {
             @Override
             public void onResponse(Call<SlipDetails> call, Response<SlipDetails> response) {
                 if (response.isSuccessful()) {
@@ -76,7 +80,9 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                     }
                     else {
-                        Toast.makeText(PaySlipDetailsActivity.this, "No data found", Toast.LENGTH_SHORT).show();
+                        linearLayout.setVisibility(View.VISIBLE);
+
+                        //Toast.makeText(PaySlipDetailsActivity.this, "No data found", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     }
                     //Toast.makeText(PaySlipDetailsActivity.this, "success", Toast.LENGTH_SHORT).show();
