@@ -39,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +59,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -86,6 +88,9 @@ public class PaySlipActivity2 extends AppCompatActivity {
     ProgressBar progressBar;
     PieChart pieChart;
 
+    ScrollView scrollView;
+    LinearLayout linearLayout, earninglayout, errorlayoutforeanings, deductionslayout, errorlayoutfordeductions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (isDarkThemePreferred()) {
@@ -102,10 +107,20 @@ public class PaySlipActivity2 extends AppCompatActivity {
         getSupportActionBar().setTitle("Payslip Report");
 
 
+        scrollView = findViewById(R.id.payslipscrollview);
+        linearLayout = findViewById(R.id.errorlayoutforpayslip);
+
         downloadBtn = findViewById(R.id.downloadBtn);
         progressBar = findViewById(R.id.progressbar);
         pieChart = findViewById(R.id.pieChart);
         dateTxt = findViewById(R.id.datetxt);
+
+        earninglayout = findViewById(R.id.eaningslayout);
+        errorlayoutforeanings = findViewById(R.id.errorlayoutforearnings);
+
+        errorlayoutfordeductions = findViewById(R.id.errorlayoutfordeductions);
+        deductionslayout = findViewById(R.id.layoutfordeductions);
+
         deductionComponent = findViewById(R.id.deductioncomponent);
         totalDeductionstxt = findViewById(R.id.total_deductions);
         deductionRecycler = findViewById(R.id.deductionsRecyclerview);
@@ -119,125 +134,125 @@ public class PaySlipActivity2 extends AppCompatActivity {
         deductionRecycler.setAdapter(deductionAdapter);
         earningRecycler.setAdapter(earniAdapter);
 
-    downloadBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View popupView = inflater.inflate(R.layout.popupwinddowfordownload, null);
+        downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popupwinddowfordownload, null);
 
 // Create the popup window
-            PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-            popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-            popupWindow.setFocusable(true); // Enable focus
-            popupWindow.setOutsideTouchable(true);
+                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setFocusable(true); // Enable focus
+                popupWindow.setOutsideTouchable(true);
 
-            // Show the popup window at a specific location
-            popupWindow.showAtLocation(downloadBtn, Gravity.CENTER, 1, -1);
-            popupWindow.setOutsideTouchable(false);
-            popupWindow.setWidth(400);
-            popupWindow.setHeight(400);
+                // Show the popup window at a specific location
+                popupWindow.showAtLocation(downloadBtn, Gravity.CENTER, 1, -1);
+                popupWindow.setOutsideTouchable(false);
+                popupWindow.setWidth(400);
+                popupWindow.setHeight(400);
 
 
 // Example: Close the popup window when clicked outside
-            popupView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                        popupWindow.dismiss();
-                        return true;
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                        return false;
                     }
-                    return false;
-                }
-            });
-        }
-    });
+                });
+            }
+        });
 // Inflate the layout for the popup window
-
 
 
         NumberFormat kenyanCurrencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "KE"));
         kenyanCurrencyFormat.setCurrency(Currency.getInstance("KES"));
-progressBar.setVisibility(View.VISIBLE);
-ApiClient.getApiClient().getSlipData("Salary Slip",getIntent().getExtras().getString("name"), sessionManager.getUserId()).enqueue(new Callback<PaySlip>() {
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onResponse(Call<PaySlip> call, Response<PaySlip> response) {
-        if (response.isSuccessful()){
-            PaySlip paySlip = response.body();
-            if (paySlip != null && !paySlip.getData().getDeductions().isEmpty()){
-                String totalDeductions = kenyanCurrencyFormat.format(paySlip.getData().getTotalDeduction());
-                totalDeductionstxt.setText(totalDeductions);
-                String formatedDate = DateUtils.convertStringToDate(paySlip.getData().getStartDate(),"yyyy-MM-dd","MMM yyyy");
-                dateTxt.setText(formatedDate);
-                //deductionComponent.setText(paySlip.getData().);
+        progressBar.setVisibility(View.VISIBLE);
+        ApiClient.getApiClient().getSlipData("Salary Slip", getIntent().getExtras().getString("name"), "sid="+sessionManager.getUserId()).enqueue(new Callback<PaySlip>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<PaySlip> call, Response<PaySlip> response) {
+                if (response.isSuccessful()) {
+                    PaySlip paySlip = response.body();
 
-//                toolbar.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent intent = new Intent(PaySlipActivity2.this, SlipDetails.class);
-//                        String month = DateUtils.convertStringToDate(kenyanCurrencyFormat.format(paySlip.getData().getStartDate()), "yyyy-MM-dd","MMM");
-//                        String period = DateUtils.convertStringToDate(kenyanCurrencyFormat.format(paySlip.getData().getStartDate()), "yyyy-MM-dd","dd/MM/yyyy")+"-"+DateUtils.convertStringToDate(kenyanCurrencyFormat.format(paySlip.getData().getEndDate()), "yyyy-MM-dd","dd/MM/yyyy");
-//
-//                        String totalEarning = kenyanCurrencyFormat.format(paySlip.getData().getRoundedTotal());
-//                        intent.putExtra("month", month);
-//                        intent.putExtra("period", period);
-//                        intent.putExtra("totalEarnings", totalEarning);
-//                        startActivity(intent);
-//                    }
-//                });
-                List<PieEntry> entries = new ArrayList<>();
-                int ded = paySlip.getData().getTotalDeduction().intValue();
-                int earn = paySlip.getData().getGrossPay().intValue();
-                entries.add(new PieEntry(ded, kenyanCurrencyFormat.format(ded) + "\n" + "Deductions"));
-                entries.add(new PieEntry(earn, kenyanCurrencyFormat.format(earn) + "\n" + "Earnings"));
+                    if (paySlip != null && paySlip.getData().getEarnings().isEmpty() && paySlip.getData().getDeductions().isEmpty() ){
+                        scrollView.setVisibility(View.GONE);
+                        linearLayout.setVisibility(View.VISIBLE);
+                    }else {
+                       /* scrollView.setVisibility(View.VISIBLE);
+                        linearLayout.setVisibility(View.GONE);*/
 
-                float desiredHoleRadius = 85f; // Range: 0.0f (no hole) to 1.0f (full size)
-                int desiredWidth = 500; // in pixels
-
-                createPieChart(entries, pieChart, desiredHoleRadius, desiredWidth);
-                pieChart.setCenterText(kenyanCurrencyFormat.format(paySlip.getData().getBaseRoundedTotal()) + "\n\n" + "Gross Pay");
+                        if (paySlip != null && !paySlip.getData().getDeductions().isEmpty()) {
+                            String totalDeductions = kenyanCurrencyFormat.format(paySlip.getData().getTotalDeduction());
+                            totalDeductionstxt.setText(totalDeductions);
+                            String formatedDate = DateUtils.convertStringToDate(paySlip.getData().getStartDate(), "yyyy-MM-dd", "MMM yyyy");
+                            dateTxt.setText(formatedDate);
 
 
-                List<PaySlip.Deduction> deductions = paySlip.getData().getDeductions();
-                deductionList.addAll(deductions);
-                deductionAdapter.notifyDataSetChanged();
+                            List<PieEntry> entries = new ArrayList<>();
+                            int ded = paySlip.getData().getTotalDeduction().intValue();
+                            int earn = paySlip.getData().getGrossPay().intValue();
+                            entries.add(new PieEntry(ded, kenyanCurrencyFormat.format(ded) + "\n" + "Deductions"));
+                            entries.add(new PieEntry(earn, kenyanCurrencyFormat.format(earn) + "\n" + "Earnings"));
+
+                            float desiredHoleRadius = 85f; // Range: 0.0f (no hole) to 1.0f (full size)
+                            int desiredWidth = 500; // in pixels
+
+                            createPieChart(entries, pieChart, desiredHoleRadius, desiredWidth);
+                            pieChart.setCenterText(kenyanCurrencyFormat.format(paySlip.getData().getBaseRoundedTotal()) + "\n\n" + "Gross Pay");
+
+
+                            List<PaySlip.Deduction> deductions = paySlip.getData().getDeductions();
+                            deductionList.addAll(deductions);
+                            deductionAdapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
+                        } else {
+
+                            errorlayoutfordeductions.setVisibility(View.VISIBLE);
+                            deductionslayout.setVisibility(View.GONE);
+                            //Toast.makeText(PaySlipActivity2.this, "No deductions", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+
+                        }
+                        if (paySlip != null && !paySlip.getData().getEarnings().isEmpty()) {
+                            List<PaySlip.Earning> earnings = paySlip.getData().getEarnings();
+                            earningList.addAll(earnings);
+                            earniAdapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
+
+                        } else {
+                            errorlayoutforeanings.setVisibility(View.VISIBLE);
+                            earninglayout.setVisibility(View.GONE);
+                            //Toast.makeText(PaySlipActivity2.this, "No Earnings", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+
+                        }
+
+
+                    }
+                } else {
+
+                    Toast.makeText(PaySlipActivity2.this, "failure", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PaySlip> call, Throwable t) {
+                Toast.makeText(PaySlipActivity2.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
-            }else {
-                Toast.makeText(PaySlipActivity2.this, "No deductions", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.GONE);
+
 
             }
-            if (paySlip !=null && !paySlip.getData().getEarnings().isEmpty()){
-                List<PaySlip.Earning> earnings = paySlip.getData().getEarnings();
-                earningList.addAll(earnings);
-                earniAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
-
-            }
-            else {
-                Toast.makeText(PaySlipActivity2.this, "No Earnings", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.GONE);
-
-            }
-
-        }else {
-            Toast.makeText(PaySlipActivity2.this, "failure", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-
-        }
+        });
     }
-
-    @Override
-    public void onFailure(Call<PaySlip> call, Throwable t) {
-        Toast.makeText(PaySlipActivity2.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-        progressBar.setVisibility(View.GONE);
-
-
-    }
-});
-    }
-
 
 
     @Override
@@ -264,14 +279,21 @@ ApiClient.getApiClient().getSlipData("Salary Slip",getIntent().getExtras().getSt
         pieChart.getDescription().setEnabled(false);
         pieChart.setHoleRadius(desiredHoleRadius);
 
+        pieChart.setData(pieData);
+        pieChart.setDrawEntryLabels(false); // Disable default entry labels
+        pieChart.setDrawMarkers(true);
+
+        dataSet.setDrawIcons(true);
+        dataSet.setValueFormatter(new PercentFormatter(pieChart));
+        dataSet.setValueLineColor(Color.TRANSPARENT); // Hide value line
+        dataSet.setValueLinePart1Length(0.5f);
+        dataSet.setValueLinePart2Length(0.5f);
+        dataSet.setValueLineWidth(2f);
 
         pieChart.setDrawEntryLabels(false);
         pieChart.setData(pieData);
         pieChart.invalidate(); // Refresh the chart
     }
-
-
-
 
 
     private boolean isDarkThemePreferred() {
