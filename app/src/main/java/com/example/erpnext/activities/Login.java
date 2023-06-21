@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -14,13 +15,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erpnext.R;
+import com.example.erpnext.models.EmployeeDataResponse;
 import com.example.erpnext.models.EmployeePermission;
+import com.example.erpnext.models.LeaveType;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.models.UserError;
@@ -54,6 +58,7 @@ public class Login extends AppCompatActivity {
 
     Calendar calendar = Calendar.getInstance();
     int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+    View customView;
 
 
     @Override
@@ -89,8 +94,7 @@ public class Login extends AppCompatActivity {
         } else {
             login.setOnClickListener(v -> {
                 login();
-                //getEmployeeData();
-
+                //getEmployeeId();
             });
         }
     }
@@ -145,7 +149,9 @@ public class Login extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     sessionManager.setUserId(sid);
                                     sessionManager.setKeyFullName(response.body().getFullName());
-                                    //getNamingSeries();
+
+                                    getEmployeeId();
+                                    getEmployeeData();
                                     startActivity(intent);
                                     finish();
                                 } else {
@@ -154,6 +160,7 @@ public class Login extends AppCompatActivity {
                                 }
                                 break;
                             }
+
                             onBackPressed();
                         }
                         progressDialog.dismiss();
@@ -165,9 +172,9 @@ public class Login extends AppCompatActivity {
                                 UserError errorResponse = new Gson().fromJson(errorResponseJson, UserError.class);
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                                builder.setTitle("Error Occurred");
-                                builder.setMessage(errorResponse.getMessage());
-
+                                builder.setTitle(errorResponse.getExcType());
+                                builder.setMessage(errorResponseJson);
+                                builder.setCancelable(false);
                                 // Set a positive button and its click listener
                                 builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
 
@@ -187,19 +194,18 @@ public class Login extends AppCompatActivity {
                 public void onFailure(Call<UserModel> call, Throwable t) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
                     builder.setTitle("Login Error");
-                    if (t.getMessage().equals("timeout")) {
-                        builder.setMessage("Kindly check your internet connection then try again");
 
-                        // Set a positive button and its click listener
-                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
-                        progressDialog.dismiss();
-                    } else {
                         builder.setMessage(t.getMessage());
-
+                        builder.setCancelable(false);
                         // Set a positive button and its click listener
                         builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
                         progressDialog.dismiss();
-                    }
+
+
+                        // Set a positive button and its click listener
+                      /*  builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                        progressDialog.dismiss();*/
+
                     // Create and show the alert dialog
                     AlertDialog dialog = builder.create();
                     dialog.show();
@@ -207,6 +213,64 @@ public class Login extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void getEmployeeData() {
+
+        ApiClient.getApiClient().getEmployeeData("Employee",  sessionManager.getKeyEmployeeNamingSeries(), "sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
+            @Override
+            public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
+                if (response.isSuccessful()) {
+                    EmployeeDataResponse responseModel = response.body();
+                    if (responseModel != null && responseModel.getData() != null) {
+                        EmployeeDataResponse.Data data = responseModel.getData();
+                        sessionManager.setUserFirstName(data.getFirstName());
+                        System.out.println("data.getFirstName() = " + data.getFirstName());
+                    } else {
+
+                        Toast.makeText(Login.this, "Null data", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorResponseJson = response.errorBody().string();
+                                PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                customView = getLayoutInflater().inflate(R.layout.customalertbuilder, null);
+                                //AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
+                                TextView textView = customView.findViewById(R.id.textView);
+                                TextView textView1 = customView.findViewById(R.id.alerttext);
+                                textView.setText(errorResponse.getExcType());
+                                textView1.setText(errorResponseJson);
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                                builder.setView(customView)
+                                        .setCancelable(false);
+                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeDataResponse> call, Throwable t) {
+                System.out.println("t.getMessage() = " + t.getMessage());
+                //Toast.makeText(Login.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private final TextWatcher loginTextWatcher = new TextWatcher() {
@@ -239,56 +303,28 @@ public class Login extends AppCompatActivity {
         return !password.isEmpty();
     }
 
-  /*  public void getNamingSeries() {
-        ApiClient.getApiClient().getEmployeePermission(sessionManager.getUserId()).enqueue(new Callback<EmployeePermission>() {
+    public void getEmployeeId(){
+        sessionManager = new UserSessionManager(this);
+        ApiClient.getApiClient().getEmployeeId("Employee", "sid="+sessionManager.getUserId()).enqueue(new Callback<LeaveType>() {
             @Override
-            public void onResponse(Call<EmployeePermission> call, Response<EmployeePermission> response) {
-                if (response.isSuccessful()) {
-                    EmployeePermission responseData = response.body();
-                    //Toast.makeText(Login.this, ""+responseData, Toast.LENGTH_SHORT).show();
-                    if (responseData != null && responseData.getMessage() != null) {
-                        List<EmployeePermission.Employee> employees = responseData.getMessage().getEmployee();
-                        if (employees != null && !employees.isEmpty()) {
-                            String doc = employees.get(0).getDoc();
-                            sessionManager.setKeyEmployeeNamingSeries(doc);
-                            Toast.makeText(Login.this, "Naming Series" + doc, Toast.LENGTH_SHORT).show();
-                            // Log.d(TAG, "onResponse: "+doc);
-                        } else {
-                            Toast.makeText(Login.this, "Doc is null", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } else {
-                    // Handle error response
-
-                    if (response.errorBody() != null) {
-                        try {
-                            String errorResponseJson = response.errorBody().string();
-                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                            builder.setTitle("Error Occurred");
-                            builder.setMessage(errorResponse.getExcType());
-
-                            // Set a positive button and its click listener
-                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
-
-                            // Create and show the alert dialog
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+            public void onResponse(Call<LeaveType> call, Response<LeaveType> response) {
+                if (response.isSuccessful()){
+                    LeaveType leaveType = response.body();
+                    if (leaveType != null && !leaveType.getData().isEmpty()){
+                        LeaveType.Datum datum = leaveType.getData().get(0);
+                        sessionManager.setKeyEmployeeNamingSeries(datum.getName());
+                        Toast.makeText(Login.this, "Login Naming Series "+sessionManager.getKeyEmployeeNamingSeries(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<EmployeePermission> call, Throwable t) {
+            public void onFailure(Call<LeaveType> call, Throwable t) {
+                Toast.makeText(Login.this, "Error retrieving employee naming series", Toast.LENGTH_LONG).show();
 
-                Toast.makeText(Login.this, "An error occurred" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }*/
+    }
     private boolean isDarkThemePreferred() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String themePreference = sharedPreferences.getString("theme_preference", "system");
