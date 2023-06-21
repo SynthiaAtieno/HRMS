@@ -47,6 +47,10 @@ public class OverviewFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
+        progressBar = view.findViewById(R.id.progressbar);
+
+        progressBar.setVisibility(View.VISIBLE);
+
         empId = view.findViewById(R.id.employee_id);
         phone = view.findViewById(R.id.employee_phone);
         email = view.findViewById(R.id.employee_email);
@@ -54,7 +58,6 @@ public class OverviewFragment extends Fragment {
         dob = view.findViewById(R.id.employee_dob);
         blood = view.findViewById(R.id.employee_blood);
         dateofjoining = view.findViewById(R.id.employee_dateofjoining);
-        progressBar = view.findViewById(R.id.progressbar);
         return view;
     }
 
@@ -69,29 +72,28 @@ public class OverviewFragment extends Fragment {
 
 
     public void getEmployeeData() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("Please wait...");
+        // progressDialog = new ProgressDialog(getContext());
+        /*progressDialog.setTitle("Please wait...");
         progressDialog.setMessage("Fetching data");
-        progressDialog.setCanceledOnTouchOutside(false);
-        //progressBar.setVisibility(View.VISIBLE);
+        progressDialog.setCanceledOnTouchOutside(false);*/
+        //
         sessionManager = new UserSessionManager(getContext());
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(),"sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
                 if (response.isSuccessful()) {
-                    progressDialog.show();
                     EmployeeDataResponse responseModel = response.body();
                     if (responseModel != null && responseModel.getData() != null) {
                         EmployeeDataResponse.Data data = responseModel.getData();
-                        if (data != null){
+                        if (data != null) {
 
 
-                        String dateOfBirth = DateUtils.convertStringToDate(data.getDateOfBirth(), "yyyy-MM-dd", "dd MMM yyy");
+                            String dateOfBirth = DateUtils.convertStringToDate(data.getDateOfBirth(), "yyyy-MM-dd", "dd MMM yyy");
 
-                        String dateOfJoining = DateUtils.convertStringToDate(data.getDateOfJoining(), "yyyy-MM-dd", "dd MMM yyy");
-                        String empIdtext = data.getEmployee();
+                            String dateOfJoining = DateUtils.convertStringToDate(data.getDateOfJoining(), "yyyy-MM-dd", "dd MMM yyy");
+                            String empIdtext = data.getEmployee();
 
                             empId.setText(empIdtext);
                             phone.setText(data.getEmployeeNumber());
@@ -101,20 +103,19 @@ public class OverviewFragment extends Fragment {
                             email.setText(data.getPreferedEmail());
                             dob.setText(dateOfBirth);
                             address.setText(data.getCurrentAddress());
-
+                            progressBar.setVisibility(View.GONE);
                         } else {
 
                             Toast.makeText(requireContext(), "Employee data is empty", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
 
                         }
 
                         // progressBar.setVisibility(View.GONE);
                     } else {
-                        progressDialog.dismiss();
                         Toast.makeText(getContext(), "Null data", Toast.LENGTH_SHORT).show();
-                        //progressBar.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
-                    progressDialog.dismiss();
                 } else {
                     if (response.errorBody() != null) {
                         try {
@@ -133,10 +134,9 @@ public class OverviewFragment extends Fragment {
                             //progressBar.setVisibility(View.GONE);
                         } catch (IOException e) {
                             e.printStackTrace();
-                            // progressBar.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
-                    //Toast.makeText(MainActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
                 }
 
             }
