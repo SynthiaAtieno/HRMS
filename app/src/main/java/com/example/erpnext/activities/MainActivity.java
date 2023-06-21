@@ -43,6 +43,7 @@ import com.example.erpnext.fragments.LeaveFragment;
 import com.example.erpnext.fragments.MarkAttendanceFragment;
 import com.example.erpnext.fragments.ProfileFragment;
 import com.example.erpnext.models.EmployeeDataResponse;
+import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
@@ -51,6 +52,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_nav);
+        //getNamingSeries();
         replaceFragment(new HomeFragment());
         sessionManager = new UserSessionManager(this);
 
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        sessionManager = new UserSessionManager(this);
 
         frameLayout = findViewById(R.id.frame_layout);
 
@@ -153,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -203,36 +208,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    logoutview = getLayoutInflater().inflate(R.layout.customalertlayout, null);
-                    //AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                    customView = getLayoutInflater().inflate(R.layout.customalertlayout, null);
+                    builder.setView(customView);
+                    AppCompatButton cancelBtn = customView.findViewById(R.id.cancelbtn);
+                    AppCompatButton okBtn = customView.findViewById(R.id.okbtn);
                    // TextView textView = customView.findViewById(R.id.textView);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setView(logoutview);
                     builder.setCancelable(false);
-                    // Set a positive button and its click listener
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Perform any action you want when the "Yes" button is clicked
-                            Toast.makeText(MainActivity.this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, Login.class));
-                            finish();
-                            sessionManager.clearSession();
-
-                        }
+                    AlertDialog dialog = builder.create();
+                    okBtn.setOnClickListener(view -> {
+                        Toast.makeText(MainActivity.this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, Login.class));
+                        finish();
+                        sessionManager.clearSession();
+                        dialog.dismiss();
                     });
-                    // Set a negative button and its click listener
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+
+                    cancelBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Perform any action you want when the "No" button is clicked
+                        public void onClick(View view) {
                             dialog.dismiss();
                         }
                     });
+                   // builder.setView(logoutview);
+                    builder.setCancelable(false);
 
-                    // Create and show the alert dialog
-                    AlertDialog dialog = builder.create();
                     dialog.show();
 
                 }
@@ -262,7 +265,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getEmployeeData() {
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
+        sessionManager = new UserSessionManager(this);
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), "sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @Override
             public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
                 if (response.isSuccessful()) {
@@ -274,24 +278,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         roletxt.setText(designation);
                         // Set the designation in a TextView
                         sessionManager.setUserFirstName(data.getFirstName());
-                        //Toast.makeText(MainActivity.this, "First Name"+sessionManager.getUserFirstName(), Toast.LENGTH_SHORT).show();
+                        //sessionManager.setKeyEmployeeNamingSeries(data.getNamingSeries());
+                       // Toast.makeText(MainActivity.this, "First Name"+sessionManager.getUserFirstName(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(MainActivity.this, "Null data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Null data", Toast.LENGTH_LONG).show();
                     }
 
                 } else {
                     if (response.errorBody() != null) {
                         try {
                             String errorResponseJson = response.errorBody().string();
-                            if (response.code() == 403) {
                                 PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
-
-                                customView = getLayoutInflater().inflate(R.layout.customalertbuilder, null);
+                                /*customView = getLayoutInflater().inflate(R.layout.customalertbuilder, null);
                                 //AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
                                 TextView textView = customView.findViewById(R.id.textView);
                                 textView.setText(errorResponse.getExcType());
-
+*/
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle(errorResponse.getExcType());
+                                String exceptionMessage = errorResponse.getException();
+                                int firstmaessage = exceptionMessage.indexOf(":");
+                                //int lastmessage = exceptionMessage.lastIndexOf(":");
+                                String errorMessage = exceptionMessage.substring(firstmaessage+1).trim();
+                                builder.setMessage(errorMessage);
+                                builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+
+                                // Set a positive button and its click listener
+
+
+                                // Create and show the alert dialog
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
+                                /*AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setView(customView)
                                         .setCancelable(false);
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -302,53 +322,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 });
 
                                 AlertDialog alertDialog = builder.create();
-                                alertDialog.show();
-
-                               /* Drawable image = getResources().getDrawable(R.drawable.error);
-                                CustomAlertDialogBuilder builder = new CustomAlertDialogBuilder(MainActivity.this);
-                                builder.setImage(image)
-                                        .setTitle("Title")
-                                        .setMessage("Message")
-                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                // Positive button click listener
-                                                // Add your logic here
-                                            }
-                                        })
-                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                // Negative button click listener
-                                                // Add your logic here
-                                            }
-                                        });
-
-                                android.app.AlertDialog alertDialog = builder.create();
                                 alertDialog.show();*/
 
-                               /* frameLayout.setVisibility(View.GONE);
-                                //drawerLayout.setVisibility(View.GONE);
-                                bottomNavigationView.setVisibility(View.GONE);
-                                errorlayout.setVisibility(View.VISIBLE);
-                                loginbtnerror.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        startActivity(new Intent(MainActivity.this, Login.class));
-                                    }
-                                });
-                                toolbar.setVisibility(View.GONE);
-                                permissiontxt.setText(errorResponse.getExcType());*/
-                                /*AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                builder.setTitle(errorResponse.getExcType());
-                                builder.setMessage("Your session expired, please logout then login to access your account");
-                                builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
 
-                                AlertDialog dialog = builder.create();
-                                dialog.show();*/
-                            } else {
-                                Toast.makeText(MainActivity.this, "Server error occurred, please reload your page", Toast.LENGTH_SHORT).show();
-                            }
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -360,7 +336,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onFailure(Call<EmployeeDataResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("t.getMessage() = " + t.getMessage());
+                //Toast.makeText(MainActivity.this, "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -379,4 +356,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
         }
     }
+
 }
