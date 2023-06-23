@@ -44,21 +44,20 @@ public interface ApiInterface {
     @GET("resource/{doctype}")
     Call<LeaveType> getEmployeeId(@Path("doctype") String doctype, @Header("Cookie") String sid);
 
-    @GET("resource/{doctype}/{name}")
-    Call<EmployeeDataResponse> getEmployeeData(@Path("doctype") String empDoctype, @Path("name") String name, @Header("Cookie") String sid);
+    @GET("resource/Employee/{name}")
+    Call<EmployeeDataResponse> getEmployeeData(@Path("name") String name, @Header("Cookie") String sid);
 
 
-    @GET("resource/{doctype}/{name}")
-    Call<PaySlip> getSlipData(@Path("doctype") String doctype, @Path("name") String name, @Header("Cookie") String sid);
+    @GET("resource/Salary Slip/{name}")
+    Call<PaySlip> getSlipData(@Path("name") String name, @Header("Cookie") String sid);
 
-    @GET("resource/{doctype}/{name}")
-    Call<HolidayList> getHolidayList(@Path("doctype") String doctype, @Path("name") String name, @Header("Cookie") String sid);
+    @GET("resource/Holiday List/{name}")
+    Call<HolidayList> getHolidayList(@Path("name") String name, @Header("Cookie") String sid);
 
 
     @GET("resource/{doctype}")
-    Call<LeaveAllocation> getLeaveTypes(@Path("doctype") String doctype, @Header("Cookie") String sid, @Query("fields") String fields);
+    Call<LeaveAllocation> getAllocatedLeaveTypes(@Path("doctype") String doctype, @Header("Cookie") String sid, @Query("fields") String fields);
 
-    //@Headers({"Authorization:ca703ed7be711da:a7f3d6e351f608c","Content-Type:application/json"})
     @POST("resource/{doctype}")
     Call<LeaveApplication> ApplyLeave(@Body LeaveApplicationData leaveApplicationData, @Path("doctype") String doctype, @Header("Cookie") String authorization);
 
@@ -72,6 +71,10 @@ public interface ApiInterface {
 
     @GET("resource/{doctype}")
     Call<LeaveAllocation> getLeaveTypesForLeaveReport(@Path("doctype") String doctype, @Header("Cookie") String sid);
+
+    //getting leave balance for an employee
+    @GET("resource/Leave Allocation")
+    Call<LeaveAllocation> getLeaveReportForEmployee(@Header("Cookie") String sid, @Query("fields") String fields);
 
 
     //endpoint for downloading salary slip in pdf format

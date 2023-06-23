@@ -72,7 +72,7 @@ public class EducationFragment extends Fragment {
 
     public void getEmployeeData() {
         sessionManager = new UserSessionManager(requireContext());
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), "sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
+        ApiClient.getApiClient().getEmployeeData(sessionManager.getKeyEmployeeNamingSeries(), "sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
