@@ -49,7 +49,7 @@ public class LeaveReportAdapter extends RecyclerView.Adapter<LeaveReportAdapter.
         System.out.println("Numberofdays = " + Numberofdays);
         holder.noofdays.setText(stringValue);
         String Leavestatus = leaveApplicationReport.getStatus();
-        holder.status.setText(leaveApplicationReport.getStatus());
+        holder.status.setText(Leavestatus);
         String fromdate = DateUtils.convertStringToDate(leaveApplicationReport.getFromDate(),"yyyy-MM-dd", "dd MMM yyy");
         String toDate = DateUtils.convertStringToDate(leaveApplicationReport.getToDate(),"yyyy-MM-dd", "dd MMM yyy");
         String appliedOn = DateUtils.convertStringToDate(leaveApplicationReport.getPostingDate(),"yyyy-MM-dd", "dd MMM yyy");
@@ -61,13 +61,18 @@ public class LeaveReportAdapter extends RecyclerView.Adapter<LeaveReportAdapter.
         switch (Leavestatus) {
             case "Open":
                 holder.open.setVisibility(View.VISIBLE);
+                holder.approved.setVisibility(View.GONE);
+                holder.rejected.setVisibility(View.GONE);
                 break;
             case "Rejected":
                 holder.rejected.setVisibility(View.VISIBLE);
+                holder.approved.setVisibility(View.GONE);
+                holder.open.setVisibility(View.GONE);
                 break;
             case "Approved":
                 holder.approved.setVisibility(View.VISIBLE);
-                break;
+                holder.open.setVisibility(View.GONE);
+                holder.rejected.setVisibility(View.GONE);
 
             default:
                 System.out.println(" No status found");
