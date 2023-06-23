@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.example.erpnext.R;
 import com.example.erpnext.adapters.SlipDetailsAdapter;
 import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.models.SlipDetails;
+import com.example.erpnext.models.SalarySlipReport;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
 import com.google.gson.Gson;
@@ -31,7 +31,7 @@ import retrofit2.Response;
 
 public class PaySlipDetailsActivity extends AppCompatActivity {
     ProgressBar progressBar;
-    List<SlipDetails.Datum> slipDetails;
+    List<SalarySlipReport.Datum> slipDetails;
     SlipDetailsAdapter adapter;
     UserSessionManager sessionManager;
     TextView firstbane, fromtodate, totaltxt;
@@ -69,13 +69,14 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
 
     public void getSlipData() {
         progressBar.setVisibility(View.VISIBLE);
-        ApiClient.getApiClient().getSlipDetails("Salary Slip", "sid="+sessionManager.getUserId()).enqueue(new Callback<SlipDetails>() {
+        String fields = "[\"start_date\",\"rounded_total\",\"end_date\",\"letter_head\",\"status\",\"total_working_days\", \"name\"]";
+        ApiClient.getApiClient().getSlipDetails("Salary Slip", "sid="+sessionManager.getUserId(), fields).enqueue(new Callback<SalarySlipReport>() {
             @Override
-            public void onResponse(Call<SlipDetails> call, Response<SlipDetails> response) {
+            public void onResponse(Call<SalarySlipReport> call, Response<SalarySlipReport> response) {
                 if (response.isSuccessful()) {
-                    SlipDetails responseModel = response.body();
+                    SalarySlipReport responseModel = response.body();
                     if (responseModel != null && !responseModel.getData().isEmpty()) {
-                        List<SlipDetails.Datum> datumList1 = responseModel.getData();
+                        List<SalarySlipReport.Datum> datumList1 = responseModel.getData();
                         slipDetails.addAll(datumList1);
                         adapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.GONE);
@@ -112,7 +113,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SlipDetails> call, Throwable t) {
+            public void onFailure(Call<SalarySlipReport> call, Throwable t) {
                 //Toast.makeText(PaySlipDetailsActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
                 if (t.getMessage().startsWith("failed to connect to")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipDetailsActivity.this);
