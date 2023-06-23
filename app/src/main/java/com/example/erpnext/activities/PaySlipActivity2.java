@@ -246,7 +246,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
         NumberFormat kenyanCurrencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "KE"));
         kenyanCurrencyFormat.setCurrency(Currency.getInstance("KES"));
         progressBar.setVisibility(View.VISIBLE);
-        ApiClient.getApiClient().getSlipData("Salary Slip", getIntent().getExtras().getString("name"), "sid=" + sessionManager.getUserId()).enqueue(new Callback<PaySlip>() {
+        ApiClient.getApiClient().getSlipData( getIntent().getExtras().getString("name"), "sid=" + sessionManager.getUserId()).enqueue(new Callback<PaySlip>() {
             @Override
             public void onResponse(Call<PaySlip> call, Response<PaySlip> response) {
                 if (response.isSuccessful()) {

@@ -79,6 +79,8 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                         List<SalarySlipReport.Datum> datumList1 = responseModel.getData();
                         for (SalarySlipReport.Datum datum:datumList1){
                             if (datum.getStatus().equals("Submitted")){
+                                slipDetails.clear();
+                                adapter.notifyDataSetChanged();
                                 slipDetails.addAll(datumList1);
                                 adapter.notifyDataSetChanged();
                                 progressBar.setVisibility(View.GONE);

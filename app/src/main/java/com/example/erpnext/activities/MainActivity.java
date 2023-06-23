@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void getEmployeeData() {
         sessionManager = new UserSessionManager(this);
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), "sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
+        ApiClient.getApiClient().getEmployeeData(sessionManager.getKeyEmployeeNamingSeries(), "sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @Override
             public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
                 if (response.isSuccessful()) {

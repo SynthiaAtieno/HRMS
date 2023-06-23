@@ -178,7 +178,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
         to.setOnClickListener(view -> showDatePickerDialog(to));
         progressBar.setVisibility(View.VISIBLE);
         String fields = "[\"leave_type\", \"name\", \"total_leaves_allocated\"]";
-        ApiClient.getApiClient().getLeaveTypes("Leave Allocation", "sid="+sessionManager.getUserId(), fields).enqueue(new Callback<LeaveAllocation>() {
+        ApiClient.getApiClient().getAllocatedLeaveTypes("Leave Allocation", "sid="+sessionManager.getUserId(), fields).enqueue(new Callback<LeaveAllocation>() {
             @Override
             public void onResponse(Call<LeaveAllocation> call, Response<LeaveAllocation> response) {
                 if (response.isSuccessful()) {
