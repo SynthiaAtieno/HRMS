@@ -273,6 +273,7 @@
 
     </ScrollView>
 
+<!--
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/errorlayoutforpayslip"
@@ -297,6 +298,7 @@
             android:src="@drawable/nothing_found"
             />
     </LinearLayout>
+-->
 
     <ProgressBar
         android:id="@+id/progressbar"
