@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.erpnext.R;
 import com.example.erpnext.adapters.SlipDetailsAdapter;
@@ -39,6 +39,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
         slipdetailsrecycler.setAdapter(adapter);
         progressBar = findViewById(R.id.progressbarSlipDetails);
         sessionManager = new UserSessionManager(this);
-        firstbane.setText("Hey " + sessionManager.getUserFirstName() + ",");
+        firstbane.setText("Hey " + sessionManager.getFullName().toUpperCase() + ",");
         getSlipData();
     }
 
@@ -101,10 +102,10 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                             // Create and show the alert dialog
                             AlertDialog dialog = builder.create();
                             dialog.show();
-                            //progressBar.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
                         } catch (IOException e) {
                             e.printStackTrace();
-                            // progressBar.setVisibility(View.GONE);
+                             progressBar.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -112,7 +113,19 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SlipDetails> call, Throwable t) {
-                Toast.makeText(PaySlipDetailsActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PaySlipDetailsActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if (t.getMessage().startsWith("failed to connect to")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipDetailsActivity.this);
+                    builder.setTitle("Error Occurred");
+                    builder.setMessage("The server is down or you have no internet connection, Please try again");
+                    // Set a positive button and its click listener
+                    builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                    // Create and show the alert dialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    progressBar.setVisibility(View.GONE);
+                }
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

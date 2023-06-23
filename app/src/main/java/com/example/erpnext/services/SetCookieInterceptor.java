@@ -1,9 +1,5 @@
 package com.example.erpnext.services;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

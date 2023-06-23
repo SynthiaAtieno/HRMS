@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ public class EducationFragment extends Fragment {
     List<EmployeeDataResponse.Education> educationList = new ArrayList<>();
     EmployeEducationAdapter adapter;
 
+    LinearLayout linearLayout;
+
     public EducationFragment() {
         // Required empty public constructor
     }
@@ -55,6 +58,7 @@ public class EducationFragment extends Fragment {
         progressBar = view.findViewById(R.id.educationProgressbar);
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewEducation.setAdapter(adapter);
+        linearLayout = view.findViewById(R.id.nothingfoundeducationlayout);
         return view;
     }
 
@@ -68,7 +72,7 @@ public class EducationFragment extends Fragment {
 
     public void getEmployeeData() {
         sessionManager = new UserSessionManager(requireContext());
-        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
+        ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(), "sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<EmployeeDataResponse> call, Response<EmployeeDataResponse> response) {
@@ -82,7 +86,8 @@ public class EducationFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
 
                         }else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                            linearLayout.setVisibility(View.VISIBLE);
+                            /*AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                             builder.setTitle("No Data");
                             builder.setMessage("Your education details has not been updated");
 
@@ -91,7 +96,7 @@ public class EducationFragment extends Fragment {
 
                             // Create and show the alert dialog
                             AlertDialog dialog = builder.create();
-                            dialog.show();
+                            dialog.show();*/
                             progressBar.setVisibility(View.GONE);
                             //Toast.makeText(requireContext(), "Your education details has not been added yet", Toast.LENGTH_SHORT).show();
                         }

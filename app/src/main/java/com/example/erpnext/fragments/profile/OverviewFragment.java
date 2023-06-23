@@ -50,7 +50,6 @@ public class OverviewFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressbar);
 
         progressBar.setVisibility(View.VISIBLE);
-
         empId = view.findViewById(R.id.employee_id);
         phone = view.findViewById(R.id.employee_phone);
         email = view.findViewById(R.id.employee_email);
@@ -58,6 +57,7 @@ public class OverviewFragment extends Fragment {
         dob = view.findViewById(R.id.employee_dob);
         blood = view.findViewById(R.id.employee_blood);
         dateofjoining = view.findViewById(R.id.employee_dateofjoining);
+
         return view;
     }
 
@@ -72,12 +72,7 @@ public class OverviewFragment extends Fragment {
 
 
     public void getEmployeeData() {
-        // progressDialog = new ProgressDialog(getContext());
-        /*progressDialog.setTitle("Please wait...");
-        progressDialog.setMessage("Fetching data");
-        progressDialog.setCanceledOnTouchOutside(false);*/
-        //
-        sessionManager = new UserSessionManager(getContext());
+        sessionManager = new UserSessionManager(requireContext());
         ApiClient.getApiClient().getEmployeeData("Employee", sessionManager.getKeyEmployeeNamingSeries(),"sid="+ sessionManager.getUserId()).enqueue(new Callback<EmployeeDataResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @SuppressLint("SetTextI18n")
@@ -86,6 +81,7 @@ public class OverviewFragment extends Fragment {
                 if (response.isSuccessful()) {
                     EmployeeDataResponse responseModel = response.body();
                     if (responseModel != null && responseModel.getData() != null) {
+                        progressBar.setVisibility(View.GONE);
                         EmployeeDataResponse.Data data = responseModel.getData();
                         if (data != null) {
 
@@ -111,7 +107,6 @@ public class OverviewFragment extends Fragment {
 
                         }
 
-                        // progressBar.setVisibility(View.GONE);
                     } else {
                         Toast.makeText(getContext(), "Null data", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);

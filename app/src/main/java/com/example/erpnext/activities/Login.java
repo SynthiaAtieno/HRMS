@@ -23,9 +23,9 @@ import android.widget.Toast;
 
 import com.example.erpnext.R;
 import com.example.erpnext.models.EmployeeDataResponse;
-import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.models.LeaveType;
 import com.example.erpnext.models.PermissionError;
+import com.example.erpnext.network_connctivity.NetworkUtils;
 import com.example.erpnext.session.UserSessionManager;
 import com.example.erpnext.models.UserError;
 import com.example.erpnext.models.UserModel;
@@ -77,6 +77,8 @@ public class Login extends AppCompatActivity {
         forgotpasswordtxt = findViewById(R.id.forgot_password);
         sessionManager = new UserSessionManager(Login.this);
 
+        boolean isConnected = NetworkUtils.isNetworkConnected(this);
+
         usernametxt.getEditText().addTextChangedListener(loginTextWatcher);
         passwordtxt.getEditText().addTextChangedListener(loginTextWatcher);
 
@@ -93,8 +95,12 @@ public class Login extends AppCompatActivity {
             finish();
         } else {
             login.setOnClickListener(v -> {
-                login();
-                //getEmployeeId();
+                if (isConnected){
+                    login();
+                }
+                else {
+                    Toast.makeText(this, "Please connect to the internet and try again", Toast.LENGTH_SHORT).show();
+                }
             });
         }
     }
@@ -120,7 +126,7 @@ public class Login extends AppCompatActivity {
         Map<String, String> credentials = new HashMap<>();
         credentials.put("usr", username);
         credentials.put("pwd", password);
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+      /*  if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
             builder.setTitle("Network Error");
@@ -131,25 +137,26 @@ public class Login extends AppCompatActivity {
 
             // Create and show the alert dialog
             AlertDialog dialog = builder.create();
-            dialog.show();
-        } else {
+            dialog.show();*/
+        //} else {
             progressDialog.show();
             ApiClient.getApiClient().login(credentials, contentType, accept, authToken).enqueue(new Callback<UserModel>() {
                 @Override
                 public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                     if (response.isSuccessful()) {
                         Headers headers = response.headers();
+                        UserModel userModel = response.body();
                         List<String> setCookieHeaders = headers.values("Set-Cookie");
                         String sid;
                         for (String cookieHeader : setCookieHeaders) {
                             if (cookieHeader.startsWith("sid=")) {
                                 sid = cookieHeader.substring(4, cookieHeader.indexOf(';'));
                                 if (!Objects.equals(sid, "Guest")) {
-                                    Toast.makeText(Login.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "" + userModel.getMessage(), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     sessionManager.setUserId(sid);
+                                    assert response.body() != null;
                                     sessionManager.setKeyFullName(response.body().getFullName());
-
                                     getEmployeeId();
                                     getEmployeeData();
                                     startActivity(intent);
@@ -172,8 +179,8 @@ public class Login extends AppCompatActivity {
                                 UserError errorResponse = new Gson().fromJson(errorResponseJson, UserError.class);
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                                builder.setTitle(errorResponse.getExcType());
-                                builder.setMessage(errorResponseJson);
+                                builder.setTitle("Login Failed");
+                                builder.setMessage(errorResponse.getMessage());
                                 builder.setCancelable(false);
                                 // Set a positive button and its click listener
                                 builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
@@ -213,7 +220,7 @@ public class Login extends AppCompatActivity {
                 }
             });
         }
-    }
+
 
     public void getEmployeeData() {
 
@@ -313,7 +320,7 @@ public class Login extends AppCompatActivity {
                     if (leaveType != null && !leaveType.getData().isEmpty()){
                         LeaveType.Datum datum = leaveType.getData().get(0);
                         sessionManager.setKeyEmployeeNamingSeries(datum.getName());
-                        Toast.makeText(Login.this, "Login Naming Series "+sessionManager.getKeyEmployeeNamingSeries(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Login.this, "Login Naming Series "+sessionManager.getKeyEmployeeNamingSeries(), Toast.LENGTH_LONG).show();
                     }
                 }
             }

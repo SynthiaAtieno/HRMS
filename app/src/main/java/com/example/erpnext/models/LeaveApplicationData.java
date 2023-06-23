@@ -1,4 +1,4 @@
-package com.example.erpnext;
+package com.example.erpnext.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -15,31 +15,31 @@ public class LeaveApplicationData {
     @SerializedName("description")
         String reasonForApplication;
 
-    @SerializedName("sid")
-    String sid;
+    @SerializedName("leaveApprover")
+    String leaveApprover;
 
     public LeaveApplicationData() {
     }
 
-    public LeaveApplicationData(String employeeId, String startDate, String endDate, String leaveType, String reasonForApplication, String sid) {
+    public LeaveApplicationData(String employeeId, String startDate, String endDate, String leaveType, String reasonForApplication, String leaveApprover) {
         this.employeeId = employeeId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.leaveType = leaveType;
         this.reasonForApplication = reasonForApplication;
-        this.sid = sid;
+        this.leaveApprover = leaveApprover;
     }
 
 
 // Constructor, getters, and setters
 
 
-    public String getSid() {
-        return sid;
+    public String getLeaveApprover() {
+        return leaveApprover;
     }
 
-    public void setSid(String sid) {
-        this.sid = sid;
+    public void setLeaveApprover(String leaveApprover) {
+        this.leaveApprover = leaveApprover;
     }
 
     public String getReasonForApplication() {

@@ -1,7 +1,5 @@
 package com.example.erpnext.models;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

@@ -66,12 +66,13 @@
                 android:layout_marginBottom="6dp"
                 >
                 <TextView
+                    android:id="@+id/fromdatereport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:textSize="14sp"
                     android:textColor="#000"
-                    android:text="10 Nov 2022"/>
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,43 +81,47 @@
                     android:textColor="#000"
                     android:text=" To "/>
                 <TextView
+                    android:id="@+id/todatereport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:textSize="14sp"
                     android:textColor="#000"
-                    android:text="13 Nov 2022"/>
+                    />
             </LinearLayout>
 
 
             <TextView
+                android:id="@+id/leavetypeforreport"
                 android:layout_marginBottom="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:textSize="14sp"
                 android:textColor="#000"
-                android:text="Graduation Leave"/>
+                />
+
             <TextView
-                android:layout_marginBottom="6dp"
+                android:id="@+id/numberOfDays"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
                 android:textAllCaps="false"
-                android:textSize="14sp"
                 android:textColor="#000"
-                android:text="03"/>
+                android:textSize="14sp" />
             <TextView
+                android:id="@+id/appliedon"
                 android:layout_marginBottom="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:textSize="14sp"
                 android:textColor="#000"
-                android:text="04 Nov 2022"/>
+                />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/leaveaction"
+            android:id="@+id/leavestatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -125,16 +130,27 @@
             android:layout_marginBottom="91dp"
             android:text="Action" />
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/acceptedstatus"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_toLeftOf="@id/leaveaction"
+            android:layout_toLeftOf="@id/leavestatus"
             android:src="@drawable/accept"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"/>
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/rejectedstatus"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_toLeftOf="@id/leaveaction"
+            android:layout_toLeftOf="@id/leavestatus"
             android:src="@drawable/ic_baseline_cancel_24"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/openstatus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toLeftOf="@id/leavestatus"
+            android:src="@drawable/ic_baseline_pending_24"
             android:visibility="gone"
             android:layout_alignParentBottom="true"/>
 

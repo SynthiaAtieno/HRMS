@@ -10,6 +10,7 @@ public class UserSessionManager {
     private static final String KEY_FULL_NAME = "full_name";
     private static final String KEY_EMPLOYEE_NAMING_SERIES = "employee_naming";
     private static final String USER_FIRST_NAME = "first_name";
+    private static final String USER_LEAVE_APPROVER = "leave_approver";
 
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
@@ -28,33 +29,44 @@ public class UserSessionManager {
         return sharedPreferences.getString(KEY_USER_ID, null);
     }
 
-    public void  setKeyFullName(String full_name){
+    public void setUserLeaveApprover(String leaveApprover) {
+        editor.putString(USER_LEAVE_APPROVER, leaveApprover);
+        editor.apply();
+    }
+
+    public String getLeaveApprover() {
+        return sharedPreferences.getString(USER_LEAVE_APPROVER, null);
+    }
+
+    public void setKeyFullName(String full_name) {
         editor.putString(KEY_FULL_NAME, full_name);
         editor.apply();
     }
 
 
-    public String getFullName(){
+    public String getFullName() {
         return sharedPreferences.getString(KEY_FULL_NAME, null);
     }
 
-    public void setKeyEmployeeNamingSeries(String employeeNamingSeries){
+    public void setKeyEmployeeNamingSeries(String employeeNamingSeries) {
         editor.putString(KEY_EMPLOYEE_NAMING_SERIES, employeeNamingSeries);
         editor.apply();
     }
 
-    public String getKeyEmployeeNamingSeries(){
+    public String getKeyEmployeeNamingSeries() {
         return sharedPreferences.getString(KEY_EMPLOYEE_NAMING_SERIES, null);
     }
-//set the first name and saves in a shared preference
-    public void setUserFirstName(String firstName){
+
+    //set the first name and saves in a shared preference
+    public void setUserFirstName(String firstName) {
         editor.putString(USER_FIRST_NAME, firstName);
         editor.apply();
     }
 
-    public String getUserFirstName(){
+    public String getUserFirstName() {
         return sharedPreferences.getString(USER_FIRST_NAME, null);
     }
+
     public boolean isLoggedIn() {
         return getUserId() != null && getFullName() != null;
     }

@@ -45,4 +45,5 @@
     <!--    Navigation strings-->
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="welcome_to_savanna_payslip_summary_details">Welcome to Savanna Payslip Summary details</string>
 </resources>

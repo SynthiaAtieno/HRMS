@@ -10,6 +10,7 @@
     app:cardElevation="12dp"
     android:padding="12dp">
 <RelativeLayout
+    android:padding="14dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -34,21 +35,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/alertimage"
-        android:text="You have no permission to access these files Please login to access your account"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="16sp" />
 
-<!--    <androidx.appcompat.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginbuttonerror"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/alerttext"
         android:layout_marginTop="12dp"
         android:background="@drawable/reset_btn"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
         android:text="Login"
         android:textAllCaps="false"
-        android:textColor="@color/white" />-->
+        android:textColor="@color/white" />
 </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

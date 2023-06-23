@@ -1,7 +1,6 @@
 package com.example.erpnext.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
@@ -24,8 +22,6 @@ import android.widget.Toast;
 
 import com.example.erpnext.Greetings;
 import com.example.erpnext.activities.LeaveReportActivity;
-import com.example.erpnext.activities.Login;
-import com.example.erpnext.activities.MainActivity;
 import com.example.erpnext.activities.PaySlipDetailsActivity;
 import com.example.erpnext.R;
 import com.example.erpnext.activities.drawerActivities.HolidayActivity;
@@ -96,7 +92,7 @@ public class HomeFragment extends Fragment {
             System.out.println(" First name is null ");
             // Toast.makeText(getContext(), "First Name is null", Toast.LENGTH_SHORT).show();
         } else {
-            first_name.setText(sessionManager.getUserFirstName().toUpperCase());
+            first_name.setText(sessionManager.getFullName().toUpperCase());
         }
 
         payslip.setOnClickListener(v ->
@@ -134,6 +130,7 @@ public class HomeFragment extends Fragment {
                     if (responseModel != null && responseModel.getData() != null) {
                         EmployeeDataResponse.Data data = responseModel.getData();
                         sessionManager.setUserFirstName(data.getFirstName().toUpperCase());
+                        sessionManager.setUserLeaveApprover(data.getLeaveApprover());
 
                     } else {
                         Toast.makeText(requireContext(), "Null data", Toast.LENGTH_SHORT).show();

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erpnext.R;
 import com.example.erpnext.models.PaySlip;
-import com.example.erpnext.models.SalarySlipData;
 
 import java.text.NumberFormat;
 import java.util.Currency;

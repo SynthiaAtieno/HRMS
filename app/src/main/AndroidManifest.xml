@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +24,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".PaySlipDetailsActivity"
+            android:name=".activities.PaySlipDetailsActivity"
             android:parentActivityName=".activities.MainActivity"
             android:exported="false" >
             <meta-data
@@ -28,15 +32,15 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ApplyLeaveActivity"
+            android:name=".activities.ApplyLeaveActivity"
             android:exported="false"
-            android:parentActivityName=".LeaveReportActivity" >
+            android:parentActivityName=".activities.LeaveReportActivity" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LeaveReportActivity"
+            android:name=".activities.LeaveReportActivity"
             android:exported="false"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
@@ -54,7 +58,7 @@
         <activity
             android:name=".activities.PaySlipActivity2"
             android:exported="false"
-            android:parentActivityName=".PaySlipDetailsActivity" >
+            android:parentActivityName=".activities.PaySlipDetailsActivity" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

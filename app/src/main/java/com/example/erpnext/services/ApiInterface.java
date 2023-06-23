@@ -1,8 +1,11 @@
 package com.example.erpnext.services;
 
-import com.example.erpnext.LeaveType;
-import com.example.erpnext.models.EmployeeDataResponse;
+import com.example.erpnext.models.LeaveApplicationData;
 import com.example.erpnext.models.EmployeePermission;
+import com.example.erpnext.models.LeaveAllocation;
+import com.example.erpnext.models.LeaveApplicationReport;
+import com.example.erpnext.models.LeaveType;
+import com.example.erpnext.models.EmployeeDataResponse;
 import com.example.erpnext.models.HolidayList;
 import com.example.erpnext.models.LeaveApplication;
 import com.example.erpnext.models.PaySlip;
@@ -20,6 +23,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 
 public interface ApiInterface {
 
@@ -29,33 +33,51 @@ public interface ApiInterface {
     @POST("method/logout")
     Call<ResponseBody> logout();
 
-//    @GET("frappe.realtime.get_user_info")
-//    Call<UserInfo> getUserInfo(@Query("sid") String sid);
+    @GET("method/frappe.auth.get_logged_user")
+    @Headers({"Authorization: ca703ed7be711da:a7f3d6e351f608c","Content-Type:application/json"})
+    Call<ResponseBody> login();
 
-    /*@Headers({"Content-Type:application/json", "Accept:application/json"})
+    //@GET("")
+    @Headers({"Content-Type:application/json", "Accept:application/json"})
     @GET("method/frappe.core.doctype.user_permission.user_permission.get_user_permissions")
-    Call<EmployeePermission> getEmployeePermission(@Query("sid") String sid);*/
+    Call<EmployeePermission> getEmployeePermission(@Query("sid") String sid);
+    @GET("resource/{doctype}")
+    Call<LeaveType> getEmployeeId(@Path("doctype") String doctype, @Header("Cookie") String sid);
 
     @GET("resource/{doctype}/{name}")
-    Call<EmployeeDataResponse> getEmployeeData(@Path("doctype") String empDoctype, @Path("name") String name, @Query("sid") String sid);
+    Call<EmployeeDataResponse> getEmployeeData(@Path("doctype") String empDoctype, @Path("name") String name, @Header("Cookie") String sid);
 
 
     @GET("resource/{doctype}/{name}")
-    Call<PaySlip> getSlipData(@Path("doctype") String doctype, @Path("name") String name, @Query("sid") String sid);
+    Call<PaySlip> getSlipData(@Path("doctype") String doctype, @Path("name") String name, @Header("Cookie") String sid);
 
-    @GET("method/frappe.desk.form.load.getdoc")
-    Call<HolidayList> getHolidayList(@Query("doctype") String doctype, @Query("name") String name, @Query("sid") String sid);
-
+    @GET("resource/{doctype}/{name}")
+    Call<HolidayList> getHolidayList(@Path("doctype") String doctype, @Path("name") String name, @Header("Cookie") String sid);
 
 
     @GET("resource/{doctype}")
-    Call<LeaveType> getLeaveTypes(@Path("doctype") String doctype, @Query("sid") String sid);
+    Call<LeaveAllocation> getLeaveTypes(@Path("doctype") String doctype, @Header("Cookie") String sid, @Query("fields") String fields);
 
-    @POST("resource/{doctype}/{sid}")
-    Call<LeaveApplication> ApplyLeave(@Body Map<String, String> parameters, @Path("doctype") String doctype, @Path("sid") String sid,@Header("Content-Type") String contentType, @Header("Accept") String accept);
+    //@Headers({"Authorization:ca703ed7be711da:a7f3d6e351f608c","Content-Type:application/json"})
+    @POST("resource/{doctype}")
+    Call<LeaveApplication> ApplyLeave(@Body LeaveApplicationData leaveApplicationData, @Path("doctype") String doctype, @Header("Cookie") String authorization);
 
     @GET("resource/{doctype}")
-    Call<SlipDetails> getSlipDetails(@Path("doctype") String doctype, @Query("sid") String sid);
+    Call<SlipDetails> getSlipDetails(@Path("doctype") String doctype, @Header("Cookie") String sid);
+
+
+    @GET("resource/{doctype}")
+    Call<LeaveApplicationReport> getAppliedLeavesReport(@Path("doctype") String doctype, @Header("Cookie") String sid, @Query("fields") String fields);
+
+
+    @GET("resource/{doctype}")
+    Call<LeaveAllocation> getLeaveTypesForLeaveReport(@Path("doctype") String doctype, @Header("Cookie") String sid);
+
+
+    //endpoint for downloading salary slip in pdf format
+    @Streaming
+    @GET("method/frappe.utils.print_format.download_multi_pdf")
+    Call<ResponseBody> DownloadSlip(@Header("Cookie") String sid, @Query("doctype") String doctype, @Query("name") String name);
 
 
 }

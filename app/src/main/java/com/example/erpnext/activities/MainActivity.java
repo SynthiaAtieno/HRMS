@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -43,7 +42,6 @@ import com.example.erpnext.fragments.LeaveFragment;
 import com.example.erpnext.fragments.MarkAttendanceFragment;
 import com.example.erpnext.fragments.ProfileFragment;
 import com.example.erpnext.models.EmployeeDataResponse;
-import com.example.erpnext.models.EmployeePermission;
 import com.example.erpnext.models.PermissionError;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
@@ -52,7 +50,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

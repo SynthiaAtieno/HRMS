@@ -45,11 +45,6 @@ public class SlipDetailsAdapter extends RecyclerView.Adapter<SlipDetailsAdapter.
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), PaySlipActivity2.class);
                 intent.putExtra("name", datum.getName());
-                /*intent.putExtra("amount", defaultFormat.format(loans.getAmount()));
-                intent.putExtra("status", loans.getStatus());
-                intent.putExtra("description", loans.getDescription());
-                intent.putExtra("loanId", loans.getLoanId());
-                intent.putExtra("date", loans.getDate());*/
                 view.getContext().startActivity(intent);
             }
 

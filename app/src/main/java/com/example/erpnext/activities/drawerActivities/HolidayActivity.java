@@ -72,12 +72,12 @@ public class HolidayActivity extends AppCompatActivity {
             public void onResponse(Call<HolidayList> call, Response<HolidayList> response) {
                 if (response.isSuccessful()){
                     HolidayList holidayList = response.body();
-                    if (holidayList != null && !holidayList.getDocs().isEmpty() && holidayList.getDocs() !=null){
+                    if (holidayList != null && holidayList.getData() != null){
 
                         dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         holidayLists = new ArrayList<>();
                         holidayListAdapter = new HolidayListAdapter(holidayLists, HolidayActivity.this);
-                        HolidayList.Doc holiday = holidayList.getDocs().get(0);
+                        HolidayList.Data holiday = holidayList.getData();
                         String currentDate = dateFormat.format(new Date());
                         for (HolidayList.Holiday holiday1 : holiday.getHolidays()){
                             if (holiday1.getHolidayDate().compareTo(currentDate)>0 || holiday1.getHolidayDate().compareTo(currentDate) == 0){

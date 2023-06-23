@@ -6,41 +6,27 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,9 +36,6 @@ import com.example.erpnext.adapters.SalarySlipAdapter;
 import com.example.erpnext.adapters.SalarySlipDeductionAdapter;
 import com.example.erpnext.models.PaySlip;
 import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.models.SalarySlipData;
-import com.example.erpnext.models.SlipDetails;
-import com.example.erpnext.models.SlipNumber;
 import com.example.erpnext.services.ApiClient;
 import com.example.erpnext.session.UserSessionManager;
 import com.github.mikephil.charting.charts.PieChart;
@@ -62,7 +45,11 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -70,7 +57,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -87,10 +74,13 @@ public class PaySlipActivity2 extends AppCompatActivity {
     SalarySlipDeductionAdapter deductionAdapter;
     ProgressBar progressBar;
     PieChart pieChart;
+    View customView;
 
     ScrollView scrollView;
     LinearLayout linearLayout, earninglayout, errorlayoutforeanings, deductionslayout, errorlayoutfordeductions;
+    private static final int MY_REQUEST_PERMISSION = 100;
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (isDarkThemePreferred()) {
@@ -110,7 +100,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
         scrollView = findViewById(R.id.payslipscrollview);
         linearLayout = findViewById(R.id.errorlayoutforpayslip);
 
-        downloadBtn = findViewById(R.id.downloadBtn);
+        downloadBtn = findViewById(R.id.downloadSalarySlipBtn);
         progressBar = findViewById(R.id.progressbar);
         pieChart = findViewById(R.id.pieChart);
         dateTxt = findViewById(R.id.datetxt);
@@ -121,7 +111,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
         errorlayoutfordeductions = findViewById(R.id.errorlayoutfordeductions);
         deductionslayout = findViewById(R.id.layoutfordeductions);
 
-        deductionComponent = findViewById(R.id.deductioncomponent);
+        deductionComponent = findViewById(R.id.deductionsComponent);
         totalDeductionstxt = findViewById(R.id.total_deductions);
         deductionRecycler = findViewById(R.id.deductionsRecyclerview);
         earningRecycler = findViewById(R.id.earningRecyclerview);
@@ -134,56 +124,139 @@ public class PaySlipActivity2 extends AppCompatActivity {
         deductionRecycler.setAdapter(deductionAdapter);
         earningRecycler.setAdapter(earniAdapter);
 
-        downloadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popupwinddowfordownload, null);
+        downloadBtn.setOnClickListener(view -> {
+            //if os is marshmallow or above, handle the , handle the runtime
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-// Create the popup window
-                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-                popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                popupWindow.setFocusable(true); // Enable focus
-                popupWindow.setOutsideTouchable(true);
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                    //permission denied request permission
+                    String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    requestPermissions(permissions, MY_REQUEST_PERMISSION);
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    // permission already granted perfom download
+                    ApiClient.getApiClient().DownloadSlip("sid=" + sessionManager.getUserId(), "Salary Slip", "[" + "\"" + getIntent().getExtras().getString("name") + "\"" + "]")
+                            .enqueue(new Callback<ResponseBody>() {
+                                @SuppressLint("SetTextI18n")
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        String contentDispositionHeader = response.headers().get("Content-Disposition");
+                                        if (contentDispositionHeader != null && !contentDispositionHeader.isEmpty()) {
+                                            // Example header: attachment; filename="example.pdf"
+                                            String[] parts = contentDispositionHeader.split(";");
+                                            for (String part : parts) {
+                                                part = part.trim();
+                                                if (part.startsWith("filename=")) {
+                                                    // Remove leading and trailing quotes from the filename
+                                                    String fileName = part.substring("filename=".length()).replace("\"", "");
+                                                    if (response.body() != null) {
+                                                        saveFileLocally(response.body().byteStream(), fileName);
+                                                        customView = getLayoutInflater().inflate(R.layout.success, null);
+                                                        TextView message = customView.findViewById(R.id.message);
+                                                        AppCompatButton button = customView.findViewById(R.id.closebtn);
+                                                        message.setText("Download successful");
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                                        builder.setView(customView);
+                                                        AlertDialog dialog = builder.create();
 
-                // Show the popup window at a specific location
-                popupWindow.showAtLocation(downloadBtn, Gravity.CENTER, 1, -1);
-                popupWindow.setOutsideTouchable(false);
-                popupWindow.setWidth(400);
-                popupWindow.setHeight(400);
+                                                        button.setOnClickListener(view1 -> dialog.dismiss());
+                                                        progressBar.setVisibility(View.GONE);
+                                                        dialog.show();
+                                                    } else {
+                                                        Toast.makeText(PaySlipActivity2.this, "Body is null", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            }
+                                            progressBar.setVisibility(View.GONE);
+                                        }
+                                        progressBar.setVisibility(View.GONE);
+                                    } else {
+                                        if (response.errorBody() != null) {
+                                            progressBar.setVisibility(View.GONE);
+                                            try {
+                                                String errorResponseJson = response.errorBody().string();
+                                                PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                                builder.setTitle(errorResponse.getExcType());
+                                                String exceptionMessage = errorResponse.getException();
+                                                int firstmaessage = exceptionMessage.indexOf(":");
+                                                //int lastmessage = exceptionMessage.lastIndexOf(":");
+                                                String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
+                                                builder.setMessage(errorMessage);
+                                                builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                                                // Create and show the alert dialog
+                                                AlertDialog dialog = builder.create();
+                                                dialog.show();
+                                                progressBar.setVisibility(View.GONE);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                                 progressBar.setVisibility(View.GONE);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(PaySlipActivity2.this, "Failed to download " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
 
-// Example: Close the popup window when clicked outside
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                            popupWindow.dismiss();
-                            return true;
-                        }
-                        return false;
-                    }
-                });
+                                }
+                            });
+                }
+            } else {
+                // build version is less than marshmallow perfom download
+                ApiClient.getApiClient().DownloadSlip("sid=" + sessionManager.getUserId(), "Salary Slip", "[" + "\"" + getIntent().getExtras().getString("name") + "\"" + "]")
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+                                    String contentDispositionHeader = response.headers().get("Content-Disposition");
+                                    if (contentDispositionHeader != null && !contentDispositionHeader.isEmpty()) {
+                                        // Example header: attachment; filename="example.pdf"
+                                        String[] parts = contentDispositionHeader.split(";");
+                                        for (String part : parts) {
+                                            part = part.trim();
+                                            if (part.startsWith("filename=")) {
+                                                // Remove leading and trailing quotes from the filename
+                                                String fileName = part.substring("filename=".length()).replace("\"", "");
+                                                if (response.body() != null) {
+                                                    saveFileLocally(response.body().byteStream(), fileName);
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(PaySlipActivity2.this, "Failed to download the salary slip", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
             }
         });
-// Inflate the layout for the popup window
 
 
         NumberFormat kenyanCurrencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "KE"));
         kenyanCurrencyFormat.setCurrency(Currency.getInstance("KES"));
         progressBar.setVisibility(View.VISIBLE);
-        ApiClient.getApiClient().getSlipData("Salary Slip", getIntent().getExtras().getString("name"), "sid="+sessionManager.getUserId()).enqueue(new Callback<PaySlip>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+        ApiClient.getApiClient().getSlipData("Salary Slip", getIntent().getExtras().getString("name"), "sid=" + sessionManager.getUserId()).enqueue(new Callback<PaySlip>() {
             @Override
             public void onResponse(Call<PaySlip> call, Response<PaySlip> response) {
                 if (response.isSuccessful()) {
                     PaySlip paySlip = response.body();
 
-                    if (paySlip != null && paySlip.getData().getEarnings().isEmpty() && paySlip.getData().getDeductions().isEmpty() ){
+                    if (paySlip != null && paySlip.getData().getEarnings().isEmpty() && paySlip.getData().getDeductions().isEmpty()) {
                         scrollView.setVisibility(View.GONE);
                         linearLayout.setVisibility(View.VISIBLE);
-                    }else {
+                        progressBar.setVisibility(View.GONE);
+                    } else {
                        /* scrollView.setVisibility(View.VISIBLE);
                         linearLayout.setVisibility(View.GONE);*/
 
@@ -237,8 +310,30 @@ public class PaySlipActivity2 extends AppCompatActivity {
                     }
                 } else {
 
-                    Toast.makeText(PaySlipActivity2.this, "failure", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
+                    if (response.errorBody() != null) {
+                        progressBar.setVisibility(View.GONE);
+                        try {
+                            String errorResponseJson = response.errorBody().string();
+                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                            builder.setTitle(errorResponse.getExcType());
+                            String exceptionMessage = errorResponse.getException();
+                            int firstmaessage = exceptionMessage.indexOf(":");
+                            //int lastmessage = exceptionMessage.lastIndexOf(":");
+                            String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
+                            builder.setMessage(errorMessage);
+                            builder.setCancelable(false);
+                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                            // Create and show the alert dialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            progressBar.setVisibility(View.GONE);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                             progressBar.setVisibility(View.GONE);
+                        }
+                    }
+
 
 
                 }
@@ -252,6 +347,119 @@ public class PaySlipActivity2 extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+
+    private void saveFileLocally(InputStream inputStream, String fileName) {
+        try {
+            File directory = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+            File file = new File(directory, fileName);
+            String filePath = file.getAbsolutePath();
+
+            System.out.println("filePath = " + filePath);
+            OutputStream outputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+            outputStream.close();
+
+            // File saved successfully
+            // You can perform any additional operations on the saved file here
+        } catch (IOException e) {
+            Log.d("Exception occured", "saveFileLocally: " + e);
+            e.printStackTrace();
+            // Handle the exception appropriately
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_REQUEST_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //permission granted for popup, perform download
+                ApiClient.getApiClient().DownloadSlip("sid=" + sessionManager.getUserId(), "Salary Slip", "[" + "\"" + getIntent().getExtras().getString("name") + "\"" + "]")
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+                                    String contentDispositionHeader = response.headers().get("Content-Disposition");
+                                    if (contentDispositionHeader != null && !contentDispositionHeader.isEmpty()) {
+                                        // Example header: attachment; filename="example.pdf"
+                                        String[] parts = contentDispositionHeader.split(";");
+                                        for (String part : parts) {
+                                            part = part.trim();
+                                            if (part.startsWith("filename=")) {
+                                                // Remove leading and trailing quotes from the filename
+                                                String fileName = part.substring("filename=".length()).replace("\"", "");
+                                                if (response.body() != null) {
+                                                    saveFileLocally(response.body().byteStream(), fileName);
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (response.errorBody() != null) {
+                                        try {
+                                            String errorResponseJson = response.errorBody().string();
+                                            PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+
+                                            customView = getLayoutInflater().inflate(R.layout.customalertbuilder, null);
+                                            //AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
+                                            TextView textView = customView.findViewById(R.id.textView);
+                                            TextView textView1 = customView.findViewById(R.id.alerttext);
+                                            textView.setText(errorResponse.getExcType());
+                                            textView1.setText(errorResponseJson);
+
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                            builder.setView(customView)
+                                                    .setCancelable(false);
+                                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    dialogInterface.dismiss();
+                                                }
+                                            });
+
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                customView = getLayoutInflater().inflate(R.layout.failure, null);
+                                TextView message = customView.findViewById(R.id.message);
+                                AppCompatButton button = customView.findViewById(R.id.closebtn);
+                                //TextView alertText = customView.findViewById(R.id.alerttext);
+                                message.setText(t.getMessage());
+                                AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
+                                builder.setView(customView);
+                                AlertDialog dialog = builder.create();
+
+                                button.setOnClickListener(view1 -> dialog.dismiss());
+
+                                dialog.show();
+
+                            }
+                        });
+            } else {
+                //permission denied from popup show error message
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 
@@ -310,5 +518,8 @@ public class PaySlipActivity2 extends AppCompatActivity {
             return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
         }
     }
+
 }
+
+
 
