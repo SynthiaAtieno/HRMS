@@ -60,7 +60,7 @@
 
 <LinearLayout
     android:layout_below="@id/userintrolayout"
-    android:id="@+id/nothingfoundlayout"
+    android:id="@+id/payslipnotfoundlayout"
     android:layout_centerInParent="true"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
