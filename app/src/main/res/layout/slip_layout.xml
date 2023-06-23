@@ -28,47 +28,73 @@
                 android:src="@drawable/payslip_1" />
 
             <TextView
-                android:id="@+id/sliptextview"
+                android:layout_marginTop="4dp"
+                android:id="@+id/monthtxt"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="42dp"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:layout_toEndOf="@id/slipimage"
-                android:text="Slip 0001"
-                android:layout_centerInParent="true"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
+            <LinearLayout
+                android:layout_below="@id/monthtxt"
+                android:layout_toEndOf="@id/slipimage"
+                android:padding="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/fromtodatesummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/monthtxt"
+                    android:layout_marginTop="6dp"
+                    android:layout_toEndOf="@id/slipimage"
+                    android:layout_marginEnd="4dp"
+                    android:textColor="#7B000000"
+                    android:textStyle="bold" />
 
-            <!--<TextView
-                android:id="@+id/fromtodate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/sliptextview"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="6dp"
-                android:layout_toEndOf="@id/slipimage"
-                android:text="Slip 0001"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/monthtxt"
+                    android:layout_marginTop="6dp"
+                    android:layout_toEndOf="@id/slipimage"
+                    android:text="-"
+                    android:textColor="#7B000000"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/todatesummary"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/monthtxt"
+                    android:layout_marginTop="6dp"
+                    android:layout_toEndOf="@id/slipimage"
+                    android:textColor="#7B000000"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
 
             <TextView
-                android:id="@+id/totaltxt"
+                android:id="@+id/totaltxtsummary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/sliptextview"
+                android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="4dp"
-                android:layout_toLeftOf="@id/arrowimage"
-                android:text="Slip 0001"
                 android:textColor="@color/black"
-                android:textStyle="bold" />-->
+                android:textStyle="bold" />
 
-            <ImageView
+           <!-- <ImageView
                 android:id="@+id/arrowimage"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+                android:src="@drawable/ic_baseline_arrow_forward_ios_24" />-->
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
