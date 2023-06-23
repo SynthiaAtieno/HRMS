@@ -9,7 +9,7 @@ import com.example.erpnext.models.EmployeeDataResponse;
 import com.example.erpnext.models.HolidayList;
 import com.example.erpnext.models.LeaveApplication;
 import com.example.erpnext.models.PaySlip;
-import com.example.erpnext.models.SlipDetails;
+import com.example.erpnext.models.SalarySlipReport;
 import com.example.erpnext.models.UserModel;
 
 import java.util.Map;
@@ -63,7 +63,7 @@ public interface ApiInterface {
     Call<LeaveApplication> ApplyLeave(@Body LeaveApplicationData leaveApplicationData, @Path("doctype") String doctype, @Header("Cookie") String authorization);
 
     @GET("resource/{doctype}")
-    Call<SlipDetails> getSlipDetails(@Path("doctype") String doctype, @Header("Cookie") String sid);
+    Call<SalarySlipReport> getSlipDetails(@Path("doctype") String doctype, @Header("Cookie") String sid, @Query("fields") String fields);
 
 
     @GET("resource/{doctype}")
