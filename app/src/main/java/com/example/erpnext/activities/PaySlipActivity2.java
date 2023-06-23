@@ -98,7 +98,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
 
 
         scrollView = findViewById(R.id.payslipscrollview);
-        linearLayout = findViewById(R.id.errorlayoutforpayslip);
+      //  linearLayout = findViewById(R.id.errorlayoutforpayslip);
 
         downloadBtn = findViewById(R.id.downloadSalarySlipBtn);
         progressBar = findViewById(R.id.progressbar);
@@ -251,15 +251,6 @@ public class PaySlipActivity2 extends AppCompatActivity {
             public void onResponse(Call<PaySlip> call, Response<PaySlip> response) {
                 if (response.isSuccessful()) {
                     PaySlip paySlip = response.body();
-
-                    if (paySlip != null && paySlip.getData().getEarnings().isEmpty() && paySlip.getData().getDeductions().isEmpty()) {
-                        scrollView.setVisibility(View.GONE);
-                        linearLayout.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                    } else {
-                       /* scrollView.setVisibility(View.VISIBLE);
-                        linearLayout.setVisibility(View.GONE);*/
-
                         if (paySlip != null && !paySlip.getData().getDeductions().isEmpty()) {
                             String totalDeductions = kenyanCurrencyFormat.format(paySlip.getData().getTotalDeduction());
                             totalDeductionstxt.setText(totalDeductions);
@@ -308,7 +299,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
 
 
                     }
-                } else {
+                else {
 
                     if (response.errorBody() != null) {
                         progressBar.setVisibility(View.GONE);
