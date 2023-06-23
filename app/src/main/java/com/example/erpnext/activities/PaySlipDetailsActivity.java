@@ -52,7 +52,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
         slipDetails = new ArrayList<>();
         adapter = new SlipDetailsAdapter(slipDetails, this);
 
-        linearLayout = findViewById(R.id.nothingfoundlayout);
+        linearLayout = findViewById(R.id.payslipnotfoundlayout);
         /*fromtodate = findViewById(R.id.fromdate);
         totaltxt = findViewById(R.id.totaltxt);*/
 
@@ -77,15 +77,21 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                     SalarySlipReport responseModel = response.body();
                     if (responseModel != null && !responseModel.getData().isEmpty()) {
                         List<SalarySlipReport.Datum> datumList1 = responseModel.getData();
-                        slipDetails.addAll(datumList1);
-                        adapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.GONE);
+                        for (SalarySlipReport.Datum datum:datumList1){
+                            if (datum.getStatus().equals("Submitted")){
+                                slipDetails.addAll(datumList1);
+                                adapter.notifyDataSetChanged();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                            else {
+                                linearLayout.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+
                     }
                     else {
-                        linearLayout.setVisibility(View.VISIBLE);
 
-                        //Toast.makeText(PaySlipDetailsActivity.this, "No data found", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
                     }
                     //Toast.makeText(PaySlipDetailsActivity.this, "success", Toast.LENGTH_SHORT).show();
                 }
