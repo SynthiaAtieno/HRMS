@@ -1,4 +1,4 @@
-package com.example.erpnext.adapters;
+package com.example.savannahrms.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.erpnext.R;
-import com.example.erpnext.models.EmployeeDataResponse;
+import com.example.savannahrms.R;
+import com.example.savannahrms.models.EmployeeDataResponse;
 
 import java.util.List;
 
