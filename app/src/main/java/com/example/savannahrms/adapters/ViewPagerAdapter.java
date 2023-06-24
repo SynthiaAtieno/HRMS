@@ -1,4 +1,4 @@
-package com.example.erpnext.adapters;
+package com.example.savannahrms.adapters;
 
 
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.example.erpnext.R;
+import com.example.savannahrms.R;
 
 public class ViewPagerAdapter extends PagerAdapter {
     Context context;
