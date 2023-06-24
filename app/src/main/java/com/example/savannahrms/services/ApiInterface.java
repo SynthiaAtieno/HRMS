@@ -1,16 +1,16 @@
-package com.example.erpnext.services;
+package com.example.savannahrms.services;
 
-import com.example.erpnext.models.LeaveApplicationData;
-import com.example.erpnext.models.EmployeePermission;
-import com.example.erpnext.models.LeaveAllocation;
-import com.example.erpnext.models.LeaveApplicationReport;
-import com.example.erpnext.models.LeaveType;
-import com.example.erpnext.models.EmployeeDataResponse;
-import com.example.erpnext.models.HolidayList;
-import com.example.erpnext.models.LeaveApplication;
-import com.example.erpnext.models.PaySlip;
-import com.example.erpnext.models.SalarySlipReport;
-import com.example.erpnext.models.UserModel;
+import com.example.savannahrms.models.LeaveApplicationData;
+import com.example.savannahrms.models.EmployeePermission;
+import com.example.savannahrms.models.LeaveAllocation;
+import com.example.savannahrms.models.LeaveApplicationReport;
+import com.example.savannahrms.models.LeaveType;
+import com.example.savannahrms.models.EmployeeDataResponse;
+import com.example.savannahrms.models.HolidayList;
+import com.example.savannahrms.models.LeaveApplication;
+import com.example.savannahrms.models.PaySlip;
+import com.example.savannahrms.models.SalarySlipReport;
+import com.example.savannahrms.models.UserModel;
 
 import java.util.Map;
 
