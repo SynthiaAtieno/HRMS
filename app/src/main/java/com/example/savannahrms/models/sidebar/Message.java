@@ -1,4 +1,4 @@
-package com.example.erpnext.models.sidebar;
+package com.example.savannahrms.models.sidebar;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
