@@ -1,4 +1,4 @@
-package com.example.erpnext.adapters;
+package com.example.savannahrms.adapters;
 
 import android.icu.text.SimpleDateFormat;
 import android.net.ParseException;
