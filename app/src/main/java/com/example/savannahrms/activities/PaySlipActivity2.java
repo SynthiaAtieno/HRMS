@@ -1,4 +1,4 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,14 +31,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erpnext.R;
-import com.example.erpnext.adapters.DateUtils;
-import com.example.erpnext.adapters.SalarySlipAdapter;
-import com.example.erpnext.adapters.SalarySlipDeductionAdapter;
-import com.example.erpnext.models.PaySlip;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.R;
+import com.example.savannahrms.adapters.DateUtils;
+import com.example.savannahrms.adapters.SalarySlipAdapter;
+import com.example.savannahrms.adapters.SalarySlipDeductionAdapter;
+import com.example.savannahrms.models.PaySlip;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -488,8 +489,11 @@ public class PaySlipActivity2 extends AppCompatActivity {
         dataSet.setValueLinePart1Length(0.5f);
         dataSet.setValueLinePart2Length(0.5f);
         dataSet.setValueLineWidth(2f);
+        int labelColor = ContextCompat.getColor(this, R.color.text_color);
+        dataSet.setValueTextColor(labelColor);
 
         pieChart.setDrawEntryLabels(false);
+        pieChart.setEntryLabelColor(labelColor);
         pieChart.setData(pieData);
         pieChart.invalidate(); // Refresh the chart
     }
