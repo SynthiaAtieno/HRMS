@@ -1,4 +1,4 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -9,8 +9,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import com.example.erpnext.R;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.R;
+import com.example.savannahrms.session.UserSessionManager;
 
 
 
