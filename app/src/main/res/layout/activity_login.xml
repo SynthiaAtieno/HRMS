@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="@color/background_color"
     android:orientation="vertical"
     tools:context=".activities.Login">
 
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textColor="#639ECD"
+        android:textColor="@color/blueColor"
         android:textSize="26sp"
         android:textStyle="bold"
         android:text="Savanna HRMS"/>
@@ -23,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="@color/text_color"
         android:textSize="16sp"
         android:layout_marginTop="12dp"
         android:text="Welcome Back."/>
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Log In"
-                android:textColor="#639ECD"
+                android:textColor="@color/blueColor"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -58,17 +59,17 @@
                 android:layout_marginTop="16dp"
                 android:hint="Email"
                 android:outlineAmbientShadowColor="#000"
-                android:textColorHint="#83000000"
-                app:boxStrokeColor="#BA000000"
+                android:textColorHint="@color/text_color_light"
+                app:boxStrokeColor="@color/text_color_light"
                 app:endIconMode="clear_text"
-                app:hintTextColor="@color/black"
+                app:hintTextColor="@color/text_color"
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -81,17 +82,17 @@
                 android:layout_marginTop="8dp"
                 android:hint="Password"
                 android:outlineAmbientShadowColor="#77FFFFFF"
-                android:textColorHint="#83000000"
-                app:boxStrokeColor="#BB000000"
+                android:textColorHint="@color/text_color_light"
+                app:boxStrokeColor="@color/text_color_light"
                 app:endIconMode="password_toggle"
-                app:hintTextColor="#000"
+                app:hintTextColor="@color/text_color"
                 app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:textSize="16sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -105,7 +106,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Forgot Password?"
                 android:textAlignment="textEnd"
-                android:textColor="#639ECD"
+                android:textColor="@color/blueColor"
                 android:textSize="18sp"
                 />
 
