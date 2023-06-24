@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:textSize="14sp"
-            android:textColor="#4F000000"
+            android:textColor="@color/text_color_light"
             android:layout_marginBottom="6dp"
             android:text="Duration"/>
         <TextView
@@ -34,7 +34,7 @@
             android:layout_marginBottom="6dp"
             android:textAllCaps="false"
             android:textSize="14sp"
-            android:textColor="#8A000000"
+            android:textColor="@color/text_color_light"
             android:text="Type"/>
         <TextView
             android:layout_width="wrap_content"
@@ -42,14 +42,14 @@
             android:layout_marginBottom="6dp"
             android:textAllCaps="false"
             android:textSize="14sp"
-            android:textColor="#75000000"
+            android:textColor="@color/text_color_light"
             android:text="No. of days"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:textSize="14sp"
-            android:textColor="#6E000000"
+            android:textColor="@color/text_color_light"
             android:text="Applied On"/>
     </LinearLayout>
         <LinearLayout
@@ -71,14 +71,14 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:textSize="14sp"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:textSize="14sp"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:text=" To "/>
                 <TextView
                     android:id="@+id/todatereport"
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:textSize="14sp"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     />
             </LinearLayout>
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:textSize="14sp"
-                android:textColor="#000"
+                android:textColor="@color/text_color"
                 />
 
             <TextView
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:textAllCaps="false"
-                android:textColor="#000"
+                android:textColor="@color/text_color"
                 android:textSize="14sp" />
             <TextView
                 android:id="@+id/appliedon"
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:textSize="14sp"
-                android:textColor="#000"
+                android:textColor="@color/text_color"
                 />
         </LinearLayout>
 
@@ -128,6 +128,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="17dp"
             android:layout_marginBottom="91dp"
+            android:textColor="@color/text_color_light"
             android:text="Action" />
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/acceptedstatus"
