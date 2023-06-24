@@ -1,4 +1,4 @@
-package com.example.erpnext.services;
+package com.example.savannahrms.services;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -16,8 +16,8 @@ public class ApiClient {
         httpClient.addInterceptor(logging);
 
         if (retrofit == null) {
-            String baseurl = "http://192.168.88.253:8000/api/";
-            //String baseurl = "http://erp.techsavanna.technology:8082/api/";
+            //String baseurl = "http://192.168.88.253:8000/api/";
+            String baseurl = "http://erp.techsavanna.technology:8082/api/";
             retrofit = new Retrofit.Builder().baseUrl(baseurl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
