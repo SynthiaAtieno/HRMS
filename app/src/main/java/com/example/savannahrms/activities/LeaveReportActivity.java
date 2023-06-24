@@ -278,7 +278,7 @@ public class LeaveReportActivity extends AppCompatActivity {
                                         }
 
                                     }
-                                    Toast.makeText(LeaveReportActivity.this, noOfOccurs + " occurrence of leave type", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(LeaveReportActivity.this, noOfOccurs + " occurrence of leave type", Toast.LENGTH_SHORT).show();
 
 
                                     int TotalLeaveDays = (int) totalLeaveDaysUsed;
