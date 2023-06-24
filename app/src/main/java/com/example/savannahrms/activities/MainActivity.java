@@ -1,4 +1,4 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -27,24 +27,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erpnext.R;
-import com.example.erpnext.activities.drawerActivities.AppointmentsActivity;
-import com.example.erpnext.activities.drawerActivities.BenefitsActivity;
-import com.example.erpnext.activities.drawerActivities.HolidayActivity;
-import com.example.erpnext.activities.drawerActivities.ProfileActivity;
-import com.example.erpnext.activities.drawerActivities.RaiseIssueActivity;
-import com.example.erpnext.activities.drawerActivities.SettingsActivity;
-import com.example.erpnext.activities.drawerActivities.TaskInformationActivity;
-import com.example.erpnext.activities.drawerActivities.TrainingActivity;
-import com.example.erpnext.fragments.AttendanceFragment;
-import com.example.erpnext.fragments.HomeFragment;
-import com.example.erpnext.fragments.LeaveFragment;
-import com.example.erpnext.fragments.MarkAttendanceFragment;
-import com.example.erpnext.fragments.ProfileFragment;
-import com.example.erpnext.models.EmployeeDataResponse;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.R;
+import com.example.savannahrms.activities.drawerActivities.AppointmentsActivity;
+import com.example.savannahrms.activities.drawerActivities.BenefitsActivity;
+import com.example.savannahrms.activities.drawerActivities.HolidayActivity;
+import com.example.savannahrms.activities.drawerActivities.ProfileActivity;
+import com.example.savannahrms.activities.drawerActivities.RaiseIssueActivity;
+import com.example.savannahrms.activities.drawerActivities.SettingsActivity;
+import com.example.savannahrms.activities.drawerActivities.TaskInformationActivity;
+import com.example.savannahrms.activities.drawerActivities.TrainingActivity;
+import com.example.savannahrms.fragments.AttendanceFragment;
+import com.example.savannahrms.fragments.HomeFragment;
+import com.example.savannahrms.fragments.LeaveFragment;
+import com.example.savannahrms.fragments.MarkAttendanceFragment;
+import com.example.savannahrms.fragments.ProfileFragment;
+import com.example.savannahrms.models.EmployeeDataResponse;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -286,15 +286,59 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         try {
                             String errorResponseJson = response.errorBody().string();
                                 PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
-                                /*customView = getLayoutInflater().inflate(R.layout.customalertbuilder, null);
-                                //AppCompatButton button = customView.findViewById(R.id.loginbuttonerror);
-                                TextView textView = customView.findViewById(R.id.textView);
-                                textView.setText(errorResponse.getExcType());
-*/
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setTitle(errorResponse.getExcType());
                                 String exceptionMessage = errorResponse.getException();
                                 int firstmaessage = exceptionMessage.indexOf(":");
+
+                            if (exceptionMessage.equals("frappe.exceptions.PermissionError")){
+                                /*ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful()){
+                                            builder.setMessage("Your Session expired, please login to access your account");
+                                            builder.setCancelable(false);
+                                            builder.setPositiveButton("Ok", (dialog, which) -> {
+                                                dialog.dismiss();
+                                                startActivity(new Intent(requireContext(), Login.class));
+                                            });
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                                        builder.setTitle("Error Occurred");
+                                        if (t.getMessage().equals("timeout")) {
+                                            builder.setMessage("Kindly check your internet connection then try again");
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        } else {
+                                            builder.setMessage(t.getMessage());
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        }
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                });*/
+                                builder.setMessage("Your session expired, please login to access your account");
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("Login", (dialog, which) -> {
+                                    dialog.dismiss();
+                                    sessionManager.clearSession();
+                                    startActivity(new Intent(MainActivity.this, Login.class));
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
+                            }
                                 //int lastmessage = exceptionMessage.lastIndexOf(":");
                                 String errorMessage = exceptionMessage.substring(firstmaessage+1).trim();
                                 builder.setMessage(errorMessage);
