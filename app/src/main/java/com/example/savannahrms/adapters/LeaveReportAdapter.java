@@ -1,4 +1,4 @@
-package com.example.erpnext.adapters;
+package com.example.savannahrms.adapters;
 
 import android.content.Context;
 import android.os.Build;
@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.erpnext.R;
-import com.example.erpnext.models.LeaveApplicationReport;
+import com.example.savannahrms.R;
+import com.example.savannahrms.models.LeaveApplicationReport;
 
 import java.util.List;
 
