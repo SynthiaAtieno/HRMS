@@ -1,4 +1,4 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,16 +21,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erpnext.R;
-import com.example.erpnext.models.EmployeeDataResponse;
-import com.example.erpnext.models.LeaveType;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.network_connctivity.NetworkUtils;
-import com.example.erpnext.session.UserSessionManager;
-import com.example.erpnext.models.UserError;
-import com.example.erpnext.models.UserModel;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.services.SetCookieInterceptor;
+import com.example.savannahrms.R;
+import com.example.savannahrms.models.EmployeeDataResponse;
+import com.example.savannahrms.models.LeaveType;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.network_connctivity.NetworkUtils;
+import com.example.savannahrms.session.UserSessionManager;
+import com.example.savannahrms.models.UserError;
+import com.example.savannahrms.models.UserModel;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.services.SetCookieInterceptor;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
