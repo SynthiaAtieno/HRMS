@@ -1,4 +1,4 @@
-package com.example.erpnext.fragments;
+package com.example.savannahrms.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,19 +20,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erpnext.Greetings;
-import com.example.erpnext.activities.LeaveReportActivity;
-import com.example.erpnext.activities.PaySlipDetailsActivity;
-import com.example.erpnext.R;
-import com.example.erpnext.activities.drawerActivities.HolidayActivity;
-import com.example.erpnext.models.EmployeeDataResponse;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.Greetings;
+import com.example.savannahrms.activities.LeaveReportActivity;
+import com.example.savannahrms.activities.Login;
+import com.example.savannahrms.activities.MainActivity;
+import com.example.savannahrms.activities.PaySlipDetailsActivity;
+import com.example.savannahrms.R;
+import com.example.savannahrms.activities.drawerActivities.HolidayActivity;
+import com.example.savannahrms.models.EmployeeDataResponse;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,8 +61,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), isDarkThemePreferred() ? R.style.AppTheme_Dark : R.style.AppTheme_Light);
-        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+        //Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), isDarkThemePreferred() ? R.style.AppTheme_Dark : R.style.AppTheme_Light);
+       // LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         String greeting = Greetings.getGreeting();
@@ -72,12 +75,7 @@ public class HomeFragment extends Fragment {
         txviewslip = view.findViewById(R.id.textViewslip);
 
 
-        leave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(requireContext(), LeaveReportActivity.class));
-            }
-        });
+        leave.setOnClickListener(view1 -> startActivity(new Intent(requireContext(), LeaveReportActivity.class)));
 
         viewallholidays.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -104,7 +102,7 @@ public class HomeFragment extends Fragment {
         return R.id.homefragment;
     }
 
-    private boolean isDarkThemePreferred() {
+   /* private boolean isDarkThemePreferred() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         String themePreference = sharedPreferences.getString("theme_preference", "system");
 
@@ -117,7 +115,7 @@ public class HomeFragment extends Fragment {
             int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
         }
-    }
+    }*/
 
 
     public void getEmployeeData() {
@@ -140,29 +138,75 @@ public class HomeFragment extends Fragment {
                     if (response.errorBody() != null) {
                         try {
                             String errorResponseJson = response.errorBody().string();
-
                             PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
-
-
                             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                             builder.setTitle(errorResponse.getExcType());
                             String exceptionMessage = errorResponse.getException();
                             int firstmaessage = exceptionMessage.indexOf(":");
-                            //int lastmessage = exceptionMessage.lastIndexOf(":");
-                            String errorMessage = exceptionMessage.substring(firstmaessage+1).trim();
-                            builder.setMessage(errorMessage);
-                            builder.setCancelable(false);
-                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                            int lastmessage = exceptionMessage.lastIndexOf(":");
+                            if (exceptionMessage.equals("frappe.exceptions.PermissionError")){
+                                /*ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful()){
+                                            builder.setMessage("Your Session expired, please login to access your account");
+                                            builder.setCancelable(false);
+                                            builder.setPositiveButton("Ok", (dialog, which) -> {
+                                                dialog.dismiss();
+                                                startActivity(new Intent(requireContext(), Login.class));
+                                            });
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                                        builder.setTitle("Error Occurred");
+                                        if (t.getMessage().equals("timeout")) {
+                                            builder.setMessage("Kindly check your internet connection then try again");
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        } else {
+                                            builder.setMessage(t.getMessage());
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        }
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                });*/
+                                builder.setMessage("Your session expired, please login to access your account");
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("Login", (dialog, which) -> {
+                                    dialog.dismiss();
+                                    sessionManager.clearSession();
+                                    startActivity(new Intent(requireContext(), Login.class));
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
+                            }
+                            else {
+                                String errorMessage = exceptionMessage.substring(firstmaessage+1, lastmessage).trim();
+                                builder.setMessage(errorMessage);
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
 
 
-                            // Set a positive button and its click listener
+                                // Set a positive button and its click listener
 
 
-                            // Create and show the alert dialog
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
+                                // Create and show the alert dialog
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
 
-                            //Toast.makeText(getContext(), "Server error occurred, please reload your page", Toast.LENGTH_SHORT).show();
+                            }
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -175,7 +219,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(Call<EmployeeDataResponse> call, Throwable t) {
                 System.out.println("t.getMessage() = " + t.getMessage());
-               // Toast.makeText(requireContext(), "Error occurred " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error occurred in home fragment" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
