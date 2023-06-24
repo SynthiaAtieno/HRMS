@@ -1,4 +1,4 @@
-package com.example.erpnext.models;
+package com.example.savannahrms.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
