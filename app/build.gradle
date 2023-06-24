@@ -4,16 +4,15 @@ plugins {
 
 
 android {
-    namespace 'com.example.erpnext'
+    namespace 'com.example.savannahrms'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.erpnext"
+        applicationId "com.example.savannahrms"
         minSdk 22
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        //maven { url 'https://jitpack.io' }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
