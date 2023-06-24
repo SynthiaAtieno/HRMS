@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
+    android:background="@color/background_color"
     tools:context=".activities.PaySlipActivity2">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/payslip_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
+        android:background="@color/app_bar_color"
         android:elevation="16dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerInParent="true"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_color"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -99,7 +99,7 @@
                     android:background="@drawable/shape"
                     android:text="Raise Issue"
                     android:textAllCaps="false"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/text_color" />
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView
@@ -110,6 +110,7 @@
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="6dp"
+                android:background="@color/card_color"
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="4dp">
                 <LinearLayout
@@ -150,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:padding="6dp"
                         android:text="Earnings"
-                        android:textColor="@color/royal_blue"
+                        android:textColor="@color/text_color_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -190,7 +191,7 @@
                         android:padding="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/purple_700"
+                        android:textColor="@color/text_color"
                         android:text="You have no deductions"
                         android:textSize="18sp"/>
 
@@ -214,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:padding="6dp"
                         android:text="Deductions"
-                        android:textColor="#EF6C00"
+                        android:textColor="@color/text_color_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -250,7 +251,7 @@
                         android:layout_alignParentStart="true"
                         android:padding="6dp"
                         android:text="Total Deductions"
-                        android:textColor="#F86F03"
+                        android:textColor="@color/text_color_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -261,7 +262,7 @@
                         android:layout_alignParentEnd="true"
                         android:padding="6dp"
                         android:text="Deductions"
-                        android:textColor="#F86F03"
+                        android:textColor="@color/text_color_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
