@@ -103,7 +103,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                             AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipDetailsActivity.this);
                             builder.setTitle(errorResponse.getException());
 
-                            if (errorResponse.getException().equals("frappe.exceptions.PermissionError")){
+                            if (errorResponse.getSessionExpired().equals(1)) {
                                 builder.setMessage("Your session expired, please login to access your account");
                                 builder.setCancelable(false);
                                 builder.setPositiveButton("Login", (dialog, which) -> {
