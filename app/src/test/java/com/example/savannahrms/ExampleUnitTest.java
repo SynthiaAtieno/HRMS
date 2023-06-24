@@ -1,4 +1,4 @@
-package com.example.erpnext;
+package com.example.savannahrms;
 
 import org.junit.Test;
 
