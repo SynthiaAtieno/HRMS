@@ -1,5 +1,6 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -7,6 +8,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,14 +20,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erpnext.models.LeaveApplicationData;
-import com.example.erpnext.R;
-import com.example.erpnext.models.LeaveAllocation;
-import com.example.erpnext.models.LeaveApplication;
-import com.example.erpnext.models.LeaveType;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.adapters.DateUtils;
+import com.example.savannahrms.models.LeaveApplicationData;
+import com.example.savannahrms.R;
+import com.example.savannahrms.models.LeaveAllocation;
+import com.example.savannahrms.models.LeaveApplication;
+import com.example.savannahrms.models.LeaveType;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
@@ -32,10 +36,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -101,13 +108,29 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                     leaveApplicationData.setLeaveType(spinnerIte);
                     leaveApplicationData.setReasonForApplication(reasonforleaveapplication.getText().toString());
                     leaveApplicationData.setLeaveApprover(sessionManager.getLeaveApprover());
-                    ApiClient.getApiClient().ApplyLeave(leaveApplicationData, "Leave Application", "sid=" + sessionManager.getUserId()).enqueue(new Callback<LeaveApplication>() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onResponse(Call<LeaveApplication> call, Response<LeaveApplication> response) {
-                            if (response.code() == 200) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        // Parse the date strings into Date object
 
-                                // Toast.makeText(ApplyLeaveActivity.this, "hey 200", Toast.LENGTH_SHORT).show();
+                        Date date1 = dateFormat.parse(todate);
+                        Date date2 = dateFormat.parse(fromtxt);
+
+                        // Calculate the difference in milliseconds
+                        long differenceInMillis = date1.getTime() - date2.getTime();
+
+                        // Convert milliseconds to days
+                        long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMillis)+1;
+
+                       // Toast.makeText(ApplyLeaveActivity.this, ""+differenceInDays, Toast.LENGTH_SHORT).show();
+                        System.out.println("Difference in days: " + differenceInDays);
+                    } catch (ParseException | java.text.ParseException e) {
+                        e.printStackTrace();
+                    }
+                    ApiClient.getApiClient().ApplyLeave(leaveApplicationData, "Leave Application", "sid=" + sessionManager.getUserId()).enqueue(new Callback<LeaveApplication>() {
+                        @SuppressLint({"SetTextI18n", "InflateParams"})
+                        @Override
+                        public void onResponse(@NonNull Call<LeaveApplication> call, @NonNull Response<LeaveApplication> response) {
+                            if (response.isSuccessful()) {
                                 LeaveApplication responseModel = response.body();
                                 if (responseModel != null) {
                                     successView = getLayoutInflater().inflate(R.layout.success, null);
@@ -118,16 +141,26 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                                     builder.setView(successView);
                                     AlertDialog dialog = builder.create();
 
-                                    button.setOnClickListener(view1 -> dialog.dismiss());
+                                    button.setOnClickListener(view1 ->{
+                                        dialog.dismiss();
+                                        startActivity(new Intent(getApplicationContext(), LeaveReportActivity.class));
+                                        finish();
+                                    });
 
                                     dialog.show();
+                                    progressBar.setVisibility(View.GONE);
+                                   /* startActivity(new Intent(ApplyLeaveActivity.this, LeaveReportActivity.class));
+                                    finish();*/
                                     //System.out.println("responseModel.getData() = " + responseModel.getData());
                                    // System.out.println("responseModel = " + responseModel);
                                 }
+                                assert responseModel != null;
                                 if (responseModel.getData() != null) {
                                     System.out.println("responseModel.getData().getLeaveBalance() = " + responseModel.getData().getLeaveBalance());
                                 } else {
                                     System.out.println("null data = ");
+                                    Toast.makeText(ApplyLeaveActivity.this, "null data in apply leave activity", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
                                 }
 
                                 progressBar.setVisibility(View.GONE);
@@ -142,10 +175,45 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                                         builder.setTitle(errorResponse.getExcType());
                                         String exceptionMessage = errorResponse.getException();
                                         int firstmaessage = exceptionMessage.indexOf(":");
-                                        //int lastmessage = exceptionMessage.lastIndexOf(":");
-                                        String errorMessage = exceptionMessage.substring(firstmaessage+1).trim();
+
+                                        if (exceptionMessage.startsWith("frappe.exceptions.PermissionError")){
+                                            ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
+                                                @Override
+                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                    if (response.isSuccessful()){
+                                                        builder.setMessage("Your Session expired, please login to access your account");
+                                                        builder.setCancelable(false);
+                                                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
+                                                    builder.setTitle("Error Occurred");
+                                                    if (t.getMessage().equals("timeout")) {
+                                                        builder.setMessage("Kindly check your internet connection then try again");
+
+                                                        // Set a positive button and its click listener
+                                                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                                    } else {
+                                                        builder.setMessage(t.getMessage());
+
+                                                        // Set a positive button and its click listener
+                                                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                                    }
+                                                    // Create and show the alert dialog
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
+
+                                                }
+                                            });
+                                        }
+                                        int lastmessage = exceptionMessage.lastIndexOf(":");
+                                        String errorMessage = exceptionMessage.substring(firstmaessage+1, lastmessage-1).trim();
+                                        builder.setCancelable(false);
                                         builder.setMessage(errorMessage);
-                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                                        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
 
 
                                         // Set a positive button and its click listener
@@ -154,10 +222,10 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                                         // Create and show the alert dialog
                                         AlertDialog dialog = builder.create();
                                         dialog.show();
-                                        //progressBar.setVisibility(View.GONE);
+                                        progressBar.setVisibility(View.GONE);
                                     } catch (IOException e) {
                                         e.printStackTrace();
-                                        // progressBar.setVisibility(View.GONE);
+                                         progressBar.setVisibility(View.GONE);
                                     }
                                 }
                             }
@@ -195,6 +263,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
 
                         // Set the adapter to the spinner
                         leaveTypeSpinner.setAdapter(adapter);
+                        progressBar.setVisibility(View.GONE);
                     }
                     progressBar.setVisibility(View.GONE);
                 } else {
@@ -208,8 +277,8 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                             builder.setTitle(errorResponse.getExcType());
                             String exceptionMessage = errorResponse.getException();
                             int firstmaessage = exceptionMessage.indexOf(":");
-                            //int lastmessage = exceptionMessage.lastIndexOf(":");
-                            String errorMessage = exceptionMessage.substring(firstmaessage+1).trim();
+                            int lastmessage = exceptionMessage.lastIndexOf(":");
+                            String errorMessage = exceptionMessage.substring(firstmaessage+1, lastmessage).trim();
                             builder.setMessage(errorMessage);
                             builder.setCancelable(false);
                             builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
@@ -221,6 +290,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                             // Create and show the alert dialog
                             AlertDialog dialog = builder.create();
                             dialog.show();
+                            progressBar.setVisibility(View.GONE);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -231,7 +301,8 @@ public class ApplyLeaveActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LeaveAllocation> call, Throwable t) {
+            public void onFailure(@NonNull Call<LeaveAllocation> call, @NonNull Throwable t) {
+                Toast.makeText(ApplyLeaveActivity.this, "error occurred "+t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
