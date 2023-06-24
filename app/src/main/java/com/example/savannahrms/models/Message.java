@@ -1,4 +1,4 @@
-package com.example.erpnext.models;
+package com.example.savannahrms.models;
 
 public class Message {
     private String user;
