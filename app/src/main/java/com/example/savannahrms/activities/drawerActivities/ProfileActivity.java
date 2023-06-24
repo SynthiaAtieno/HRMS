@@ -1,4 +1,4 @@
-package com.example.erpnext.activities.drawerActivities;
+package com.example.savannahrms.activities.drawerActivities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,15 +19,15 @@ import android.preference.PreferenceManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erpnext.R;
-import com.example.erpnext.fragments.profile.AchievementFragment;
-import com.example.erpnext.fragments.profile.EducationFragment;
-import com.example.erpnext.fragments.profile.ExperienceFragment;
-import com.example.erpnext.fragments.profile.OverviewFragment;
-import com.example.erpnext.models.EmployeeDataResponse;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.R;
+import com.example.savannahrms.fragments.profile.AchievementFragment;
+import com.example.savannahrms.fragments.profile.EducationFragment;
+import com.example.savannahrms.fragments.profile.ExperienceFragment;
+import com.example.savannahrms.fragments.profile.OverviewFragment;
+import com.example.savannahrms.models.EmployeeDataResponse;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
