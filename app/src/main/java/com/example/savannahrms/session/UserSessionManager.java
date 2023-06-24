@@ -1,4 +1,4 @@
-package com.example.erpnext.session;
+package com.example.savannahrms.session;
 
 import android.content.Context;
 import android.content.SharedPreferences;
