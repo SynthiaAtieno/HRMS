@@ -1,5 +1,6 @@
 package com.example.savannahrms.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +36,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
     List<SalarySlipReport.Datum> slipDetails;
     SlipDetailsAdapter adapter;
     UserSessionManager sessionManager;
-    TextView firstbane;
+    TextView firstName;
     RecyclerView slipdetailsrecycler;
 
     LinearLayout linearLayout;
@@ -49,22 +50,20 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Payslip");
-        firstbane = findViewById(R.id.FirstNameTxtForSlip);
+       firstName = findViewById(R.id.FirstNameTxtForSlip);
         slipDetails = new ArrayList<>();
         adapter = new SlipDetailsAdapter(slipDetails, this);
 
         linearLayout = findViewById(R.id.payslipnotfoundlayout);
-        /*fromtodate = findViewById(R.id.fromdate);
-        totaltxt = findViewById(R.id.totaltxt);*/
 
-        /*fromtodate.setText(getIntent().getExtras().getString("period"));
-        fromtodate.setText(getIntent().getExtras().getString("totalEarnings"));*/
+
+
         slipdetailsrecycler = findViewById(R.id.slip_recycler);
         slipdetailsrecycler.setLayoutManager(new LinearLayoutManager(this));
         slipdetailsrecycler.setAdapter(adapter);
         progressBar = findViewById(R.id.progressbarSlipDetails);
         sessionManager = new UserSessionManager(this);
-        firstbane.setText("Hey " + sessionManager.getFullName().toUpperCase() + ",");
+        firstName.setText("Hey " + sessionManager.getFullName().toUpperCase() + ",");
         getSlipData();
     }
 
@@ -72,8 +71,9 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         String fields = "[\"start_date\",\"rounded_total\",\"end_date\",\"letter_head\",\"status\",\"total_working_days\", \"name\"]";
         ApiClient.getApiClient().getSlipDetails("Salary Slip", "sid="+sessionManager.getUserId(), fields).enqueue(new Callback<SalarySlipReport>() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onResponse(Call<SalarySlipReport> call, Response<SalarySlipReport> response) {
+            public void onResponse(@NonNull Call<SalarySlipReport> call, @NonNull Response<SalarySlipReport> response) {
                 if (response.isSuccessful()) {
                     SalarySlipReport responseModel = response.body();
                     if (responseModel != null && !responseModel.getData().isEmpty()) {
@@ -133,9 +133,9 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SalarySlipReport> call, Throwable t) {
+            public void onFailure(@NonNull Call<SalarySlipReport> call, @NonNull Throwable t) {
                 //Toast.makeText(PaySlipDetailsActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-                if (t.getMessage().startsWith("failed to connect to")){
+                if (Objects.requireNonNull(t.getMessage()).startsWith("failed to connect to")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipDetailsActivity.this);
                     builder.setTitle("Error Occurred");
                     builder.setMessage("The server is down or you have no internet connection, Please try again");
