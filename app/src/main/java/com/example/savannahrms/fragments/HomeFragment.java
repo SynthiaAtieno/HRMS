@@ -61,9 +61,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), isDarkThemePreferred() ? R.style.AppTheme_Dark : R.style.AppTheme_Light);
-       // LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         String greeting = Greetings.getGreeting();
         first_name = view.findViewById(R.id.firstname);
@@ -102,20 +99,6 @@ public class HomeFragment extends Fragment {
         return R.id.homefragment;
     }
 
-   /* private boolean isDarkThemePreferred() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        String themePreference = sharedPreferences.getString("theme_preference", "system");
-
-        if (themePreference.equals("dark")) {
-            return true;
-        } else if (themePreference.equals("light")) {
-            return false;
-        } else {
-            // If the theme preference is set to "system", use the system default
-            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
-        }
-    }*/
 
 
     public void getEmployeeData() {
@@ -144,43 +127,7 @@ public class HomeFragment extends Fragment {
                             String exceptionMessage = errorResponse.getException();
                             int firstmaessage = exceptionMessage.indexOf(":");
                             int lastmessage = exceptionMessage.lastIndexOf(":");
-                            if (exceptionMessage.equals("frappe.exceptions.PermissionError")){
-                                /*ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.isSuccessful()){
-                                            builder.setMessage("Your Session expired, please login to access your account");
-                                            builder.setCancelable(false);
-                                            builder.setPositiveButton("Ok", (dialog, which) -> {
-                                                dialog.dismiss();
-                                                startActivity(new Intent(requireContext(), Login.class));
-                                            });
-                                            AlertDialog dialog = builder.create();
-                                            dialog.show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                                        builder.setTitle("Error Occurred");
-                                        if (t.getMessage().equals("timeout")) {
-                                            builder.setMessage("Kindly check your internet connection then try again");
-
-                                            // Set a positive button and its click listener
-                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
-                                        } else {
-                                            builder.setMessage(t.getMessage());
-
-                                            // Set a positive button and its click listener
-                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
-                                        }
-                                        // Create and show the alert dialog
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-
-                                    }
-                                });*/
+                            if (errorResponse.getSessionExpired().equals(1)) {
                                 builder.setMessage("Your session expired, please login to access your account");
                                 builder.setCancelable(false);
                                 builder.setPositiveButton("Login", (dialog, which) -> {
