@@ -174,7 +174,7 @@ public class LeaveReportActivity extends AppCompatActivity {
                                                             String exceptionMessage = errorResponse.getException();
                                                             int firstmaessage = exceptionMessage.indexOf(":");
 
-                                                            if (exceptionMessage.equals("frappe.exceptions.PermissionError")) {
+                                                            if (errorResponse.getSessionExpired().equals(1)) {
                                                                 builder.setMessage("Your session expired, please login to access your account");
                                                                 builder.setCancelable(false);
                                                                 builder.setPositiveButton("Login", (dialog, which) -> {
@@ -186,7 +186,7 @@ public class LeaveReportActivity extends AppCompatActivity {
                                                                 dialog.show();
 
                                                             }
-                                                            //int lastmessage = exceptionMessage.lastIndexOf(":");
+                                                            int lastmessage = exceptionMessage.lastIndexOf(":");
                                                             String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
                                                             builder.setMessage(errorMessage);
                                                             builder.setCancelable(false);
