@@ -1,4 +1,4 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,17 +16,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.erpnext.R;
-import com.example.erpnext.adapters.LeaveReportAdapter;
-import com.example.erpnext.models.LeaveAllocation;
-import com.example.erpnext.models.LeaveApplicationReport;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.R;
+import com.example.savannahrms.adapters.LeaveReportAdapter;
+import com.example.savannahrms.models.LeaveAllocation;
+import com.example.savannahrms.models.LeaveApplicationReport;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -76,49 +77,58 @@ public class LeaveReportActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             progressBar.setVisibility(View.VISIBLE);
             getLeaveTypesForLeaveReport();
+            progressBar.setVisibility(View.GONE);
 
         });
 
     }
+
     public void getLeaveBalanceReport() {
         String fields = "[\"total_leaves_allocated\"]";
-        ApiClient.getApiClient().getLeaveReportForEmployee("sid="+sessionManager.getUserId(), fields)
+        ApiClient.getApiClient().getLeaveReportForEmployee("sid=" + sessionManager.getUserId(), fields)
                 .enqueue(new Callback<LeaveAllocation>() {
                     @Override
                     public void onResponse(Call<LeaveAllocation> call, Response<LeaveAllocation> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             LeaveAllocation leaveAllocation = response.body();
 
-                            if (leaveAllocation != null && !leaveAllocation.getData().isEmpty()){
+                            if (leaveAllocation != null && !leaveAllocation.getData().isEmpty()) {
                                 List<LeaveAllocation.Datum> leallocationlist = leaveAllocation.getData();
                                 double totalleavesallocated = 0.0;
 
 
-                                for (LeaveAllocation.Datum leaveallocation:leallocationlist){
+                                for (LeaveAllocation.Datum leaveallocation : leallocationlist) {
                                     totalleavesallocated += leaveallocation.getTotalLeavesAllocated();
+
                                 }
-                                int totalleaves = (int)  totalleavesallocated;
+                                int totalleaves = (int) totalleavesallocated;
+                                if (totalleaves == 0) {
+                                    total_leave_days_txt.setText("0");
+                                }
 
                                 total_leave_days_txt.setText(String.valueOf(totalleaves));
-                                Toast.makeText(LeaveReportActivity.this, "Total"+totalleaves, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(LeaveReportActivity.this, "Total"+totalleaves, Toast.LENGTH_SHORT).show();
 
-                                String fields = "[\"leave_type\", \"from_date\", \"to_date\",\"leave_balance\", \"total_leave_days\", \"posting_date\",\"status\"]";
+                                String fields = "[\"leave_type\"," +
+                                        " \"from_date\", \"to_date\"," +
+                                        "\"leave_balance\"," +
+                                        " \"total_leave_days\", " +
+                                        "\"posting_date\"," +
+                                        "\"status\"]";
                                 progressBar.setVisibility(View.VISIBLE);
-                                ApiClient.getApiClient().getAppliedLeavesReport("Leave Application", "sid=" + sessionManager.getUserId(), fields)
+                                ApiClient.getApiClient().getAppliedLeavesReport("Leave Application",
+                                                "sid=" + sessionManager.getUserId(),
+                                                fields)
                                         .enqueue(new Callback<LeaveApplicationReport>() {
                                             @Override
-                                            public void onResponse(Call<LeaveApplicationReport> call, Response<LeaveApplicationReport> response) {
+                                            public void onResponse(Call<LeaveApplicationReport> call,
+                                                                   Response<LeaveApplicationReport> response) {
                                                 if (response.isSuccessful()) {
                                                     LeaveApplicationReport leaveApplicationReport = response.body();
-
-
                                                     if (leaveApplicationReport != null && leaveApplicationReport.getData() != null && !leaveApplicationReport.getData().isEmpty()) {
                                                         List<LeaveApplicationReport.Datum> datumList1 = leaveApplicationReport.getData();
                                                         if (datumList1 != null) {
                                                             double totalLeaveDaysUsed = 0.0;
-                                                            datumList.addAll(datumList1);
-                                                            adapter.notifyDataSetChanged();
-                                                            progressBar.setVisibility(View.GONE);
                                                             for (LeaveApplicationReport.Datum leaveApplicationReport1 : datumList1) {
                                                                 if (leaveApplicationReport1.getLeave_balance() != null) {
                                                                     //total leave days used
@@ -133,19 +143,20 @@ public class LeaveReportActivity extends AppCompatActivity {
                                                             int TotalLeaveDays = (int) totalLeaveDaysUsed;
                                                             int leaveBalanceInt = Integer.parseInt(totalLeaveDays);
                                                             //total leave days left
-                                                            int leaveDaysLeft = leaveBalanceInt-TotalLeaveDays;
+                                                            int leaveDaysLeft = leaveBalanceInt - TotalLeaveDays;
 
 
                                                             String total_leave_days = String.valueOf(TotalLeaveDays);
                                                             String total_leave_balance = String.valueOf(leaveDaysLeft);
-//                                    String total_leave_used = String.valueOf(leaveDaysUsed);
                                                             //total_leave_days_txt.setText(total_leave_days);
                                                             leave_days_left.setText(total_leave_balance);
                                                             leave_days_used.setText(total_leave_days);
+                                                            progressBar.setVisibility(View.GONE);
 
                                                         } else {
                                                             total_leave_days_txt.setText("0");
                                                             Toast.makeText(LeaveReportActivity.this, "data list is null", Toast.LENGTH_SHORT).show();
+                                                            progressBar.setVisibility(View.GONE);
                                                         }
                                                     } else {
                                                         leavereportlayout.setVisibility(View.VISIBLE);
@@ -162,6 +173,19 @@ public class LeaveReportActivity extends AppCompatActivity {
                                                             builder.setTitle(errorResponse.getExcType());
                                                             String exceptionMessage = errorResponse.getException();
                                                             int firstmaessage = exceptionMessage.indexOf(":");
+
+                                                            if (exceptionMessage.equals("frappe.exceptions.PermissionError")) {
+                                                                builder.setMessage("Your session expired, please login to access your account");
+                                                                builder.setCancelable(false);
+                                                                builder.setPositiveButton("Login", (dialog, which) -> {
+                                                                    dialog.dismiss();
+                                                                    sessionManager.clearSession();
+                                                                    startActivity(new Intent(LeaveReportActivity.this, Login.class));
+                                                                });
+                                                                AlertDialog dialog = builder.create();
+                                                                dialog.show();
+
+                                                            }
                                                             //int lastmessage = exceptionMessage.lastIndexOf(":");
                                                             String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
                                                             builder.setMessage(errorMessage);
@@ -211,15 +235,14 @@ public class LeaveReportActivity extends AppCompatActivity {
 
 
                             }
-                        }
-                        else {
+                        } else {
                             Toast.makeText(LeaveReportActivity.this, "Response not successful", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<LeaveAllocation> call, Throwable t) {
-                        Toast.makeText(LeaveReportActivity.this, "Failed "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LeaveReportActivity.this, "Failed " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -244,15 +267,22 @@ public class LeaveReportActivity extends AppCompatActivity {
                                     datumList.addAll(datumList1);
                                     adapter.notifyDataSetChanged();
                                     progressBar.setVisibility(View.GONE);
+                                    int noOfOccurs = 0;
                                     for (LeaveApplicationReport.Datum leaveApplicationReport1 : datumList1) {
                                         if (leaveApplicationReport1.getLeave_balance() != null) {
                                             //total leave days used
                                             totalLeaveDaysUsed += leaveApplicationReport1.getTotalLeaveDays();
                                         }
-                                    }
-                                    //total leave days
 
-                                     int TotalLeaveDays = (int) totalLeaveDaysUsed;
+                                        if (leaveApplicationReport1.equals(leaveApplicationReport1.getStatus())) {
+                                            noOfOccurs++;
+                                        }
+
+                                    }
+                                    Toast.makeText(LeaveReportActivity.this, noOfOccurs + " occurrence of leave type", Toast.LENGTH_SHORT).show();
+
+
+                                    int TotalLeaveDays = (int) totalLeaveDaysUsed;
 
                                     String total_leave_days = String.valueOf(TotalLeaveDays);
 
@@ -277,8 +307,57 @@ public class LeaveReportActivity extends AppCompatActivity {
                                     builder.setTitle(errorResponse.getExcType());
                                     String exceptionMessage = errorResponse.getException();
                                     int firstmaessage = exceptionMessage.indexOf(":");
-                                    //int lastmessage = exceptionMessage.lastIndexOf(":");
-                                    String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
+
+                                    if (exceptionMessage.equals("frappe.exceptions.PermissionError")) {
+                                /*ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful()){
+                                            builder.setMessage("Your Session expired, please login to access your account");
+                                            builder.setCancelable(false);
+                                            builder.setPositiveButton("Ok", (dialog, which) -> {
+                                                dialog.dismiss();
+                                                startActivity(new Intent(requireContext(), Login.class));
+                                            });
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                                        builder.setTitle("Error Occurred");
+                                        if (t.getMessage().equals("timeout")) {
+                                            builder.setMessage("Kindly check your internet connection then try again");
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        } else {
+                                            builder.setMessage(t.getMessage());
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        }
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                });*/
+                                        builder.setMessage("Your session expired, please login to access your account");
+                                        builder.setCancelable(false);
+                                        builder.setPositiveButton("Login", (dialog, which) -> {
+                                            dialog.dismiss();
+                                            sessionManager.clearSession();
+                                            startActivity(new Intent(LeaveReportActivity.this, Login.class));
+                                        });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                    int lastmessage = exceptionMessage.lastIndexOf(":");
+                                    String errorMessage = exceptionMessage.substring(firstmaessage + 1, lastmessage).trim();
                                     builder.setMessage(errorMessage);
                                     builder.setCancelable(false);
                                     builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
@@ -363,8 +442,57 @@ public class LeaveReportActivity extends AppCompatActivity {
                                     builder.setTitle(errorResponse.getExcType());
                                     String exceptionMessage = errorResponse.getException();
                                     int firstmaessage = exceptionMessage.indexOf(":");
-                                    //int lastmessage = exceptionMessage.lastIndexOf(":");
-                                    String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
+
+                                    if (exceptionMessage.equals("frappe.exceptions.PermissionError")) {
+                                /*ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful()){
+                                            builder.setMessage("Your Session expired, please login to access your account");
+                                            builder.setCancelable(false);
+                                            builder.setPositiveButton("Ok", (dialog, which) -> {
+                                                dialog.dismiss();
+                                                startActivity(new Intent(requireContext(), Login.class));
+                                            });
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                                        builder.setTitle("Error Occurred");
+                                        if (t.getMessage().equals("timeout")) {
+                                            builder.setMessage("Kindly check your internet connection then try again");
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        } else {
+                                            builder.setMessage(t.getMessage());
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        }
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                });*/
+                                        builder.setMessage("Your session expired, please login to access your account");
+                                        builder.setCancelable(false);
+                                        builder.setPositiveButton("Login", (dialog, which) -> {
+                                            dialog.dismiss();
+                                            sessionManager.clearSession();
+                                            startActivity(new Intent(LeaveReportActivity.this, Login.class));
+                                        });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                    int lastmessage = exceptionMessage.lastIndexOf(":");
+                                    String errorMessage = exceptionMessage.substring(firstmaessage + 1, lastmessage).trim();
                                     builder.setMessage(errorMessage);
                                     builder.setCancelable(false);
                                     builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
