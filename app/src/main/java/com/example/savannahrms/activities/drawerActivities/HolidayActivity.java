@@ -1,4 +1,4 @@
-package com.example.erpnext.activities.drawerActivities;
+package com.example.savannahrms.activities.drawerActivities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +16,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.erpnext.R;
-import com.example.erpnext.adapters.DateUtils;
-import com.example.erpnext.adapters.HolidayListAdapter;
-import com.example.erpnext.models.HolidayList;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.R;
+import com.example.savannahrms.adapters.DateUtils;
+import com.example.savannahrms.adapters.HolidayListAdapter;
+import com.example.savannahrms.models.HolidayList;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 
 import java.util.ArrayList;
 import java.util.Date;
