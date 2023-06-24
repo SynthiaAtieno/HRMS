@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Diwali Holiday"
+        android:textColor="@color/text_color"
         android:layout_toEndOf="@id/circular_image_view"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -33,6 +34,7 @@
         android:visibility="gone"
         android:layout_marginTop="8dp"
         android:id="@+id/holiday"
+        android:textColor="@color/text_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/holidayname"
@@ -42,6 +44,7 @@
     <TextView
         android:layout_below="@id/holidayname"
         android:id="@+id/holidaydate"
+        android:textColor="@color/text_color"
         android:layout_toEndOf="@id/circular_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +55,7 @@
         android:id="@+id/firstviewforpayslip"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:backgroundTint="@color/text_color"
         android:layout_below="@id/relative"
         android:layout_marginTop="6dp"
         android:background="#20000000" />
