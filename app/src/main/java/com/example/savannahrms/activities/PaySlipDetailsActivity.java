@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,7 +35,7 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
     List<SalarySlipReport.Datum> slipDetails;
     SlipDetailsAdapter adapter;
     UserSessionManager sessionManager;
-    TextView firstbane, fromtodate, totaltxt;
+    TextView firstbane;
     RecyclerView slipdetailsrecycler;
 
     LinearLayout linearLayout;
@@ -94,7 +93,6 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                         linearLayout.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                     }
-                    //Toast.makeText(PaySlipDetailsActivity.this, "success", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     if (response.errorBody() != null) {
