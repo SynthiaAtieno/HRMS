@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     android:orientation="vertical"
     tools:context=".activities.LeaveReportActivity">
 
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@color/white"
+        android:background="@color/app_bar_color"
         android:elevation="18dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
@@ -29,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Leave balance"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -67,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Total Leave"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
                             android:textSize="12dp" />
 
                         <TextView
@@ -75,7 +76,7 @@
                             android:layout_height="wrap_content"
                             android:text="Days"
                             android:textAlignment="center"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
                             android:textSize="12dp" />
 
                         <TextView
@@ -83,7 +84,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
+                            android:text="0"
                             android:textSize="18sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -101,7 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Leave Days"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
                             android:textSize="12dp" />
 
                         <TextView
@@ -109,7 +111,7 @@
                             android:layout_height="wrap_content"
                             android:text="Left"
                             android:textAlignment="center"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
                             android:textSize="12dp" />
 
                         <TextView
@@ -118,7 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:text="0"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -136,7 +138,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Leave Days"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
                             android:textSize="12dp" />
 
                         <TextView
@@ -144,7 +146,7 @@
                             android:layout_height="wrap_content"
                             android:text="Used"
                             android:textAlignment="center"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
                             android:textSize="12dp" />
 
                         <TextView
@@ -153,7 +155,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:text="0"
-                            android:textColor="#000"
+                            android:textColor="@color/text_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -179,7 +181,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recent Leaves"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="18dp"
         android:textStyle="bold" />
 
@@ -205,7 +207,7 @@
             android:text="Your applied leaves will appear here"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/text_color_primary"
             android:textAlignment="center"/>
         <ImageView
             android:layout_width="200dp"
