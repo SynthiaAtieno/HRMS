@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -78,7 +78,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
     View customView;
 
     ScrollView scrollView;
-    LinearLayout linearLayout, earninglayout, errorlayoutforeanings, deductionslayout, errorlayoutfordeductions;
+    LinearLayout earninglayout, errorlayoutforeanings, deductionslayout, errorlayoutfordeductions;
     private static final int MY_REQUEST_PERMISSION = 100;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -99,7 +99,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
 
 
         scrollView = findViewById(R.id.payslipscrollview);
-      //  linearLayout = findViewById(R.id.errorlayoutforpayslip);
+        //  linearLayout = findViewById(R.id.errorlayoutforpayslip);
 
         downloadBtn = findViewById(R.id.downloadSalarySlipBtn);
         progressBar = findViewById(R.id.progressbar);
@@ -138,9 +138,9 @@ public class PaySlipActivity2 extends AppCompatActivity {
                     // permission already granted perfom download
                     ApiClient.getApiClient().DownloadSlip("sid=" + sessionManager.getUserId(), "Salary Slip", "[" + "\"" + getIntent().getExtras().getString("name") + "\"" + "]")
                             .enqueue(new Callback<ResponseBody>() {
-                                @SuppressLint("SetTextI18n")
+                                @SuppressLint({"SetTextI18n", "InflateParams"})
                                 @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                                     if (response.isSuccessful()) {
                                         String contentDispositionHeader = response.headers().get("Content-Disposition");
                                         if (contentDispositionHeader != null && !contentDispositionHeader.isEmpty()) {
@@ -182,6 +182,19 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                                 builder.setTitle(errorResponse.getExcType());
                                                 String exceptionMessage = errorResponse.getException();
                                                 int firstmaessage = exceptionMessage.indexOf(":");
+
+                                                if (errorResponse.getSessionExpired().equals(1)) {
+                                                    builder.setMessage("Your session expired, please login to access your account");
+                                                    builder.setCancelable(false);
+                                                    builder.setPositiveButton("Login", (dialog, which) -> {
+                                                        dialog.dismiss();
+                                                        sessionManager.clearSession();
+                                                        startActivity(new Intent(PaySlipActivity2.this, Login.class));
+                                                    });
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
+
+                                                }
                                                 //int lastmessage = exceptionMessage.lastIndexOf(":");
                                                 String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
                                                 builder.setMessage(errorMessage);
@@ -192,14 +205,14 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                                 progressBar.setVisibility(View.GONE);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
-                                                 progressBar.setVisibility(View.GONE);
+                                                progressBar.setVisibility(View.GONE);
                                             }
                                         }
                                     }
                                 }
 
                                 @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                                     progressBar.setVisibility(View.GONE);
                                     Toast.makeText(PaySlipActivity2.this, "Failed to download " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -212,7 +225,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
                 ApiClient.getApiClient().DownloadSlip("sid=" + sessionManager.getUserId(), "Salary Slip", "[" + "\"" + getIntent().getExtras().getString("name") + "\"" + "]")
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                                 if (response.isSuccessful()) {
                                     String contentDispositionHeader = response.headers().get("Content-Disposition");
                                     if (contentDispositionHeader != null && !contentDispositionHeader.isEmpty()) {
@@ -234,7 +247,7 @@ public class PaySlipActivity2 extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                                 progressBar.setVisibility(View.GONE);
                                 Toast.makeText(PaySlipActivity2.this, "Failed to download the salary slip", Toast.LENGTH_SHORT).show();
                             }
@@ -247,60 +260,60 @@ public class PaySlipActivity2 extends AppCompatActivity {
         NumberFormat kenyanCurrencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "KE"));
         kenyanCurrencyFormat.setCurrency(Currency.getInstance("KES"));
         progressBar.setVisibility(View.VISIBLE);
-        ApiClient.getApiClient().getSlipData( getIntent().getExtras().getString("name"), "sid=" + sessionManager.getUserId()).enqueue(new Callback<PaySlip>() {
+        ApiClient.getApiClient().getSlipData(getIntent().getExtras().getString("name"), "sid=" + sessionManager.getUserId()).enqueue(new Callback<PaySlip>() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onResponse(Call<PaySlip> call, Response<PaySlip> response) {
+            public void onResponse(@NonNull Call<PaySlip> call, @NonNull Response<PaySlip> response) {
                 if (response.isSuccessful()) {
                     PaySlip paySlip = response.body();
-                        if (paySlip != null && !paySlip.getData().getDeductions().isEmpty()) {
-                            String totalDeductions = kenyanCurrencyFormat.format(paySlip.getData().getTotalDeduction());
-                            totalDeductionstxt.setText(totalDeductions);
-                            String formatedDate = DateUtils.convertStringToDate(paySlip.getData().getStartDate(), "yyyy-MM-dd", "MMM yyyy");
-                            dateTxt.setText(formatedDate);
+                    if (paySlip != null && !paySlip.getData().getDeductions().isEmpty()) {
+                        String totalDeductions = kenyanCurrencyFormat.format(paySlip.getData().getTotalDeduction());
+                        totalDeductionstxt.setText(totalDeductions);
+                        String formatedDate = DateUtils.convertStringToDate(paySlip.getData().getStartDate(), "yyyy-MM-dd", "MMM yyyy");
+                        dateTxt.setText(formatedDate);
 
 
-                            List<PieEntry> entries = new ArrayList<>();
-                            int ded = paySlip.getData().getTotalDeduction().intValue();
-                            int earn = paySlip.getData().getGrossPay().intValue();
-                            entries.add(new PieEntry(ded, kenyanCurrencyFormat.format(ded) + "\n" + "Deductions"));
-                            entries.add(new PieEntry(earn, kenyanCurrencyFormat.format(earn) + "\n" + "Earnings"));
+                        List<PieEntry> entries = new ArrayList<>();
+                        int ded = paySlip.getData().getTotalDeduction().intValue();
+                        int earn = paySlip.getData().getGrossPay().intValue();
+                        entries.add(new PieEntry(ded, kenyanCurrencyFormat.format(ded) + "\n" + "Deductions"));
+                        entries.add(new PieEntry(earn, kenyanCurrencyFormat.format(earn) + "\n" + "Earnings"));
 
-                            float desiredHoleRadius = 85f; // Range: 0.0f (no hole) to 1.0f (full size)
-                            int desiredWidth = 500; // in pixels
+                        float desiredHoleRadius = 85f; // Range: 0.0f (no hole) to 1.0f (full size)
+                        int desiredWidth = 500; // in pixels
 
-                            createPieChart(entries, pieChart, desiredHoleRadius, desiredWidth);
-                            pieChart.setCenterText(kenyanCurrencyFormat.format(paySlip.getData().getBaseRoundedTotal()) + "\n\n" + "Gross Pay");
+                        createPieChart(entries, pieChart, desiredHoleRadius, desiredWidth);
+                        pieChart.setCenterText(kenyanCurrencyFormat.format(paySlip.getData().getBaseRoundedTotal()) + "\n\n" + "Gross Pay");
 
 
-                            List<PaySlip.Deduction> deductions = paySlip.getData().getDeductions();
-                            deductionList.addAll(deductions);
-                            deductionAdapter.notifyDataSetChanged();
-                            progressBar.setVisibility(View.GONE);
-                        } else {
+                        List<PaySlip.Deduction> deductions = paySlip.getData().getDeductions();
+                        deductionList.addAll(deductions);
+                        deductionAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
+                    } else {
 
-                            errorlayoutfordeductions.setVisibility(View.VISIBLE);
-                            deductionslayout.setVisibility(View.GONE);
-                            //Toast.makeText(PaySlipActivity2.this, "No deductions", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-
-                        }
-                        if (paySlip != null && !paySlip.getData().getEarnings().isEmpty()) {
-                            List<PaySlip.Earning> earnings = paySlip.getData().getEarnings();
-                            earningList.addAll(earnings);
-                            earniAdapter.notifyDataSetChanged();
-                            progressBar.setVisibility(View.GONE);
-
-                        } else {
-                            errorlayoutforeanings.setVisibility(View.VISIBLE);
-                            earninglayout.setVisibility(View.GONE);
-                            //Toast.makeText(PaySlipActivity2.this, "No Earnings", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-
-                        }
-
+                        errorlayoutfordeductions.setVisibility(View.VISIBLE);
+                        deductionslayout.setVisibility(View.GONE);
+                        //Toast.makeText(PaySlipActivity2.this, "No deductions", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
 
                     }
-                else {
+                    if (paySlip != null && !paySlip.getData().getEarnings().isEmpty()) {
+                        List<PaySlip.Earning> earnings = paySlip.getData().getEarnings();
+                        earningList.addAll(earnings);
+                        earniAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
+
+                    } else {
+                        errorlayoutforeanings.setVisibility(View.VISIBLE);
+                        earninglayout.setVisibility(View.GONE);
+                        //Toast.makeText(PaySlipActivity2.this, "No Earnings", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+
+                    }
+
+
+                } else {
 
                     if (response.errorBody() != null) {
                         progressBar.setVisibility(View.GONE);
@@ -315,6 +328,19 @@ public class PaySlipActivity2 extends AppCompatActivity {
                             String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
                             builder.setMessage(errorMessage);
                             builder.setCancelable(false);
+
+                            if (errorResponse.getSessionExpired().equals(1)) {
+                                builder.setMessage("Your session expired, please login to access your account");
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("Login", (dialog, which) -> {
+                                    dialog.dismiss();
+                                    sessionManager.clearSession();
+                                    startActivity(new Intent(PaySlipActivity2.this, Login.class));
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
+                            }
                             builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
                             // Create and show the alert dialog
                             AlertDialog dialog = builder.create();
@@ -322,17 +348,16 @@ public class PaySlipActivity2 extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                         } catch (IOException e) {
                             e.printStackTrace();
-                             progressBar.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
-
 
 
                 }
             }
 
             @Override
-            public void onFailure(Call<PaySlip> call, Throwable t) {
+            public void onFailure(@NonNull Call<PaySlip> call, @NonNull Throwable t) {
                 Toast.makeText(PaySlipActivity2.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
 
@@ -377,8 +402,9 @@ public class PaySlipActivity2 extends AppCompatActivity {
                 //permission granted for popup, perform download
                 ApiClient.getApiClient().DownloadSlip("sid=" + sessionManager.getUserId(), "Salary Slip", "[" + "\"" + getIntent().getExtras().getString("name") + "\"" + "]")
                         .enqueue(new Callback<ResponseBody>() {
+                            @SuppressLint("InflateParams")
                             @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                                 if (response.isSuccessful()) {
                                     String contentDispositionHeader = response.headers().get("Content-Disposition");
                                     if (contentDispositionHeader != null && !contentDispositionHeader.isEmpty()) {
@@ -412,12 +438,19 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                             AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipActivity2.this);
                                             builder.setView(customView)
                                                     .setCancelable(false);
-                                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    dialogInterface.dismiss();
-                                                }
-                                            });
+                                            if (errorResponse.getSessionExpired().equals(1)) {
+                                                builder.setMessage("Your session expired, please login to access your account");
+                                                builder.setCancelable(false);
+                                                builder.setPositiveButton("Login", (dialog, which) -> {
+                                                    dialog.dismiss();
+                                                    sessionManager.clearSession();
+                                                    startActivity(new Intent(PaySlipActivity2.this, Login.class));
+                                                });
+                                                AlertDialog dialog = builder.create();
+                                                dialog.show();
+
+                                            }
+                                            builder.setPositiveButton("OK", (dialogInterface, i) -> dialogInterface.dismiss());
 
                                             AlertDialog alertDialog = builder.create();
                                             alertDialog.show();
@@ -429,9 +462,9 @@ public class PaySlipActivity2 extends AppCompatActivity {
                                 }
                             }
 
-                            @SuppressLint("SetTextI18n")
+                            @SuppressLint({"SetTextI18n", "InflateParams"})
                             @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                                 customView = getLayoutInflater().inflate(R.layout.failure, null);
                                 TextView message = customView.findViewById(R.id.message);
                                 AppCompatButton button = customView.findViewById(R.id.closebtn);
