@@ -1,4 +1,4 @@
-package com.example.erpnext.fragments;
+package com.example.savannahrms.fragments;
 
 import android.os.Bundle;
 
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.example.erpnext.R;
+import com.example.savannahrms.R;
 //import com.example.savannahrms.R;
 
 /**
