@@ -7,13 +7,24 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="icon_colo">#FFFFFFFF</color>
     <color name="purple">#928FED</color>
+    <color name="blueColor">#639ECD</color>
     <color name="inactive">#45928FED</color>
     <color name="orange">#FFA500</color>
-    <color name="textColorLight">@android:color/black</color>
-    <color name="textColorDark">@android:color/white</color>
+
     <color name="royal_blue">#4169E1</color>
+    <color name="text_color_primary">#4169E1</color>
+    <color name="text_color_light">#6E000000</color>
     <color name="dark_orange">#F86F03</color>
+    <color name="card_color">#E5F8F1EC</color>
+
+
+    <color name="background_color">#FFF</color>
+    <color name="text_color">#000</color>
+    <color name="view_color">#4169E1</color>
+    <color name="app_bar_color">#fff</color>
+
 
 
 </resources>
