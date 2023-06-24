@@ -1,4 +1,4 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,18 +6,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.erpnext.R;
-import com.example.erpnext.adapters.SlipDetailsAdapter;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.models.SalarySlipReport;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.R;
+import com.example.savannahrms.adapters.SlipDetailsAdapter;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.models.SalarySlipReport;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,14 +88,14 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                             }
                             else {
-                                linearLayout.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
+
                             }
                         }
 
                     }
                     else {
-
+                        linearLayout.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
                     //Toast.makeText(PaySlipDetailsActivity.this, "success", Toast.LENGTH_SHORT).show();
                 }
@@ -104,14 +106,65 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                             String errorResponseJson = response.errorBody().string();
                             PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
                             AlertDialog.Builder builder = new AlertDialog.Builder(PaySlipDetailsActivity.this);
-                            builder.setTitle("Error Occurred");
-                            builder.setMessage(errorResponse.getExcType());
-                            // Set a positive button and its click listener
-                            builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
-                            // Create and show the alert dialog
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                            progressBar.setVisibility(View.GONE);
+                            builder.setTitle(errorResponse.getException());
+
+                            if (errorResponse.getException().equals("frappe.exceptions.PermissionError")){
+                                /*ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful()){
+                                            builder.setMessage("Your Session expired, please login to access your account");
+                                            builder.setCancelable(false);
+                                            builder.setPositiveButton("Ok", (dialog, which) -> {
+                                                dialog.dismiss();
+                                                startActivity(new Intent(requireContext(), Login.class));
+                                            });
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                                        builder.setTitle("Error Occurred");
+                                        if (t.getMessage().equals("timeout")) {
+                                            builder.setMessage("Kindly check your internet connection then try again");
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        } else {
+                                            builder.setMessage(t.getMessage());
+
+                                            // Set a positive button and its click listener
+                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                        }
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                });*/
+                                builder.setMessage("Your session expired, please login to access your account");
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("Login", (dialog, which) -> {
+                                    dialog.dismiss();
+                                    sessionManager.clearSession();
+                                    startActivity(new Intent(PaySlipDetailsActivity.this, Login.class));
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
+                            }else {
+                                builder.setMessage(errorResponse.getException());
+                                // Set a positive button and its click listener
+                                builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                                // Create and show the alert dialog
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+
                         } catch (IOException e) {
                             e.printStackTrace();
                              progressBar.setVisibility(View.GONE);
