@@ -1,4 +1,4 @@
-package com.example.erpnext.adapters;
+package com.example.savannahrms.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.erpnext.R;
-import com.example.erpnext.models.HolidayList;
+import com.example.savannahrms.R;
+import com.example.savannahrms.models.HolidayList;
 
 import java.util.List;
 
