@@ -127,20 +127,24 @@ public class HomeFragment extends Fragment {
                             String exceptionMessage = errorResponse.getException();
                             int firstmaessage = exceptionMessage.indexOf(":");
                             int lastmessage = exceptionMessage.lastIndexOf(":");
-                            if (errorResponse.getSessionExpired().equals(1)) {
-                                builder.setMessage("Your session expired, please login to access your account");
-                                builder.setCancelable(false);
-                                builder.setPositiveButton("Login", (dialog, which) -> {
-                                    dialog.dismiss();
-                                    sessionManager.clearSession();
-                                    startActivity(new Intent(requireContext(), Login.class));
-                                });
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
+                            if (errorResponse.getSessionExpired() != null){
+                                if (errorResponse.getSessionExpired().equals(1)) {
+                                    builder.setMessage("Your session expired, please login to access your account");
+                                    builder.setCancelable(false);
+                                    builder.setPositiveButton("Login", (dialog, which) -> {
+                                        dialog.dismiss();
+                                        sessionManager.clearSession();
+                                        startActivity(new Intent(requireContext(), Login.class));
+                                    });
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
 
+                                }
                             }
+
+
                             else {
-                                String errorMessage = exceptionMessage.substring(firstmaessage+1, lastmessage).trim();
+                                String errorMessage = exceptionMessage.substring(firstmaessage+1).trim();
                                 builder.setMessage(errorMessage);
                                 builder.setCancelable(false);
                                 builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
@@ -166,7 +170,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(Call<EmployeeDataResponse> call, Throwable t) {
                 System.out.println("t.getMessage() = " + t.getMessage());
-                Toast.makeText(requireContext(), "Error occurred in home fragment" + t.getMessage(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(requireContext(), "Error occurred in home fragment" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
