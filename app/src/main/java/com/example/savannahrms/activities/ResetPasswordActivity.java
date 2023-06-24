@@ -1,4 +1,4 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
 //import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.Button;
 
 
-import com.example.erpnext.R;
+import com.example.savannahrms.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
