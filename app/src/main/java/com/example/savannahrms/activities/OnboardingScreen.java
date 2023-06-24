@@ -1,4 +1,4 @@
-package com.example.erpnext.activities;
+package com.example.savannahrms.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -11,8 +11,8 @@ import android.text.Html;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.erpnext.R;
-import com.example.erpnext.adapters.ViewPagerAdapter;
+import com.example.savannahrms.R;
+import com.example.savannahrms.adapters.ViewPagerAdapter;
 
 public class OnboardingScreen extends AppCompatActivity {
     ViewPager mSlideViewPage;
