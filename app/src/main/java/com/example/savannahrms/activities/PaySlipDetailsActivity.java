@@ -87,9 +87,6 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
                                 progressBar.setVisibility(View.GONE);
                             }
-                            else {
-
-                            }
                         }
 
                     }
@@ -109,42 +106,6 @@ public class PaySlipDetailsActivity extends AppCompatActivity {
                             builder.setTitle(errorResponse.getException());
 
                             if (errorResponse.getException().equals("frappe.exceptions.PermissionError")){
-                                /*ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.isSuccessful()){
-                                            builder.setMessage("Your Session expired, please login to access your account");
-                                            builder.setCancelable(false);
-                                            builder.setPositiveButton("Ok", (dialog, which) -> {
-                                                dialog.dismiss();
-                                                startActivity(new Intent(requireContext(), Login.class));
-                                            });
-                                            AlertDialog dialog = builder.create();
-                                            dialog.show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                                        builder.setTitle("Error Occurred");
-                                        if (t.getMessage().equals("timeout")) {
-                                            builder.setMessage("Kindly check your internet connection then try again");
-
-                                            // Set a positive button and its click listener
-                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
-                                        } else {
-                                            builder.setMessage(t.getMessage());
-
-                                            // Set a positive button and its click listener
-                                            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
-                                        }
-                                        // Create and show the alert dialog
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-
-                                    }
-                                });*/
                                 builder.setMessage("Your session expired, please login to access your account");
                                 builder.setCancelable(false);
                                 builder.setPositiveButton("Login", (dialog, which) -> {
