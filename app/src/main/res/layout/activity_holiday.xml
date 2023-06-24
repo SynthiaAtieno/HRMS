@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
+        android:background="@color/app_bar_color"
         android:elevation="26dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
