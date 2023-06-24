@@ -1,4 +1,4 @@
-package com.example.erpnext.adapters;
+package com.example.savannahrms.adapters;
 
 
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.erpnext.R;
-import com.example.erpnext.models.PaySlip;
+import com.example.savannahrms.R;
+import com.example.savannahrms.models.PaySlip;
 
 import java.text.NumberFormat;
 import java.util.Currency;
