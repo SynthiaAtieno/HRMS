@@ -1,4 +1,4 @@
-package com.example.erpnext;
+package com.example.savannahrms;
 
 import android.app.AlertDialog;
 import android.content.Context;
