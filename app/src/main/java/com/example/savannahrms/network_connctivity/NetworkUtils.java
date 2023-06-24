@@ -1,4 +1,4 @@
-package com.example.erpnext.network_connctivity;
+package com.example.savannahrms.network_connctivity;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
