@@ -1,4 +1,4 @@
-package com.example.erpnext.models.sidebar;
+package com.example.savannahrms.models.sidebar;
 
 
 import java.io.IOException;
