@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ERPNext</string>
+    <string name="app_name">SavanaHRMS</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!--    Heading-->
     <string name="savanna_hrms">Savanna HRMS</string>
