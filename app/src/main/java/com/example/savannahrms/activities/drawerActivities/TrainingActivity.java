@@ -1,4 +1,4 @@
-package com.example.erpnext.activities.drawerActivities;
+package com.example.savannahrms.activities.drawerActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,7 +8,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import com.example.erpnext.R;
+import com.example.savannahrms.R;
 
 public class TrainingActivity extends AppCompatActivity {
 
