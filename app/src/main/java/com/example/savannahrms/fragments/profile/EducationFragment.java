@@ -1,4 +1,4 @@
-package com.example.erpnext.fragments.profile;
+package com.example.savannahrms.fragments.profile;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,12 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.erpnext.R;
-import com.example.erpnext.adapters.EmployeEducationAdapter;
-import com.example.erpnext.models.EmployeeDataResponse;
-import com.example.erpnext.models.PermissionError;
-import com.example.erpnext.services.ApiClient;
-import com.example.erpnext.session.UserSessionManager;
+import com.example.savannahrms.R;
+import com.example.savannahrms.adapters.EmployeEducationAdapter;
+import com.example.savannahrms.models.EmployeeDataResponse;
+import com.example.savannahrms.models.PermissionError;
+import com.example.savannahrms.services.ApiClient;
+import com.example.savannahrms.session.UserSessionManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
