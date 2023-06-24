@@ -24,7 +24,7 @@
         android:textAlignment="center"
         android:text="Confirm log out"
         android:textStyle="bold"
-        android:textColor="@color/purple_700"
+        android:textColor="@color/text_color_primary"
         android:textSize="18sp" />
         <View
             android:id="@+id/view1"
@@ -44,7 +44,7 @@
             android:padding="8dp"
             android:text="Are you sure you want to log out?"
             android:textAlignment="center"
-            android:textColor="#000"
+            android:textColor="@color/text_color_primary"
             android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatButton
