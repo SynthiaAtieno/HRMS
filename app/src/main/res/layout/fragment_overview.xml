@@ -7,14 +7,6 @@
     android:orientation="vertical"
     tools:context=".fragments.profile.OverviewFragment">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="6dp"
-        android:layout_margin="4dp"
-      >
-
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -37,14 +29,14 @@
                     android:layout_marginEnd="18dp"
                     android:background="@drawable/shape"
                     android:src="@drawable/ic_baseline_person_24"
-                    android:textColor="#AA000000"
+                    android:backgroundTint="@color/icon_colo"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/employee_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:textSize="16sp"
                     android:text="No empee Id"
                     android:textStyle="bold" />
@@ -82,7 +74,7 @@
                     android:id="@+id/employee_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:text="No employee number"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -116,7 +108,7 @@
                     android:id="@+id/employee_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:text="No employee email"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -151,7 +143,7 @@
                     android:id="@+id/employee_dob"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:textSize="16sp"
                     android:text="Date of joining is empty"
                     android:textStyle="bold" />
@@ -183,7 +175,7 @@
                     android:id="@+id/employee_blood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:text="Blood group is empty"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -209,14 +201,13 @@
                     android:layout_height="30dp"
                     android:layout_marginEnd="18dp"
                     android:src="@drawable/ic_baseline_access_time_filled_24"
-                    android:textColor="#AA000000"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/employee_dateofjoining"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:text="Location is empty"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -240,14 +231,13 @@
                     android:layout_height="30dp"
                     android:layout_marginEnd="18dp"
                     android:src="@drawable/ic_baseline_location_on_24"
-                    android:textColor="#AA000000"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/employee_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textColor="@color/text_color"
                     android:textSize="16sp"
                     android:text="Location is empty"
                     android:textStyle="bold" />
@@ -255,7 +245,6 @@
 
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
 
     <ProgressBar
         android:id="@+id/progressbar"
