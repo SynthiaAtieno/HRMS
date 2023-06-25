@@ -95,11 +95,6 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private int getLayoutResId() {
-        return R.id.homefragment;
-    }
-
-
 
     public void getEmployeeData() {
         sessionManager = new UserSessionManager(requireContext());
@@ -148,12 +143,6 @@ public class HomeFragment extends Fragment {
                                 builder.setMessage(errorMessage);
                                 builder.setCancelable(false);
                                 builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
-
-
-                                // Set a positive button and its click listener
-
-
-                                // Create and show the alert dialog
                                 AlertDialog dialog = builder.create();
                                 dialog.show();
 
