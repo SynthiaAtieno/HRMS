@@ -13,6 +13,6 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "ERPNext"
+rootProject.name = "SavannaHRMS"
 include ':app'
 
