@@ -4,30 +4,6 @@
     <!--    Heading-->
     <string name="savanna_hrms">Savanna HRMS</string>
 
-    <string-array name="months">
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
-    </string-array>
-    <string-array name="year">
-        <item>2023</item>
-        <item>2022</item>
-        <item>2021</item>
-        <item>2020</item>
-        <item>2019</item>
-        <item>2018</item>
-        <item>2017</item>
-
-    </string-array>
 
     <!--    Subheading-->
     <string name="run_payroll_in_seconds">Run Payroll in Seconds</string>
