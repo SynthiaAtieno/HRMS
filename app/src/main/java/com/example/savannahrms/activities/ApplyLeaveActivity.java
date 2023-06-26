@@ -210,19 +210,34 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                                             });
                                         }
                                         int lastmessage = exceptionMessage.lastIndexOf(":");
-                                        String errorMessage = exceptionMessage.substring(firstmaessage+1, lastmessage-1).trim();
-                                        builder.setCancelable(false);
-                                        builder.setMessage(errorMessage);
-                                        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+                                        if (lastmessage == -1){
+                                            String errorMessage = exceptionMessage.substring(firstmaessage+1, lastmessage-2).trim();
+                                            builder.setCancelable(false);
+                                            builder.setMessage(errorMessage);
+                                            builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
 
 
-                                        // Set a positive button and its click listener
+                                            // Set a positive button and its click listener
 
 
-                                        // Create and show the alert dialog
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-                                        progressBar.setVisibility(View.GONE);
+                                            // Create and show the alert dialog
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        }else {
+                                            String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
+                                            builder.setCancelable(false);
+                                            builder.setMessage(errorMessage);
+                                            builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+
+
+                                            // Set a positive button and its click listener
+
+
+                                            // Create and show the alert dialog
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                            progressBar.setVisibility(View.GONE);
+                                        }
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                          progressBar.setVisibility(View.GONE);
