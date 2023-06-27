@@ -276,7 +276,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         // Set the designation in a TextView
                         sessionManager.setUserFirstName(data.getFirstName());
                         //sessionManager.setKeyEmployeeNamingSeries(data.getNamingSeries());
-                       // Toast.makeText(MainActivity.this, "First Name"+sessionManager.getUserFirstName(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Null data", Toast.LENGTH_LONG).show();
                     }
