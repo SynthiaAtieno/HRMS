@@ -44,7 +44,6 @@ public class GettingActivity extends AppCompatActivity {
         } else if (themePreference.equals("light")) {
             return false;
         } else {
-            // If the theme preference is set to "system", use the system default
             int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
         }
