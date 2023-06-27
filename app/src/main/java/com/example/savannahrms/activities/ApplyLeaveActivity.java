@@ -20,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.savannahrms.adapters.DateUtils;
 import com.example.savannahrms.models.LeaveApplicationData;
 import com.example.savannahrms.R;
 import com.example.savannahrms.models.LeaveAllocation;
