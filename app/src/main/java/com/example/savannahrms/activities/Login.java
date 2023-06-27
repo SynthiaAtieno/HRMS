@@ -79,8 +79,8 @@ public class Login extends AppCompatActivity {
 
         boolean isConnected = NetworkUtils.isNetworkConnected(this);
 
-        usernametxt.getEditText().addTextChangedListener(loginTextWatcher);
-        passwordtxt.getEditText().addTextChangedListener(loginTextWatcher);
+        Objects.requireNonNull(usernametxt.getEditText()).addTextChangedListener(loginTextWatcher);
+        Objects.requireNonNull(passwordtxt.getEditText()).addTextChangedListener(loginTextWatcher);
 
         linearLayout = findViewById(R.id.linearlayout);
         progressDialog = new ProgressDialog(this);
@@ -126,7 +126,7 @@ public class Login extends AppCompatActivity {
         Map<String, String> credentials = new HashMap<>();
         credentials.put("usr", username);
         credentials.put("pwd", password);
-      /*  if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+/*      *//*  if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
             builder.setTitle("Network Error");
@@ -137,8 +137,8 @@ public class Login extends AppCompatActivity {
 
             // Create and show the alert dialog
             AlertDialog dialog = builder.create();
-            dialog.show();*/
-        //} else {
+            dialog.show();*//*
+        //} else {*/
             progressDialog.show();
             ApiClient.getApiClient().login(credentials, contentType, accept, authToken).enqueue(new Callback<UserModel>() {
                 @Override
