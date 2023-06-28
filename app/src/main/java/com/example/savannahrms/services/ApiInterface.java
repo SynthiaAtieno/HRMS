@@ -9,6 +9,7 @@ import com.example.savannahrms.models.EmployeeDataResponse;
 import com.example.savannahrms.models.HolidayList;
 import com.example.savannahrms.models.LeaveApplication;
 import com.example.savannahrms.models.PaySlip;
+import com.example.savannahrms.models.Projects;
 import com.example.savannahrms.models.SalarySlipReport;
 import com.example.savannahrms.models.UserModel;
 
@@ -82,6 +83,8 @@ public interface ApiInterface {
     @GET("method/frappe.utils.print_format.download_multi_pdf")
     Call<ResponseBody> DownloadSlip(@Header("Cookie") String sid, @Query("doctype") String doctype, @Query("name") String name);
 
+    @GET("resource/Project")
+    Call<Projects> getProjects(@Header("Cookie") String sid, @Query("fields") String fields);
 
 }
 
