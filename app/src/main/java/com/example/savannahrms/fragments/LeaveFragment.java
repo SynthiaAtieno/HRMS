@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -37,6 +39,9 @@ public class LeaveFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
     ProgressBar progressBar;
     UserSessionManager sessionManager;
+    LinearLayout linearLayout;
+    ImageView imageView;
+
 
 
 
@@ -64,7 +69,8 @@ public class LeaveFragment extends Fragment {
         progressBar = view.findViewById(R.id.projects_progressbar);
         progressBar.setVisibility(View.VISIBLE);
         projectsRecycler.setAdapter(projectsAdapter);
-        //linearLayout = view.findViewById(R.id.nothingfoundeducationlayout);
+        linearLayout = view.findViewById(R.id.nothingfoundprojectlayout);
+        imageView = view.findViewById(R.id.add_project);
         return view;
     }
 
@@ -82,6 +88,7 @@ public class LeaveFragment extends Fragment {
                                 List<Projects.Datum> datumList = projects.getData();
                                 if (!datumList.isEmpty())
                                 {
+                                    imageView.setVisibility(View.VISIBLE);
                                     projectslist.clear();
                                     projectsAdapter.notifyDataSetChanged();
                                     projectslist.addAll(datumList);
@@ -107,15 +114,9 @@ public class LeaveFragment extends Fragment {
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                                     builder.setTitle("Error Occurred");
-
                                     if (errorResponse.getException().equals("frappe.exceptions.PermissionError: Project")){
-                                        builder.setMessage("You have not been assigned any project yet");
-                                        // Set a positive button and its click listener
-                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
-
-                                        // Create and show the alert dialog
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
+                                        linearLayout.setVisibility(View.VISIBLE);
+                                        projectsRecycler.setVisibility(View.GONE);
                                     }
 
                                     else {
