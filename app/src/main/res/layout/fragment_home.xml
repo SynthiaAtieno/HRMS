@@ -43,9 +43,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/welcome_layout"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="6dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="18dp">
 
@@ -107,7 +107,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
-                android:padding="12dp">
+                android:padding="8dp">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/checkin"
@@ -290,6 +290,8 @@
                 android:layout_below="@id/quickaccesscardview"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/shape"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
                 android:orientation="vertical"
 
                 android:padding="8dp">
@@ -354,15 +356,16 @@
                 android:layout_below="@+id/todolayout"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="6dp"
                 android:orientation="horizontal"
-                android:padding="8dp">
+              >
 
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="6dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape"
                     android:orientation="vertical"
