@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical"
     tools:context=".fragments.LeaveFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -160,6 +166,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_toStartOf="@id/search_project"
+            android:visibility="gone"
             android:src="@drawable/ic_baseline_add_24" />
 
         <ImageView
@@ -184,4 +191,29 @@
         android:layout_gravity="center"
         android:layout_centerInParent="true"
         android:id="@+id/projects_progressbar"/>
-</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/nothingfoundprojectlayout"
+        android:layout_centerInParent="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your assigned projects will appear here"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/purple_700"
+            android:textAlignment="center"/>
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/nothing_found"/>
+
+    </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>
