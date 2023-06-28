@@ -46,7 +46,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
         int progressValue = projects.getPercentComplete().intValue();
         holder.project_name.setText(projects.getProjectName());
         holder.project_progress.setText(progressValue+"% Complete");
-        holder.project_due_date.setText(DateUtils.convertStringToDate(projects.getExpectedEndDate(), "yyyy-MM-dd", "dd-MMM-yyyy"));
+        holder.project_due_date.setText("Due "+DateUtils.convertStringToDate(projects.getExpectedEndDate(), "yyyy-MM-dd", "dd/MMM/yyyy"));
         holder.progressbar.setProgress(progressValue);
 
     }
