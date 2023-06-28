@@ -107,15 +107,28 @@ public class LeaveFragment extends Fragment {
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                                     builder.setTitle("Error Occurred");
-                                    builder.setMessage(errorResponse.getExcType());
 
-                                    // Set a positive button and its click listener
-                                    builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                                    if (errorResponse.getException().equals("frappe.exceptions.PermissionError: Project")){
+                                        builder.setMessage("You have not been assigned any project yet");
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
 
-                                    // Create and show the alert dialog
-                                    AlertDialog dialog = builder.create();
-                                    dialog.show();
-                                    //progressBar.setVisibility(View.GONE);
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    }
+
+                                    else {
+                                        builder.setMessage(errorResponse.getException());
+                                        // Set a positive button and its click listener
+                                        builder.setPositiveButton("Dismiss", (dialog, which) -> dialog.dismiss());
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        //progressBar.setVisibility(View.GONE);
+                                    }
+
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                     progressBar.setVisibility(View.GONE);
