@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="6dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape">
+
+        <ImageView
+            android:id="@+id/project_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_task_24" />
+
+        <TextView
+            android:id="@+id/project_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Movie App UI"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/project_image"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/project_due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Due 10 Nov 2023"
+            android:layout_centerInParent="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/project_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Entertainment"
+            android:layout_below="@id/project_name"
+            android:layout_toRightOf="@+id/project_image"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20% Complete"
+            android:layout_below="@id/project_type"
+            android:layout_toRightOf="@+id/project_image"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp" />
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_below="@id/progress_text"
+            android:layout_toEndOf="@id/project_image"
+            android:progressBackgroundTint="#BBBCBF"
+            android:layout_marginStart="4dp"
+            android:max="100"
+            android:progressTint="@color/blueColor"/>
+    </RelativeLayout>
+
+</RelativeLayout>
