@@ -13,14 +13,14 @@
         android:icon="@drawable/ic_baseline_task_24"/>
     <item
         android:id="@+id/attendance"
-        android:icon="@drawable/attendance_icon"
-        android:title="Attendance"/>
+        android:icon="@drawable/ic_baseline_calendar_month_24"
+        android:title="Calender"/>
     <item
         android:id="@+id/mark_attendance"
-        android:icon="@drawable/mark_attendance"
-        android:title="Mark Attendance"/>
+        android:icon="@drawable/ic_baseline_contacts_24"
+        android:title="Contacts"/>
     <item
         android:id="@+id/profile"
-        android:title="Payslip"
-        android:icon="@drawable/attendance_icon"/>
+        android:title="Chats"
+        android:icon="@drawable/ic_baseline_chat_24"/>
 </menu>
