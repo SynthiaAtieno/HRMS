@@ -6,6 +6,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,9 +41,13 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
     public void onBindViewHolder(@NonNull ProjectsAdapter.MyViewHolder holder, int position) {
         Projects.Datum projects = projectList.get(position);
 
+
+        holder.progressbar.setMax(100);
+        int progressValue = projects.getPercentComplete().intValue();
         holder.project_name.setText(projects.getProjectName());
-        holder.project_progress.setText(projects.getPercentComplete().toString()+"%");
+        holder.project_progress.setText(progressValue+"% Complete");
         holder.project_due_date.setText(DateUtils.convertStringToDate(projects.getExpectedEndDate(), "yyyy-MM-dd", "dd-MMM-yyyy"));
+        holder.progressbar.setProgress(progressValue);
 
     }
 
@@ -53,11 +58,13 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView project_name, project_due_date, project_progress;
+        ProgressBar progressbar;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             project_name = itemView.findViewById(R.id.project_name);
             project_due_date = itemView.findViewById(R.id.project_due_date);
             project_progress = itemView.findViewById(R.id.progress_text);
+            progressbar = itemView.findViewById(R.id.progressbarprojects);
 
         }
     }
