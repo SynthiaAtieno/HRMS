@@ -25,6 +25,14 @@
     <color name="view_color">#4169E1</color>
     <color name="app_bar_color">#fff</color>
 
+    <color name="progress_bar_background_color">#E0E0E0</color>
+    <color name="progress_bar_segment_color">#00FF00</color>
+
+
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#00FF00</color>
+
 
 
 </resources>
