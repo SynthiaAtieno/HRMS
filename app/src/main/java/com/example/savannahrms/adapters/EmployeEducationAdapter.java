@@ -23,11 +23,6 @@ public class EmployeEducationAdapter extends RecyclerView.Adapter<EmployeEducati
         this.context = context;
     }
 
-    /*public EmployeEducationAdapter(List<EmployeesData.EmployeeEducation> employeeEducationList, Context context) {
-            this.employeeEducationList = employeeEducationList;
-            this.context = context;
-        }
-    */
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
