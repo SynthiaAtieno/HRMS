@@ -9,8 +9,8 @@
         />
     <item
         android:id="@+id/leave"
-        android:title="Apply Leave"
-        android:icon="@drawable/apply"/>
+        android:title="Task"
+        android:icon="@drawable/ic_baseline_task_24"/>
     <item
         android:id="@+id/attendance"
         android:icon="@drawable/attendance_icon"
