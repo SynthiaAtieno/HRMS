@@ -21,18 +21,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Movie App UI"
+            android:textColor="@color/text_color"
             android:textStyle="bold"
             android:layout_toEndOf="@+id/project_image"
             android:layout_marginStart="8dp"
             android:textSize="18sp" />
+
         <TextView
             android:id="@+id/project_due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Due 10 Nov 2023"
-            android:layout_centerInParent="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
             android:layout_marginStart="8dp"
+            android:text="Due 10 Nov 2023"
+            android:textColor="@color/text_color"
             android:textSize="18sp" />
 
         <TextView
@@ -54,6 +57,7 @@
             android:layout_below="@id/project_type"
             android:layout_toEndOf="@+id/project_image"
             android:layout_marginStart="8dp"
+            android:textColor="@color/text_color"
             android:textSize="18sp" />
         <ProgressBar
             android:id="@+id/progressbarprojects"
