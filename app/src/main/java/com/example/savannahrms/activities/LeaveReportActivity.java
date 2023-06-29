@@ -134,8 +134,8 @@ public class LeaveReportActivity extends AppCompatActivity {
                                                                     //total leave days used
                                                                     totalLeaveDaysUsed += leaveApplicationReport1.getTotalLeaveDays();
                                                                     //leaveBalance = 0.0;
-                                                                } else {
-                                                                }
+                                                                } /*else {
+                                                                }*/
                                                             }
                                                             //total leave days
                                                             String totalLeaveDays = total_leave_days_txt.getText().toString();
@@ -186,7 +186,7 @@ public class LeaveReportActivity extends AppCompatActivity {
                                                                 dialog.show();
 
                                                             }
-                                                            int lastmessage = exceptionMessage.lastIndexOf(":");
+                                                            //int lastmessage = exceptionMessage.lastIndexOf(":");
                                                             String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
                                                             builder.setMessage(errorMessage);
                                                             builder.setCancelable(false);
