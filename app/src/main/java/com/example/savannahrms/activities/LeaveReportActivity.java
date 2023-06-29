@@ -121,8 +121,8 @@ public class LeaveReportActivity extends AppCompatActivity {
                                                 fields)
                                         .enqueue(new Callback<LeaveApplicationReport>() {
                                             @Override
-                                            public void onResponse(Call<LeaveApplicationReport> call,
-                                                                   Response<LeaveApplicationReport> response) {
+                                            public void onResponse(@NonNull Call<LeaveApplicationReport> call,
+                                                                   @NonNull Response<LeaveApplicationReport> response) {
                                                 if (response.isSuccessful()) {
                                                     LeaveApplicationReport leaveApplicationReport = response.body();
                                                     if (leaveApplicationReport != null && leaveApplicationReport.getData() != null && !leaveApplicationReport.getData().isEmpty()) {
