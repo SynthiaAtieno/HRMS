@@ -1,5 +1,6 @@
 package com.example.savannahrms.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -87,7 +88,7 @@ public class LeaveReportActivity extends AppCompatActivity {
         ApiClient.getApiClient().getLeaveReportForEmployee("sid=" + sessionManager.getUserId(), fields)
                 .enqueue(new Callback<LeaveAllocation>() {
                     @Override
-                    public void onResponse(Call<LeaveAllocation> call, Response<LeaveAllocation> response) {
+                    public void onResponse(@NonNull Call<LeaveAllocation> call, @NonNull Response<LeaveAllocation> response) {
                         if (response.isSuccessful()) {
                             LeaveAllocation leaveAllocation = response.body();
 
