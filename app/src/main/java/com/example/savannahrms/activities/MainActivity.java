@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     UserSessionManager sessionManager;
     RelativeLayout errorlayout;
-    TextView roletxt, permissiontxt;
+    TextView roletxt;
     FrameLayout frameLayout;
     View customView, logoutview;
 
