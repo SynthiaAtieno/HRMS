@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RelativeLayout errorlayout;
     TextView roletxt, permissiontxt;
     FrameLayout frameLayout;
-    AppCompatButton loginbtnerror;
     View customView, logoutview;
 
 
@@ -137,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
