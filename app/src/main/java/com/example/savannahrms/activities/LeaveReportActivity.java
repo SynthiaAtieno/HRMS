@@ -254,7 +254,7 @@ public class LeaveReportActivity extends AppCompatActivity {
         ApiClient.getApiClient().getAppliedLeavesReport("Leave Application", "sid=" + sessionManager.getUserId(), fields)
                 .enqueue(new Callback<LeaveApplicationReport>() {
                     @Override
-                    public void onResponse(Call<LeaveApplicationReport> call, Response<LeaveApplicationReport> response) {
+                    public void onResponse(@NonNull Call<LeaveApplicationReport> call, @NonNull Response<LeaveApplicationReport> response) {
                         if (response.isSuccessful()) {
                             LeaveApplicationReport leaveApplicationReport = response.body();
 
