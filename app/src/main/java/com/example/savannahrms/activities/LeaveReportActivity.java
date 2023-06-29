@@ -241,7 +241,7 @@ public class LeaveReportActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<LeaveAllocation> call, Throwable t) {
+                    public void onFailure(@NonNull Call<LeaveAllocation> call, @NonNull Throwable t) {
                         Toast.makeText(LeaveReportActivity.this, "Failed " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
