@@ -415,7 +415,6 @@ public class LeaveReportActivity extends AppCompatActivity {
                             if (leaveAllocation != null && !leaveAllocation.getData().isEmpty()) {
                                 List<LeaveAllocation.Datum> datumList1 = leaveAllocation.getData();
                                 LeaveAllocation.Datum data = datumList1.get(0);
-                                data.getLeaveType().toString();
 
                                 startActivity(new Intent(LeaveReportActivity.this, ApplyLeaveActivity.class));
                             } else {
