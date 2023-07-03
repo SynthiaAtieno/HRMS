@@ -378,7 +378,7 @@ public class LeaveReportActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<LeaveApplicationReport> call, Throwable t) {
+                    public void onFailure(@NonNull Call<LeaveApplicationReport> call, Throwable t) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(LeaveReportActivity.this);
                         builder.setTitle("Error Occurred");
