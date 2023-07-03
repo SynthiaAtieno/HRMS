@@ -253,6 +253,7 @@ public class LeaveReportActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         ApiClient.getApiClient().getAppliedLeavesReport("Leave Application", "sid=" + sessionManager.getUserId(), fields)
                 .enqueue(new Callback<LeaveApplicationReport>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onResponse(@NonNull Call<LeaveApplicationReport> call, @NonNull Response<LeaveApplicationReport> response) {
                         if (response.isSuccessful()) {
