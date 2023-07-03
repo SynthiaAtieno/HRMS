@@ -107,7 +107,6 @@ public class LeaveReportActivity extends AppCompatActivity {
                                 }
 
                                 total_leave_days_txt.setText(String.valueOf(totalleaves));
-                                //Toast.makeText(LeaveReportActivity.this, "Total"+totalleaves, Toast.LENGTH_SHORT).show();
 
                                 String fields = "[\"leave_type\"," +
                                         " \"from_date\", \"to_date\"," +
@@ -275,9 +274,9 @@ public class LeaveReportActivity extends AppCompatActivity {
                                             totalLeaveDaysUsed += leaveApplicationReport1.getTotalLeaveDays();
                                         }
 
-                                        if (leaveApplicationReport1.equals(leaveApplicationReport1.getStatus())) {
+                                       /* if (leaveApplicationReport1.equals(leaveApplicationReport1.getStatus())) {
                                             noOfOccurs++;
-                                        }
+                                        }*/
                                         Toast.makeText(LeaveReportActivity.this, ""+noOfOccurs, Toast.LENGTH_SHORT).show();
 
                                     }
