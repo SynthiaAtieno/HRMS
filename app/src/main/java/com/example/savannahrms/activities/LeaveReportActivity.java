@@ -409,7 +409,7 @@ public class LeaveReportActivity extends AppCompatActivity {
                 .enqueue(new Callback<LeaveAllocation>() {
                     @SuppressLint("SetTextI18n")
                     @Override
-                    public void onResponse(@NonNull Call<LeaveAllocation> call, Response<LeaveAllocation> response) {
+                    public void onResponse(@NonNull Call<LeaveAllocation> call, @NonNull Response<LeaveAllocation> response) {
                         if (response.isSuccessful()) {
                             LeaveAllocation leaveAllocation = response.body();
                             if (leaveAllocation != null && !leaveAllocation.getData().isEmpty()) {
