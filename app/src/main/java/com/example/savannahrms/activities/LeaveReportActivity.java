@@ -278,6 +278,7 @@ public class LeaveReportActivity extends AppCompatActivity {
                                         if (leaveApplicationReport1.equals(leaveApplicationReport1.getStatus())) {
                                             noOfOccurs++;
                                         }
+                                        Toast.makeText(LeaveReportActivity.this, ""+noOfOccurs, Toast.LENGTH_SHORT).show();
 
                                     }
 
