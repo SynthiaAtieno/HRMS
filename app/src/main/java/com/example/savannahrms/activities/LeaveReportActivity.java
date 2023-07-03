@@ -407,7 +407,7 @@ public class LeaveReportActivity extends AppCompatActivity {
         ApiClient.getApiClient().getLeaveTypesForLeaveReport("Leave Allocation",
                         "sid=" + sessionManager.getUserId())
                 .enqueue(new Callback<LeaveAllocation>() {
-                    @SuppressLint("SetTextI18n")
+                    @SuppressLint({"SetTextI18n", "InflateParams"})
                     @Override
                     public void onResponse(@NonNull Call<LeaveAllocation> call, @NonNull Response<LeaveAllocation> response) {
                         if (response.isSuccessful()) {
