@@ -104,7 +104,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                 leaveApplicationData.setLeaveType(spinnerIte);
                 leaveApplicationData.setReasonForApplication(reasonforleaveapplication.getText().toString());
                 leaveApplicationData.setLeaveApprover(sessionManager.getLeaveApprover());
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     // Parse the date strings into Date object
 
