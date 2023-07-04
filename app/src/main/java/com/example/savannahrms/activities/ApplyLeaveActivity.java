@@ -260,7 +260,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
         String fields = "[\"leave_type\", \"name\", \"total_leaves_allocated\"]";
         ApiClient.getApiClient().getAllocatedLeaveTypes("Leave Allocation", "sid="+sessionManager.getUserId(), fields).enqueue(new Callback<LeaveAllocation>() {
             @Override
-            public void onResponse(Call<LeaveAllocation> call, Response<LeaveAllocation> response) {
+            public void onResponse(@NonNull Call<LeaveAllocation> call, Response<LeaveAllocation> response) {
                 if (response.isSuccessful()) {
                     LeaveAllocation leaveAllocation = response.body();
                     if (leaveAllocation != null && !leaveAllocation.getData().isEmpty()) {
