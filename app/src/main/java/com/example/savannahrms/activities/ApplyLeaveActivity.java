@@ -112,6 +112,8 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                     Date date2 = dateFormat.parse(fromtxt);
 
                     // Calculate the difference in milliseconds
+                    assert date1 != null;
+                    assert date2 != null;
                     long differenceInMillis = date1.getTime() - date2.getTime();
 
                     // Convert milliseconds to days
