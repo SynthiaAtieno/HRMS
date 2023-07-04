@@ -245,7 +245,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<LeaveApplication> call, Throwable t) {
+                    public void onFailure(@NonNull Call<LeaveApplication> call, Throwable t) {
                         Toast.makeText(ApplyLeaveActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     }
