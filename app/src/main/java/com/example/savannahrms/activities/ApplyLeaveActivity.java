@@ -189,7 +189,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                                             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
                                                 builder.setTitle("Error Occurred");
-                                                if (t.getMessage().equals("timeout")) {
+                                                if (Objects.equals(t.getMessage(), "timeout")) {
                                                     builder.setMessage("Kindly check your internet connection then try again");
 
                                                     // Set a positive button and its click listener
