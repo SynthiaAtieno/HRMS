@@ -177,7 +177,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                                     if (exceptionMessage.startsWith("frappe.exceptions.PermissionError")){
                                         ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
                                             @Override
-                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                            public void onResponse(@NonNull Call<ResponseBody> call, Response<ResponseBody> response) {
                                                 if (response.isSuccessful()){
                                                     builder.setMessage("Your Session expired, please login to access your account");
                                                     builder.setCancelable(false);
