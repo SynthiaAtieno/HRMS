@@ -186,7 +186,7 @@ public class ApplyLeaveActivity extends AppCompatActivity {
                                             }
 
                                             @Override
-                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                            public void onFailure(@NonNull Call<ResponseBody> call, Throwable t) {
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
                                                 builder.setTitle("Error Occurred");
                                                 if (t.getMessage().equals("timeout")) {
