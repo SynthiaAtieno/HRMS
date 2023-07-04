@@ -86,173 +86,170 @@ public class ApplyLeaveActivity extends AppCompatActivity {
             }
         });
 
-        submitleave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
-                String spinnerIte = leaveTypeSpinner.getSelectedItem().toString();
-                String todate = to.getText().toString();
-                String fromtxt = from.getText().toString();
-                String reasonforleaveApplication = reasonforleaveapplication.getText().toString();
-                if (todate.equals("") && fromtxt.equals("") && reasonforleaveApplication.equals("")){
-                    Toast.makeText(ApplyLeaveActivity.this, "Please fill all the fields withe the appropriate data", Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
+        submitleave.setOnClickListener(view -> {
+            progressBar.setVisibility(View.VISIBLE);
+            String spinnerIte = leaveTypeSpinner.getSelectedItem().toString();
+            String todate = to.getText().toString();
+            String fromtxt = from.getText().toString();
+            String reasonforleaveApplication = Objects.requireNonNull(reasonforleaveapplication.getText()).toString();
+            if (todate.equals("") && fromtxt.equals("") && reasonforleaveApplication.equals("")){
+                Toast.makeText(ApplyLeaveActivity.this, "Please fill all the fields withe the appropriate data", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+            }
+            else {
+                LeaveApplicationData leaveApplicationData = new LeaveApplicationData();
+                leaveApplicationData.setEmployeeId(sessionManager.getKeyEmployeeNamingSeries());
+                leaveApplicationData.setStartDate(fromtxt);
+                leaveApplicationData.setEndDate(todate);
+                leaveApplicationData.setLeaveType(spinnerIte);
+                leaveApplicationData.setReasonForApplication(reasonforleaveapplication.getText().toString());
+                leaveApplicationData.setLeaveApprover(sessionManager.getLeaveApprover());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    // Parse the date strings into Date object
+
+                    Date date1 = dateFormat.parse(todate);
+                    Date date2 = dateFormat.parse(fromtxt);
+
+                    // Calculate the difference in milliseconds
+                    long differenceInMillis = date1.getTime() - date2.getTime();
+
+                    // Convert milliseconds to days
+                    long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMillis)+1;
+
+                   // Toast.makeText(ApplyLeaveActivity.this, ""+differenceInDays, Toast.LENGTH_SHORT).show();
+                    System.out.println("Difference in days: " + differenceInDays);
+                } catch (ParseException | java.text.ParseException e) {
+                    e.printStackTrace();
                 }
-                else {
-                    LeaveApplicationData leaveApplicationData = new LeaveApplicationData();
-                    leaveApplicationData.setEmployeeId(sessionManager.getKeyEmployeeNamingSeries());
-                    leaveApplicationData.setStartDate(fromtxt);
-                    leaveApplicationData.setEndDate(todate);
-                    leaveApplicationData.setLeaveType(spinnerIte);
-                    leaveApplicationData.setReasonForApplication(reasonforleaveapplication.getText().toString());
-                    leaveApplicationData.setLeaveApprover(sessionManager.getLeaveApprover());
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        // Parse the date strings into Date object
+                ApiClient.getApiClient().ApplyLeave(leaveApplicationData, "Leave Application", "sid=" + sessionManager.getUserId()).enqueue(new Callback<LeaveApplication>() {
+                    @SuppressLint({"SetTextI18n", "InflateParams"})
+                    @Override
+                    public void onResponse(@NonNull Call<LeaveApplication> call, @NonNull Response<LeaveApplication> response) {
+                        if (response.isSuccessful()) {
+                            LeaveApplication responseModel = response.body();
+                            if (responseModel != null) {
+                                successView = getLayoutInflater().inflate(R.layout.success, null);
+                                TextView message = successView.findViewById(R.id.message);
+                                AppCompatButton button = successView.findViewById(R.id.closebtn);
+                                message.setText("Leave Application successful");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
+                                builder.setView(successView);
+                                AlertDialog dialog = builder.create();
 
-                        Date date1 = dateFormat.parse(todate);
-                        Date date2 = dateFormat.parse(fromtxt);
+                                button.setOnClickListener(view1 ->{
+                                    dialog.dismiss();
+                                    startActivity(new Intent(getApplicationContext(), LeaveReportActivity.class));
+                                    finish();
+                                });
 
-                        // Calculate the difference in milliseconds
-                        long differenceInMillis = date1.getTime() - date2.getTime();
-
-                        // Convert milliseconds to days
-                        long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMillis)+1;
-
-                       // Toast.makeText(ApplyLeaveActivity.this, ""+differenceInDays, Toast.LENGTH_SHORT).show();
-                        System.out.println("Difference in days: " + differenceInDays);
-                    } catch (ParseException | java.text.ParseException e) {
-                        e.printStackTrace();
-                    }
-                    ApiClient.getApiClient().ApplyLeave(leaveApplicationData, "Leave Application", "sid=" + sessionManager.getUserId()).enqueue(new Callback<LeaveApplication>() {
-                        @SuppressLint({"SetTextI18n", "InflateParams"})
-                        @Override
-                        public void onResponse(@NonNull Call<LeaveApplication> call, @NonNull Response<LeaveApplication> response) {
-                            if (response.isSuccessful()) {
-                                LeaveApplication responseModel = response.body();
-                                if (responseModel != null) {
-                                    successView = getLayoutInflater().inflate(R.layout.success, null);
-                                    TextView message = successView.findViewById(R.id.message);
-                                    AppCompatButton button = successView.findViewById(R.id.closebtn);
-                                    message.setText("Leave Application successful");
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
-                                    builder.setView(successView);
-                                    AlertDialog dialog = builder.create();
-
-                                    button.setOnClickListener(view1 ->{
-                                        dialog.dismiss();
-                                        startActivity(new Intent(getApplicationContext(), LeaveReportActivity.class));
-                                        finish();
-                                    });
-
-                                    dialog.show();
-                                    progressBar.setVisibility(View.GONE);
-                                   /* startActivity(new Intent(ApplyLeaveActivity.this, LeaveReportActivity.class));
-                                    finish();*/
-                                    //System.out.println("responseModel.getData() = " + responseModel.getData());
-                                   // System.out.println("responseModel = " + responseModel);
-                                }
-                                assert responseModel != null;
-                                if (responseModel.getData() != null) {
-                                    System.out.println("responseModel.getData().getLeaveBalance() = " + responseModel.getData().getLeaveBalance());
-                                } else {
-                                    System.out.println("null data = ");
-                                    Toast.makeText(ApplyLeaveActivity.this, "null data in apply leave activity", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
-
+                                dialog.show();
                                 progressBar.setVisibility(View.GONE);
+                               /* startActivity(new Intent(ApplyLeaveActivity.this, LeaveReportActivity.class));
+                                finish();*/
+                                //System.out.println("responseModel.getData() = " + responseModel.getData());
+                               // System.out.println("responseModel = " + responseModel);
+                            }
+                            assert responseModel != null;
+                            if (responseModel.getData() != null) {
+                                System.out.println("responseModel.getData().getLeaveBalance() = " + responseModel.getData().getLeaveBalance());
                             } else {
-                                //Toast.makeText(ApplyLeaveActivity.this, "" + response.code(), Toast.LENGTH_SHORT).show();
-                                if (response.errorBody() != null) {
-                                    progressBar.setVisibility(View.GONE);
-                                    try {
-                                        String errorResponseJson = response.errorBody().string();
-                                        PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
-                                        builder.setTitle(errorResponse.getExcType());
-                                        String exceptionMessage = errorResponse.getException();
-                                        int firstmaessage = exceptionMessage.indexOf(":");
+                                System.out.println("null data = ");
+                                Toast.makeText(ApplyLeaveActivity.this, "null data in apply leave activity", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
 
-                                        if (exceptionMessage.startsWith("frappe.exceptions.PermissionError")){
-                                            ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
-                                                @Override
-                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                                    if (response.isSuccessful()){
-                                                        builder.setMessage("Your Session expired, please login to access your account");
-                                                        builder.setCancelable(false);
-                                                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
-                                                    }
+                            progressBar.setVisibility(View.GONE);
+                        } else {
+                            //Toast.makeText(ApplyLeaveActivity.this, "" + response.code(), Toast.LENGTH_SHORT).show();
+                            if (response.errorBody() != null) {
+                                progressBar.setVisibility(View.GONE);
+                                try {
+                                    String errorResponseJson = response.errorBody().string();
+                                    PermissionError errorResponse = new Gson().fromJson(errorResponseJson, PermissionError.class);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
+                                    builder.setTitle(errorResponse.getExcType());
+                                    String exceptionMessage = errorResponse.getException();
+                                    int firstmaessage = exceptionMessage.indexOf(":");
+
+                                    if (exceptionMessage.startsWith("frappe.exceptions.PermissionError")){
+                                        ApiClient.getApiClient().logout().enqueue(new Callback<ResponseBody>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                if (response.isSuccessful()){
+                                                    builder.setMessage("Your Session expired, please login to access your account");
+                                                    builder.setCancelable(false);
+                                                    builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
                                                 }
+                                            }
 
-                                                @Override
-                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
-                                                    builder.setTitle("Error Occurred");
-                                                    if (t.getMessage().equals("timeout")) {
-                                                        builder.setMessage("Kindly check your internet connection then try again");
+                                            @Override
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(ApplyLeaveActivity.this);
+                                                builder.setTitle("Error Occurred");
+                                                if (t.getMessage().equals("timeout")) {
+                                                    builder.setMessage("Kindly check your internet connection then try again");
 
-                                                        // Set a positive button and its click listener
-                                                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
-                                                    } else {
-                                                        builder.setMessage(t.getMessage());
+                                                    // Set a positive button and its click listener
+                                                    builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
+                                                } else {
+                                                    builder.setMessage(t.getMessage());
 
-                                                        // Set a positive button and its click listener
-                                                        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
-                                                    }
-                                                    // Create and show the alert dialog
-                                                    AlertDialog dialog = builder.create();
-                                                    dialog.show();
-
+                                                    // Set a positive button and its click listener
+                                                    builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
                                                 }
-                                            });
-                                        }
-                                        int lastmessage = exceptionMessage.lastIndexOf(":");
-                                        if (lastmessage == -1){
-                                            String errorMessage = exceptionMessage.substring(firstmaessage+1, lastmessage-2).trim();
-                                            builder.setCancelable(false);
-                                            builder.setMessage(errorMessage);
-                                            builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+                                                // Create and show the alert dialog
+                                                AlertDialog dialog = builder.create();
+                                                dialog.show();
 
-
-                                            // Set a positive button and its click listener
-
-
-                                            // Create and show the alert dialog
-                                            AlertDialog dialog = builder.create();
-                                            dialog.show();
-                                        }else {
-                                            String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
-                                            builder.setCancelable(false);
-                                            builder.setMessage(errorMessage);
-                                            builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
-
-
-                                            // Set a positive button and its click listener
-
-
-                                            // Create and show the alert dialog
-                                            AlertDialog dialog = builder.create();
-                                            dialog.show();
-                                            progressBar.setVisibility(View.GONE);
-                                        }
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                         progressBar.setVisibility(View.GONE);
+                                            }
+                                        });
                                     }
+                                    int lastmessage = exceptionMessage.lastIndexOf(":");
+                                    if (lastmessage == -1){
+                                        String errorMessage = exceptionMessage.substring(firstmaessage+1, lastmessage-2).trim();
+                                        builder.setCancelable(false);
+                                        builder.setMessage(errorMessage);
+                                        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+
+
+                                        // Set a positive button and its click listener
+
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    }else {
+                                        String errorMessage = exceptionMessage.substring(firstmaessage + 1).trim();
+                                        builder.setCancelable(false);
+                                        builder.setMessage(errorMessage);
+                                        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+
+
+                                        // Set a positive button and its click listener
+
+
+                                        // Create and show the alert dialog
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                     progressBar.setVisibility(View.GONE);
                                 }
                             }
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Call<LeaveApplication> call, Throwable t) {
-                            Toast.makeText(ApplyLeaveActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    });
-                }
-                }
-        });
+                    @Override
+                    public void onFailure(Call<LeaveApplication> call, Throwable t) {
+                        Toast.makeText(ApplyLeaveActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+            }
+            });
         from.setOnClickListener(view -> showDatePickerDialog(from));
 
 
