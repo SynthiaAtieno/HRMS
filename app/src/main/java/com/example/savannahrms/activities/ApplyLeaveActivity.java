@@ -76,7 +76,6 @@ public class ApplyLeaveActivity extends AppCompatActivity {
         leaveTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                //Toast.makeText(ApplyLeaveActivity.this, "" + adapterView.getItemAtPosition(i), Toast.LENGTH_SHORT).show();
 
 
             }
