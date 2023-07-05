@@ -48,7 +48,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
     }
 
-    private TextWatcher emailTextWatcher = new TextWatcher() {
+    private final TextWatcher emailTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
