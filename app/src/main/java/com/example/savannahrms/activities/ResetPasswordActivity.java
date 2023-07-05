@@ -78,18 +78,4 @@ public class ResetPasswordActivity extends AppCompatActivity {
         // This is a basic example checking for a non-empty email
        // return !email.isEmpty();
     }
-    private boolean isDarkThemePreferred() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String themePreference = sharedPreferences.getString("theme_preference", "system");
-
-        if (themePreference.equals("dark")) {
-            return true;
-        } else if (themePreference.equals("light")) {
-            return false;
-        } else {
-            // If the theme preference is set to "system", use the system default
-            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
-        }
-    }
 }
