@@ -18,6 +18,7 @@ import android.widget.Button;
 import com.example.savannahrms.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class ResetPasswordActivity extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         editTextEmail = (TextInputLayout) findViewById(R.id.username);
