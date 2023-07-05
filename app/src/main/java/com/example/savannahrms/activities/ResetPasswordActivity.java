@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
-    private TextInputLayout editTextEmail;
     private Button buttonResetPassword;
 
     @Override
@@ -32,7 +31,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        editTextEmail = findViewById(R.id.username);
+        TextInputLayout editTextEmail = findViewById(R.id.username);
         buttonResetPassword = findViewById(R.id.buttonResetPassword);
 
         // Add TextWatcher to EditText
@@ -40,7 +39,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         buttonResetPassword.setOnClickListener(v -> {
             // Perform action when button is clicked
-            String email = editTextEmail.getEditText().getText().toString().trim();
+          //  String email = editTextEmail.getEditText().getText().toString().trim();
             // Reset password logic goes here
         });
     }
