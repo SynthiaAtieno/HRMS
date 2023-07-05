@@ -40,7 +40,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         buttonResetPassword = findViewById(R.id.buttonResetPassword);
 
         // Add TextWatcher to EditText
-        editTextEmail.getEditText().addTextChangedListener(emailTextWatcher);
+        Objects.requireNonNull(editTextEmail.getEditText()).addTextChangedListener(emailTextWatcher);
 
         buttonResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
