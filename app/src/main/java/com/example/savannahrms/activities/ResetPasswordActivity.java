@@ -36,7 +36,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        editTextEmail = (TextInputLayout) findViewById(R.id.username);
+        editTextEmail = findViewById(R.id.username);
         buttonResetPassword = findViewById(R.id.buttonResetPassword);
 
         // Add TextWatcher to EditText
