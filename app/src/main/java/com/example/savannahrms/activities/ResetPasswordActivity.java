@@ -42,13 +42,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
         // Add TextWatcher to EditText
         Objects.requireNonNull(editTextEmail.getEditText()).addTextChangedListener(emailTextWatcher);
 
-        buttonResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Perform action when button is clicked
-                String email = editTextEmail.getEditText().getText().toString().trim();
-                // Reset password logic goes here
-            }
+        buttonResetPassword.setOnClickListener(v -> {
+            // Perform action when button is clicked
+            String email = editTextEmail.getEditText().getText().toString().trim();
+            // Reset password logic goes here
         });
     }
 
