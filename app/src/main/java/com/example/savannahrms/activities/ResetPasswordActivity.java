@@ -1,6 +1,5 @@
 package com.example.savannahrms.activities;
 
-//import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 //import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
