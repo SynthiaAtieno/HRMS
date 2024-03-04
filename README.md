@@ -39,17 +39,16 @@ Libraries used in the whole application are:
 
 ## Demo
 <p float="left">
-<img src="screenshots/splashscreen.png" width=250/>
-<img src="screenshots/donor_registration screen.png" width=250/>
-<img src="screenshots/loginscreen.png" width=250/>
-<img src="screenshots/main screen.png" width=250/>
-<img src="screenshots/navigation drawer.png" width=250/>
-<img src="screenshots/profile screen.png" width=250/>
-<img src="screenshots/sent emails screen.png" width=250/>
-<img src="screenshots/blood group AB+ intent.png" width=250/>
-<img src="screenshots/alert dialog builder.png" width=250/>
-<img src="screenshots/alert dialog builder 2.png" width=250/>
-<img src="screenshots/alert dialog bulder 3.png" width=250/>
+<img src="screenshots/get started page.png" width=250/>
+<img src="screenshots/ landing page.png" width=250/>
+<img src="screenshots/landing page1.png" width=250/>
+<img src="screenshots/landingpage2.png" width=250/>
+<img src="screenshots/login page.png" width=250/>
+<img src="screenshots/drawer menu.png" width=250/>
+<img src="screenshots/payslip page.png" width=250/>
+<img src="screenshots/homepage.png" width=250/>
+<img src="screenshots/logout.png" width=250/>
+
   </p>
   
 ## Support
