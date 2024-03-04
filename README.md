@@ -1,0 +1,1 @@
+An application that allow employees to conduct their daily activities for example view profile, apply leave, view salary slip, view holidays, claims, attendance, view tasks assigned to him/her, check in and check out, view todos etc
