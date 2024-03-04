@@ -16,7 +16,7 @@ public class ApiClient {
         httpClient.addInterceptor(logging);
 
         if (retrofit == null) {
-            String baseurl = "http://127.0.0.1:8000/api/";
+            String baseurl = "http://10.20.21.143:8000/api/";
             //String baseurl = "http://erp.techsavanna.technology:8082/api/";
             retrofit = new Retrofit.Builder().baseUrl(baseurl)
                     .addConverterFactory(GsonConverterFactory.create())
