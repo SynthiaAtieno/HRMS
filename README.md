@@ -40,7 +40,7 @@ Libraries used in the whole application are:
 ## Demo
 <p float="left">
 <img src="screenshots/get started page.png" width=250/>
-<img src="screenshots/ landing page.png" width=250/>
+<img src="screenshots/landing page.png" width=250/>
 <img src="screenshots/landing page1.png" width=250/>
 <img src="screenshots/landingpage2.png" width=250/>
 <img src="screenshots/login page.png" width=250/>
